@@ -17,7 +17,8 @@
     }
 
     @include mobile-height {
-        height: 70vh;
+        padding-top: calc($top-header-size-tablet + $mid-header-size-tablet);
+        height: 100vh;
     }
 
     &__body {
