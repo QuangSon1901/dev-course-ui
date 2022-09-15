@@ -24,7 +24,7 @@ const slider = [
 
 const Hero = () => {
     const [slideActive, setSlideActive] = useState(0);
-    const [slidePlay, setSlidePlay] = useState(false);
+    const [slidePlay, setSlidePlay] = useState(true);
 
     const sliderRef = useRef(null);
 
@@ -40,7 +40,7 @@ const Hero = () => {
         }
 
         sliderRef.current.addEventListener('mouseover', () => setSlidePlay(false));
-        sliderRef.current.addEventListener('mouseleave', () => setSlidePlay(false));
+        sliderRef.current.addEventListener('mouseleave', () => setSlidePlay(true));
 
         return () => {
             clearInterval(autoSlider);
