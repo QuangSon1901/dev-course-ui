@@ -21,6 +21,10 @@ html {
     @include mobile-height {
         font-size: 40%;
     }
+
+    @include mobile-height-300 {
+        font-size: 30%;
+    }
 }
 
 body {

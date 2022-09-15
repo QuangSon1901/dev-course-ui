@@ -84,10 +84,6 @@
                     @include mobile {
                         font-size: 3rem;
                     }
-
-                    @include mobile-height {
-                        font-size: 3rem;
-                    }
                 }
 
                 &__desc {

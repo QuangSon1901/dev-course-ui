@@ -11,7 +11,13 @@
 }
 
 @mixin mobile-height {
-    @media only screen and (max-height: $mobile-height) {
+    @media only screen and (max-height: $mobile-height) and (max-width: $tablet-width) {
+        @content;
+    }
+}
+
+@mixin mobile-height-300 {
+    @media only screen and (max-height: $mobile-height-300) and (max-width: $tablet-width) {
         @content;
     }
 }
