@@ -1,0 +1,62 @@
+.theme-menu {
+    position: fixed;
+    right: -300px;
+    top: 0;
+    width: 300px;
+    height: 100vh;
+    padding: 20px;
+    z-index: 99;
+    background-color: var(--bg-second);
+    color: var(--txt-color);
+    transition: right 0.5s ease;
+
+    &.active {
+        right: 0;
+        border-left: 1px solid var(--txt-second);
+    }
+
+    &__close {
+        position: absolute;
+        top: 17px;
+        right: 20px;
+        background-color: transparent;
+        color: var(--txt-color);
+        font-size: 2.4rem;
+    }
+
+    &__select {
+        margin-top: 40px;
+        font-size: 1.6rem;
+
+        &__mode-list {
+            margin-top: 20px;
+
+            & > li {
+                @include flex(center, flex-start);
+                cursor: pointer;
+            }
+
+            & > li ~ li {
+                margin-top: 10px;
+            }
+
+            &__color {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                @include flex(center, center);
+                margin-right: 10px;
+                font-size: 2rem;
+
+                & > i {
+                    transform: scale(0);
+                    transition: transform 0.3s ease;
+                }
+
+                &.active > i {
+                    transform: scale(1);
+                }
+            }
+        }
+    }
+}

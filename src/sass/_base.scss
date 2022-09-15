@@ -1,0 +1,144 @@
+@import 'normalize.css';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+html {
+    font-size: 62.5%;
+
+    @include tablet {
+        font-size: 55%;
+    }
+
+    @include mobile {
+        font-size: 50%;
+    }
+}
+
+body {
+    color: var(--txt-color);
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden;
+    overflow-y: overlay;
+    background-color: var(--bg-second);
+}
+
+a {
+    text-decoration: none;
+    color: unset;
+    display: inline-block;
+}
+
+button {
+    outline: 0;
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+ul {
+    list-style-type: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+@each $color, $val in $colors {
+    .color-#{$color} {
+        color: $val;
+    }
+
+    .bg-#{$color} {
+        background-color: $val;
+    }
+}
+
+@each $val in $numbers {
+    .grid-col-#{$val} {
+        grid-template-columns: repeat($val, 1fr);
+    }
+}
+
+@each $val in $numbers {
+    .grid-col-md-#{$val} {
+        @include tablet {
+            grid-template-columns: repeat($val, 1fr);
+        }
+    }
+}
+
+@each $val in $numbers {
+    .grid-col-sm-#{$val} {
+        @include mobile {
+            grid-template-columns: repeat($val, 1fr);
+        }
+    }
+}
+
+.container {
+    max-width: 1366px;
+    margin: auto;
+    padding: 0 20px;
+    position: relative;
+
+    @include tablet {
+        padding: 0 10px;
+    }
+}
+
+.bg-second {
+    background-color: var(--bg-second);
+}
+
+.bg-main {
+    background-color: var(--bg-color);
+}
+
+.bg-transparent {
+    background-color: transparent;
+}
+
+.grid {
+    display: grid;
+}
+
+html ::-webkit-scrollbar {
+    border-radius: 0;
+    height: 8px;
+    width: 8px;
+}
+
+html ::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+}
+
+html ::-webkit-scrollbar-track {
+    background-color: transparent;
+    border-radius: 0;
+}
+
+.light-background {
+    background-color: $bg-color-light;
+    color: #000;
+}
+
+.dark-background {
+    background-color: $bg-color-dark;
+    color: #fff;
+}
+
+.blue-color {
+    background-color: #2835d5;
+    color: #fff;
+}
+
+.red-color {
+    background-color: #e6232b;
+    color: #fff;
+}

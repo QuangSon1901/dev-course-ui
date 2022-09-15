@@ -1,0 +1,64 @@
+@font-face {
+    font-family: Poppins;
+    src: url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+}
+
+$bg-color: #fff;
+$bg-second: #f5f5f5;
+$main-color: #e90205;
+$txt-color: #000;
+$txt-second: #bbb;
+$txt-thirst: #e8e8e8;
+$txt-white: #fff;
+$txt-black: #000;
+
+$bg-color-light: #fff;
+$bg-second-light: #f5f5f5;
+$main-color-light: #e90205;
+$txt-color-light: #000;
+$txt-second-light: #bbb;
+$txt-thirst-light: #e8e8e8;
+$txt-white-light: #fff;
+$txt-black-light: #000;
+
+$bg-color-dark: #000;
+$bg-second-dark: #ccc;
+$main-color-dark: #e90205;
+$txt-color-dark: #fff;
+$txt-second-dark: #ccc;
+$txt-thirst-dark: #eee;
+$txt-white-dark: #000;
+$txt-black-dark: #fff;
+
+$header-padding: 50px;
+
+$top-header-size: 30px;
+$mid-header-size: 80px;
+$bottom-header-size: 45px;
+
+$top-header-size-tablet: 24px;
+$mid-header-size-tablet: 65px;
+
+$top-header-size-mobile: 18px;
+$mid-header-size-mobile: 40px;
+
+$box-shadow: rgba(149, 157, 165, 0.2) 0 8px 24px;
+
+$colors: (
+    'blue': #4267b2,
+    'orange': #fbb96b,
+    'yellow': #f9a636,
+    'pink': #fe7e73,
+    'white': #fff,
+    'black': #000,
+    'red': #ff0000,
+    'gray': #434950,
+    'transparent': transparent,
+);
+
+$mobile-width: 600px;
+$tablet-width: 1024px;
+
+$mobile-height: 750px;
+
+$numbers: (0, 1, 2, 3, 4, 5, 6, 7, 8);

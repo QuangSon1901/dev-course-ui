@@ -1,0 +1,44 @@
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;
+    min-height: 3.6rem;
+    padding: 0 16px;
+    font-size: 1.6rem;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    color: var(--txt-color);
+
+    &:hover {
+        background-color: var(--txt-thirst);
+    }
+
+    &.disable {
+        cursor: default;
+        pointer-events: none;
+        opacity: 0.5;
+    }
+}
+
+.primary {
+    background-color: var(--main-color);
+    color: var(--txt-white);
+
+    &:hover {
+        background-color: var(--main-color);
+        filter: brightness(110%);
+    }
+}
+
+.small {
+    min-width: 88px;
+    padding: 4px 16px;
+}
+
+.large {
+    min-width: 168px;
+    min-height: 48px;
+    padding: 14px 16px;
+}
