@@ -1,19 +1,16 @@
 .theme-menu {
     position: fixed;
-    right: -300px;
+    right: 0;
     top: 0;
     width: 300px;
     height: 100vh;
     padding: 20px;
-    z-index: 99;
+    z-index: 99999;
     background-color: var(--bg-second);
     color: var(--txt-color);
+    overflow-y: overlay;
+    animation: openThemeMenu 0.5s ease;
     transition: right 0.5s ease;
-
-    &.active {
-        right: 0;
-        border-left: 1px solid var(--txt-second);
-    }
 
     &__close {
         position: absolute;
@@ -58,5 +55,14 @@
                 }
             }
         }
+    }
+}
+
+@keyframes openThemeMenu {
+    from {
+        right: -300px;
+    }
+    to {
+        right: 0;
     }
 }

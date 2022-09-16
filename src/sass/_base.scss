@@ -19,11 +19,11 @@ html {
     }
 
     @include mobile-height {
-        font-size: 40%;
+        font-size: 50%;
     }
 
     @include mobile-height-300 {
-        font-size: 30%;
+        font-size: 40%;
     }
 }
 

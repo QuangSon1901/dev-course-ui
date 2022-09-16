@@ -1,11 +1,16 @@
-import React, { forwardRef, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { multilingualSelector, themeSelector } from '~/redux/selector';
+import { disableScroll, enableScroll } from '~/utils/scrollBody';
 import themeSlice from './themeSlice';
 
-const ThemeMenu = forwardRef((props, ref) => {
+const ThemeMenu = (props) => {
     const multilingual = useSelector(multilingualSelector);
     const { translationSelected } = multilingual;
+
+    const themeMenuRef = useRef(null);
+    const overlay = useRef(null);
+    let unmountDelay;
 
     const dispatch = useDispatch();
     const theme = useSelector(themeSelector);
@@ -19,20 +24,25 @@ const ThemeMenu = forwardRef((props, ref) => {
     };
 
     const handleClose = () => {
-        ref.current.classList.remove('active');
+        overlay.current.style.opacity = 0;
+        themeMenuRef.current.style.right = '-300px';
+        unmountDelay = setTimeout(() => {
+            props.onClose();
+        }, 500);
+    };
+
+    const clickOutSide = (e) => {
+        if (!document.querySelector('.toggle-theme').contains(e.target) && !themeMenuRef.current.contains(e.target))
+            return handleClose();
     };
 
     useEffect(() => {
-        const clickOutSide = (e) => {
-            if (!e.target.classList.contains('toggle-theme') && !ref.current.contains(e.target)) {
-                ref.current.classList.remove('active');
-            }
-        };
-
         document.addEventListener('click', clickOutSide);
-
+        disableScroll();
         return () => {
+            clearTimeout(unmountDelay);
             document.removeEventListener('click', clickOutSide);
+            enableScroll();
         };
     }, []);
 
@@ -67,47 +77,51 @@ const ThemeMenu = forwardRef((props, ref) => {
     ];
 
     return (
-        <div ref={ref} className="theme-menu">
-            <h2>{translationSelected.messages.themeSettings}</h2>
-            <button onClick={handleClose} className="theme-menu__close">
-                <i className="bx bx-x"></i>
-            </button>
-            <div className="theme-menu__select">
-                <span>{translationSelected.messages.chooseMode}</span>
-                <ul className="theme-menu__select__mode-list">
-                    {mode_settings.map((item, index) => (
-                        <li key={index} onClick={() => handleThemeMode(item.class)}>
-                            <div
-                                className={`theme-menu__select__mode-list__color ${item.background} ${
-                                    theme.theme === item.class ? 'active' : ''
-                                }`}
-                            >
-                                <i className="bx bx-check"></i>
-                            </div>
-                            <span>{item.name}</span>
-                        </li>
-                    ))}
-                </ul>
+        <>
+            <div ref={overlay} className="overlay"></div>
+
+            <div ref={themeMenuRef} className="theme-menu">
+                <h2>{translationSelected.messages.themeSettings}</h2>
+                <button onClick={handleClose} className="theme-menu__close">
+                    <i className="bx bx-x"></i>
+                </button>
+                <div className="theme-menu__select">
+                    <span>{translationSelected.messages.chooseMode}</span>
+                    <ul className="theme-menu__select__mode-list">
+                        {mode_settings.map((item, index) => (
+                            <li key={index} onClick={() => handleThemeMode(item.class)}>
+                                <div
+                                    className={`theme-menu__select__mode-list__color ${item.background} ${
+                                        theme.theme === item.class ? 'active' : ''
+                                    }`}
+                                >
+                                    <i className="bx bx-check"></i>
+                                </div>
+                                <span>{item.name}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="theme-menu__select">
+                    <span>{translationSelected.messages.chooseColor}</span>
+                    <ul className="theme-menu__select__mode-list">
+                        {color_settings.map((item, index) => (
+                            <li key={index} onClick={() => handleColorMode(item.class)}>
+                                <div
+                                    className={`theme-menu__select__mode-list__color ${item.background} ${
+                                        theme.color === item.class ? 'active' : ''
+                                    }`}
+                                >
+                                    <i className="bx bx-check"></i>
+                                </div>
+                                <span>{item.name}</span>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
             </div>
-            <div className="theme-menu__select">
-                <span>{translationSelected.messages.chooseColor}</span>
-                <ul className="theme-menu__select__mode-list">
-                    {color_settings.map((item, index) => (
-                        <li key={index} onClick={() => handleColorMode(item.class)}>
-                            <div
-                                className={`theme-menu__select__mode-list__color ${item.background} ${
-                                    theme.color === item.class ? 'active' : ''
-                                }`}
-                            >
-                                <i className="bx bx-check"></i>
-                            </div>
-                            <span>{item.name}</span>
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        </div>
+        </>
     );
-});
+};
 
 export default ThemeMenu;

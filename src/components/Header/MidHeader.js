@@ -8,28 +8,17 @@ import Sidebar from '../Sidebar';
 const MidHeader = () => {
     const theme = useSelector(themeSelector);
 
-    const [typeSidebar, setTypeSidebar] = useState('toggle-menu');
+    const [sidebarMenu, setSidebarMenu] = useState(false);
+    const [sidebarSearch, setSidebarSearch] = useState(false);
 
-    const sidebarRef = useRef(null);
-    const toggleSidebar = useRef(null);
+    // const handleSidebarToggle = () => {
+    //     sidebarRef.current.classList.toggle('active');
+    // };
 
-    const handleToggle = () => {
-        if (typeSidebar !== 'toggle-menu') sidebarRef.current.classList.remove('active');
-        setTypeSidebar('toggle-menu');
-        sidebarRef.current.classList.toggle('active');
-    };
-
-    const handleSearchMobile = (e) => {
-        e.preventDefault();
-
-        if (typeSidebar !== 'search') sidebarRef.current.classList.remove('active');
-        setTypeSidebar('search');
-        sidebarRef.current.classList.toggle('active');
-    };
     return (
         <>
             <div className="header__wrapper__mid container">
-                <div ref={toggleSidebar} onClick={() => handleToggle()} className="header__wrapper__mid__menu-toggle">
+                <div className="header__wrapper__mid__menu-toggle" onClick={() => setSidebarMenu(true)}>
                     <i className="bx bx-menu"></i>
                 </div>
                 <a href="/" className="header__wrapper__mid__logo">
@@ -37,8 +26,8 @@ const MidHeader = () => {
                 </a>
                 <Search />
                 <ul className="header__wrapper__mid__user-menu">
-                    <li className="header__wrapper__mid__user-menu__search">
-                        <a href="/" onClick={(e) => handleSearchMobile(e)}>
+                    <li className="header__wrapper__mid__user-menu__search" onClick={() => setSidebarSearch(true)}>
+                        <a href="/" onClick={(e) => e.preventDefault()}>
                             <i className="bx bx-search"></i>
                         </a>
                     </li>
@@ -54,7 +43,24 @@ const MidHeader = () => {
                     </li>
                 </ul>
             </div>
-            <Sidebar ref={sidebarRef} type={typeSidebar} />
+            {sidebarMenu ? (
+                <Sidebar
+                    classToggle=".header__wrapper__mid__menu-toggle"
+                    onClose={() => setSidebarMenu(false)}
+                    typeSidebar="sidebarMenu"
+                />
+            ) : (
+                ''
+            )}
+            {sidebarSearch ? (
+                <Sidebar
+                    classToggle=".header__wrapper__mid__user-menu__search"
+                    onClose={() => setSidebarSearch(false)}
+                    typeSidebar="sidebarSearch"
+                />
+            ) : (
+                ''
+            )}
         </>
     );
 };

@@ -31,6 +31,7 @@ const TopHeader = () => {
     const { translationSelected, translations } = multilingual;
 
     const [translationsList, setTranslationsList] = useState([]);
+    const [themeMenuOpen, setThemeMenuOpen] = useState(false);
 
     useEffect(() => {
         const index = translations.indexOf(translationSelected);
@@ -39,15 +40,8 @@ const TopHeader = () => {
         setTranslationsList(newLanguadeList);
     }, [multilingual]);
 
-    const themeRef = useRef(null);
     const currencyRef = useRef(null);
     const languageRef = useRef(null);
-
-    const handleThemeModeToggle = (e) => {
-        e.preventDefault();
-
-        themeRef.current.classList.toggle('active');
-    };
 
     return (
         <div className="header__wrapper__top container">
@@ -81,10 +75,17 @@ const TopHeader = () => {
                     ''
                 )}
                 <li>
-                    <a href="/" className="toggle-theme" onClick={(e) => handleThemeModeToggle(e)}>
+                    <a
+                        href="/"
+                        className="toggle-theme"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            setThemeMenuOpen(true);
+                        }}
+                    >
                         {translationSelected.messages.theme}
                     </a>
-                    <ThemeMenu ref={themeRef} />
+                    {themeMenuOpen ? <ThemeMenu onClose={() => setThemeMenuOpen(false)} /> : ''}
                 </li>
             </ul>
         </div>

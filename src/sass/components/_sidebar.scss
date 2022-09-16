@@ -1,44 +1,105 @@
 .sidebar {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 0;
-    z-index: 999;
-    visibility: hidden;
-    background-color: var(--bg-color);
-    transition: all 1s ease;
-    overflow: hidden;
-
-    @include tablet {
-        top: calc($mid-header-size-tablet + $top-header-size-tablet);
-        &.active {
-            height: calc(100vh - ($mid-header-size-tablet + $top-header-size-tablet));
-            visibility: visible;
-        }
-    }
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 50vw;
+    height: 100vh;
+    padding: 20px;
+    z-index: 99999;
+    background-color: var(--bg-second);
+    color: var(--txt-color);
+    animation: openSidebar 0.5s ease;
+    transition: left 0.5s ease;
+    overflow-y: overlay;
+    border-right: 1px solid var(--txt-second);
 
     @include mobile {
-        top: $mid-header-size-mobile;
-        &.active {
-            height: calc(100vh - $mid-header-size-mobile);
-            visibility: visible;
-        }
+        width: 100vw;
     }
 
-    & > ul {
-        & > li {
-            cursor: pointer;
-            padding: 20px 20px 16px 20px;
-            font-size: 14px;
-            border-bottom: 1px solid var(--txt-thirst);
-            color: var(--txt-color);
-            font-weight: 400;
-            @include flex(center, space-between);
+    &__close {
+        position: absolute;
+        top: 17px;
+        right: 20px;
+        background-color: transparent;
+        color: var(--txt-color);
+        font-size: 2.4rem;
+    }
 
-            & > i {
-                color: var(--main-color);
-                font-size: 24px;
+    &__menu {
+        position: relative;
+
+        & > * ~ * {
+            margin-top: 16px;
+        }
+
+        &__avatar {
+            @include flex(center, flex-start);
+            margin-top: 30px;
+
+            & > img {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                margin-right: 10px;
             }
+
+            & > h3 {
+                font-size: 1.6rem;
+            }
+        }
+
+        &__login-btn {
+            margin-top: 16px;
+            @include flex(center, center);
+        }
+
+        &__select {
+            font-size: 1.6rem;
+            border-bottom: 1px solid var(--txt-thirst);
+            padding-bottom: 16px;
+
+            & > span {
+                font-weight: 600;
+            }
+
+            &__list {
+                margin-top: 10px;
+
+                & > * ~ * {
+                    margin-top: 10px;
+                }
+
+                &__item {
+                    @include flex(center, space-between);
+                    cursor: pointer;
+
+                    &__link {
+                        @include flex(center, flex-start);
+                        padding: 5px 0;
+                        width: 100%;
+                        height: 100%;
+
+                        & > i {
+                            font-size: 2.4rem;
+                            margin-right: 10px;
+                        }
+
+                        &.active {
+                            color: var(--main-color);
+                            font-weight: 600;
+                        }
+                    }
+
+                    & > i {
+                        font-size: 2.4rem;
+                    }
+                }
+            }
+        }
+
+        &__select:last-child {
+            border-bottom: none;
         }
     }
 
@@ -47,7 +108,7 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-        padding: 20px 30px;
+        padding: 20px 10px;
 
         &__input {
             position: relative;
@@ -61,9 +122,9 @@
                 font-size: 1.6rem;
                 outline: 0;
                 border: thin solid transparent;
-                background-color: var(--bg-second);
                 color: var(--txt-color);
                 border-radius: 10px;
+                background-color: var(--bg-color);
 
                 &:focus {
                     border: thin solid var(--txt-second);
@@ -78,5 +139,14 @@
                 animation: searchLoading 1s linear infinite;
             }
         }
+    }
+}
+
+@keyframes openSidebar {
+    from {
+        left: -100vw;
+    }
+    to {
+        left: 0;
     }
 }
