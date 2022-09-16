@@ -1,11 +1,19 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import images from '~/assets/images';
+import { multilingualSelector } from '~/redux/selector';
 import { disableScroll, enableScroll } from '~/utils/scrollBody';
 import Button from '../Button';
 
 const Sidebar = (props) => {
     const authentication = true;
+
+    const multilingual = useSelector(multilingualSelector);
+    const { translationSelected } = multilingual;
+
+    const [history, setHistory] = useState([{ data: props.items }]);
+    const current = history[history.length - 1];
 
     const sidebarRef = useRef(null);
     const overlay = useRef(null);
@@ -20,8 +28,7 @@ const Sidebar = (props) => {
     };
 
     const clickOutSide = (e) => {
-        if (!document.querySelector(props.classToggle).contains(e.target) && !sidebarRef.current.contains(e.target))
-            return handleCloseSidebar();
+        if (document.querySelector('.overlay').contains(e.target)) return handleCloseSidebar();
     };
 
     useEffect(() => {
@@ -34,6 +41,111 @@ const Sidebar = (props) => {
         };
     }, []);
 
+    const renderProfile = () => {
+        return authentication ? (
+            <>
+                <div className="sidebar__menu__avatar">
+                    <img src={images.userAvt} alt="" />
+                    <h3>Vũ Quang Sơn</h3>
+                </div>
+                <div className="sidebar__menu__select">
+                    <span>{translationSelected.messages.personal}</span>
+                    <ul className="sidebar__menu__select__list">
+                        <li className="sidebar__menu__select__list__item">
+                            <NavLink className="sidebar__menu__select__list__item__link" to="/me/profile">
+                                <i className="bx bx-user"></i>
+                                <span>{translationSelected.messages.personalPage}</span>
+                            </NavLink>
+                        </li>
+                        <li className="sidebar__menu__select__list__item">
+                            <NavLink className="sidebar__menu__select__list__item__link" to="/me/courses">
+                                <i className="bx bx-bulb"></i>
+                                <span>{translationSelected.messages.myCourses}</span>
+                            </NavLink>
+                        </li>
+                    </ul>
+                </div>
+            </>
+        ) : (
+            <>
+                <div className="sidebar__menu__login-btn">
+                    <Button primary>{translationSelected.messages.login}</Button>
+                </div>
+            </>
+        );
+    };
+
+    const renderItems = () => {
+        return current.data.map((item, index) => {
+            return (
+                <div key={index} className="sidebar__menu__select">
+                    <span>{item.title}</span>
+                    <ul className="sidebar__menu__select__list">
+                        {item.data.map((li, indexLi) => {
+                            const isParent = !!li.children;
+
+                            const addHistory = (e) => {
+                                e.preventDefault();
+                                setHistory([...history, { data: li.children.data, title: li.children.title }]);
+                            };
+
+                            const renderItemsHaveLink = (render) => (
+                                <NavLink
+                                    className="sidebar__menu__select__list__item__link"
+                                    to={render.to}
+                                    onClick={isParent && ((e) => addHistory(e))}
+                                >
+                                    <i className={`${render.icon}`}></i>
+                                    <span>{render.title ? render.title : ''}</span>
+                                </NavLink>
+                            );
+
+                            const renderItemsHaveType = (render) => (
+                                <div className="sidebar__menu__select__list__item__link">
+                                    {render.icon ? (
+                                        <i className={`${render.icon}`}></i>
+                                    ) : (
+                                        <div
+                                            className={`sidebar__menu__select__list__item__link__img ${render.type.background}`}
+                                        >
+                                            <i className="bx bx-check"></i>
+                                        </div>
+                                    )}
+                                    <span>{render.title ? render.title : ''}</span>
+                                </div>
+                            );
+
+                            return (
+                                <li key={indexLi} className="sidebar__menu__select__list__item">
+                                    {li.to ? renderItemsHaveLink(li) : ''}
+                                    {li.type ? renderItemsHaveType(li) : ''}
+                                    {isParent ? <i className="bx bx-chevron-right"></i> : ''}
+                                </li>
+                            );
+                        })}
+                    </ul>
+                </div>
+            );
+        });
+    };
+
+    const renderLogout = () => {
+        return authentication ? (
+            <div className="sidebar__menu__select">
+                <ul className="sidebar__menu__select__list">
+                    <li className="sidebar__menu__select__list__item">
+                        <NavLink className="sidebar__menu__select__list__item__link" to="/logout">
+                            <i className="bx bx-log-out-circle"></i>
+                            <span>{translationSelected.messages.logout}</span>
+                        </NavLink>
+                    </li>
+                </ul>
+            </div>
+        ) : (
+            ''
+        );
+    };
+
     return (
         <>
             <div ref={overlay} className="overlay"></div>
@@ -42,95 +154,22 @@ const Sidebar = (props) => {
                     <button className="sidebar__close" onClick={handleCloseSidebar}>
                         <i className="bx bx-x"></i>
                     </button>
-                    <h2 className="sidebar__title">Tài khoản cá nhân</h2>
+                    <h2 className="sidebar__title">
+                        {history.length > 1 ? (
+                            <>
+                                <button onClick={(e) => setHistory((prev) => prev.slice(0, prev.length - 1))}>
+                                    <i className="bx bx-arrow-back"></i>
+                                </button>
+                                {current.title}
+                            </>
+                        ) : (
+                            translationSelected.messages.personalAccount
+                        )}
+                    </h2>
                     <div className="sidebar__menu">
-                        {authentication ? (
-                            <>
-                                <div className="sidebar__menu__avatar">
-                                    <img src={images.userAvt} alt="" />
-                                    <h3>Vũ Quang Sơn</h3>
-                                </div>
-                                <div className="sidebar__menu__select">
-                                    <span>Cá nhân</span>
-                                    <ul className="sidebar__menu__select__list">
-                                        <li className="sidebar__menu__select__list__item">
-                                            <NavLink
-                                                className="sidebar__menu__select__list__item__link"
-                                                to="/me/profile"
-                                            >
-                                                <i className="bx bx-user"></i>
-                                                <span>Trang cá nhân</span>
-                                            </NavLink>
-                                        </li>
-                                        <li className="sidebar__menu__select__list__item">
-                                            <NavLink
-                                                className="sidebar__menu__select__list__item__link"
-                                                to="/me/courses"
-                                            >
-                                                <i className="bx bx-bulb"></i>
-                                                <span>Khoá học của tôi</span>
-                                            </NavLink>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </>
-                        ) : (
-                            <>
-                                <div className="sidebar__menu__login-btn">
-                                    <Button primary>Đăng nhập tài khoản</Button>
-                                </div>
-                            </>
-                        )}
-                        <div className="sidebar__menu__select">
-                            <span>Danh mục</span>
-                            <ul className="sidebar__menu__select__list">
-                                <li className="sidebar__menu__select__list__item">
-                                    <NavLink className="sidebar__menu__select__list__item__link" to="/">
-                                        <i className="bx bx-home"></i>
-                                        <span>Trang chủ</span>
-                                    </NavLink>
-                                </li>
-                                <li className="sidebar__menu__select__list__item">
-                                    <NavLink className="sidebar__menu__select__list__item__link" to="/courses">
-                                        <i className="bx bx-slideshow"></i>
-                                        <span>Chương trình đào tạo</span>
-                                    </NavLink>
-                                    <i className="bx bx-chevron-right"></i>
-                                </li>
-                                <li className="sidebar__menu__select__list__item">
-                                    <NavLink className="sidebar__menu__select__list__item__link" to="/news">
-                                        <i className="bx bx-news"></i>
-                                        <span>Tin tức</span>
-                                    </NavLink>
-                                </li>
-                                <li className="sidebar__menu__select__list__item">
-                                    <NavLink className="sidebar__menu__select__list__item__link" to="/payment-guide">
-                                        <i className="bx bx-help-circle"></i>
-                                        <span>Hướng dẫn thanh toán</span>
-                                    </NavLink>
-                                </li>
-                                <li className="sidebar__menu__select__list__item">
-                                    <NavLink className="sidebar__menu__select__list__item__link" to="/contact">
-                                        <i className="bx bx-support"></i>
-                                        <span>Liên hệ</span>
-                                    </NavLink>
-                                </li>
-                            </ul>
-                        </div>
-                        {authentication ? (
-                            <div className="sidebar__menu__select">
-                                <ul className="sidebar__menu__select__list">
-                                    <li className="sidebar__menu__select__list__item">
-                                        <NavLink className="sidebar__menu__select__list__item__link" to="/logout">
-                                            <i className="bx bx-log-out-circle"></i>
-                                            <span>Đăng xuất</span>
-                                        </NavLink>
-                                    </li>
-                                </ul>
-                            </div>
-                        ) : (
-                            ''
-                        )}
+                        {history.length === 1 ? renderProfile() : ''}
+                        {renderItems()}
+                        {history.length === 1 ? renderLogout() : ''}
                     </div>
                 </div>
             ) : (

@@ -11,7 +11,6 @@
     animation: openSidebar 0.5s ease;
     transition: left 0.5s ease;
     overflow-y: overlay;
-    border-right: 1px solid var(--txt-second);
 
     @include mobile {
         width: 100vw;
@@ -26,6 +25,21 @@
         font-size: 2.4rem;
     }
 
+    &__title {
+        @include flex(center, flex-start);
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid var(--txt-thirst);
+
+        & > button {
+            @include flex(center, flex-start);
+            background-color: transparent;
+            color: var(--txt-color);
+            margin-right: 20px;
+            font-size: 2rem;
+        }
+    }
+
     &__menu {
         position: relative;
 
@@ -35,7 +49,6 @@
 
         &__avatar {
             @include flex(center, flex-start);
-            margin-top: 30px;
 
             & > img {
                 width: 30px;
@@ -88,6 +101,24 @@
                         &.active {
                             color: var(--main-color);
                             font-weight: 600;
+                        }
+
+                        &__img {
+                            width: 30px;
+                            height: 30px;
+                            border-radius: 50%;
+                            @include flex(center, center);
+                            margin-right: 10px;
+                            font-size: 2rem;
+
+                            & > i {
+                                transform: scale(0);
+                                transition: transform 0.3s ease;
+                            }
+
+                            &.active > i {
+                                transform: scale(1);
+                            }
                         }
                     }
 
