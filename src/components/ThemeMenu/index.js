@@ -32,8 +32,7 @@ const ThemeMenu = (props) => {
     };
 
     const clickOutSide = (e) => {
-        if (!document.querySelector('.toggle-theme').contains(e.target) && !themeMenuRef.current.contains(e.target))
-            return handleClose();
+        if (document.querySelector('.overlay').contains(e.target)) return handleClose();
     };
 
     useEffect(() => {

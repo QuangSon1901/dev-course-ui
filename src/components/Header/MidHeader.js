@@ -1,14 +1,18 @@
-import React, { useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import images from '~/assets/images';
 import { multilingualSelector, themeSelector } from '~/redux/selector';
 import Search from '../Search';
 import Sidebar from '../Sidebar';
+import themeSlice from '../ThemeMenu/themeSlice';
+import multilingualSlice from './multilingualSlice';
 
 const MidHeader = () => {
+    const dispatch = useDispatch();
+
     const theme = useSelector(themeSelector);
     const multilingual = useSelector(multilingualSelector);
-    const { translationSelected } = multilingual;
+    const { translationSelected, translations } = multilingual;
 
     const [sidebarMenu, setSidebarMenu] = useState(false);
     const [sidebarSearch, setSidebarSearch] = useState(false);
@@ -211,23 +215,7 @@ const MidHeader = () => {
                         title: 'Ngôn ngữ',
                         data: [
                             {
-                                data: [
-                                    {
-                                        icon: 'bx bx-globe',
-                                        title: 'Vietnamese',
-                                        to: '/news',
-                                    },
-                                    {
-                                        icon: 'bx bx-globe',
-                                        title: 'English',
-                                        to: '/news',
-                                    },
-                                    {
-                                        icon: 'bx bx-globe',
-                                        title: 'Japanese',
-                                        to: '/news',
-                                    },
-                                ],
+                                data: [...translations],
                             },
                         ],
                     },
@@ -244,15 +232,17 @@ const MidHeader = () => {
                                 data: [
                                     {
                                         title: 'Màu sáng',
-                                        type: {
+                                        typeTheme: {
                                             id: 'light',
+                                            type: 'theme',
                                             background: 'light-background',
                                             class: 'theme-mode-light',
                                         },
                                     },
                                     {
                                         title: 'Màu tối',
-                                        type: {
+                                        typeTheme: {
+                                            type: 'theme',
                                             id: 'dark',
                                             background: 'dark-background',
                                             class: 'theme-mode-dark',
@@ -265,16 +255,18 @@ const MidHeader = () => {
                                 data: [
                                     {
                                         title: 'Màu xanh',
-                                        type: {
+                                        typeTheme: {
                                             id: 'blue',
+                                            type: 'color',
                                             background: 'blue-color',
                                             class: 'theme-color-blue',
                                         },
                                     },
                                     {
                                         title: 'Màu đỏ',
-                                        type: {
+                                        typeTheme: {
                                             id: 'red',
+                                            type: 'color',
                                             background: 'red-color',
                                             class: 'theme-color-red',
                                         },
@@ -287,6 +279,23 @@ const MidHeader = () => {
             ],
         },
     ];
+
+    const handleChangeTheme = (themeType, themeClass) => {
+        switch (themeType) {
+            case 'theme':
+                dispatch(themeSlice.actions.SET_THEME(themeClass));
+                return;
+            case 'color':
+                dispatch(themeSlice.actions.SET_COLOR(themeClass));
+                return;
+            default:
+                return;
+        }
+    };
+
+    const handleChangeLanguage = (id) => {
+        dispatch(multilingualSlice.actions.CHANGE_LANGUAGE(id));
+    };
 
     return (
         <>
@@ -322,6 +331,8 @@ const MidHeader = () => {
                     onClose={() => setSidebarMenu(false)}
                     typeSidebar="sidebarMenu"
                     items={SIDEBAR_MENU}
+                    onChangeTheme={handleChangeTheme}
+                    onChangeLanguage={handleChangeLanguage}
                 />
             ) : (
                 ''

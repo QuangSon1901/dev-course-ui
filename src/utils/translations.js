@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 const translations = [
     {
         id: uuidv4(),
+        icon: 'bx bx-globe',
         locale: 'en-US',
         title: 'English',
         messages: {
@@ -51,6 +52,7 @@ const translations = [
     },
     {
         id: uuidv4(),
+        icon: 'bx bx-globe',
         locale: 'vn',
         title: 'Vietnamese',
         messages: {
@@ -100,6 +102,7 @@ const translations = [
     {
         id: uuidv4(),
         locale: 'jp',
+        icon: 'bx bx-globe',
         title: 'Japanese',
         messages: {
             theme: 'Topikku',

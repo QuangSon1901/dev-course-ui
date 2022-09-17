@@ -2,13 +2,14 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import images from '~/assets/images';
-import { multilingualSelector } from '~/redux/selector';
+import { multilingualSelector, themeSelector } from '~/redux/selector';
 import { disableScroll, enableScroll } from '~/utils/scrollBody';
 import Button from '../Button';
 
 const Sidebar = (props) => {
     const authentication = true;
 
+    const theme = useSelector(themeSelector);
     const multilingual = useSelector(multilingualSelector);
     const { translationSelected } = multilingual;
 
@@ -93,20 +94,45 @@ const Sidebar = (props) => {
                                 <NavLink
                                     className="sidebar__menu__select__list__item__link"
                                     to={render.to}
-                                    onClick={isParent && ((e) => addHistory(e))}
+                                    onClick={(isParent && ((e) => addHistory(e))) || (() => handleCloseSidebar())}
                                 >
                                     <i className={`${render.icon}`}></i>
                                     <span>{render.title ? render.title : ''}</span>
                                 </NavLink>
                             );
 
-                            const renderItemsHaveType = (render) => (
-                                <div className="sidebar__menu__select__list__item__link">
+                            const activeColor = (type) => {
+                                switch (type.typeTheme.type) {
+                                    case 'theme':
+                                        let activeTheme = '';
+
+                                        if (type.typeTheme.class === theme.theme) activeTheme = 'active';
+                                        return activeTheme;
+                                    case 'color':
+                                        let activeColor = '';
+
+                                        if (type.typeTheme.class === theme.color) activeColor = 'active';
+                                        return activeColor;
+                                    default:
+                                        return;
+                                }
+                            };
+
+                            const renderItemsHaveTheme = (render) => (
+                                <div
+                                    className="sidebar__menu__select__list__item__link"
+                                    onClick={() => {
+                                        props.onChangeTheme(render.typeTheme.type, render.typeTheme.class);
+                                        handleCloseSidebar();
+                                    }}
+                                >
                                     {render.icon ? (
                                         <i className={`${render.icon}`}></i>
                                     ) : (
                                         <div
-                                            className={`sidebar__menu__select__list__item__link__img ${render.type.background}`}
+                                            className={`sidebar__menu__select__list__item__link__img ${
+                                                render.typeTheme.background
+                                            } ${activeColor(render)}`}
                                         >
                                             <i className="bx bx-check"></i>
                                         </div>
@@ -115,10 +141,27 @@ const Sidebar = (props) => {
                                 </div>
                             );
 
+                            const renderItemsNotLink = (render) => (
+                                <div
+                                    className="sidebar__menu__select__list__item__link"
+                                    onClick={
+                                        (isParent && ((e) => addHistory(e))) ||
+                                        (() => {
+                                            handleCloseSidebar();
+                                            props.onChangeLanguage(render.id);
+                                        })
+                                    }
+                                >
+                                    <i className={`${render.icon}`}></i>
+                                    <span>{render.title ? render.title : ''}</span>
+                                </div>
+                            );
+
                             return (
                                 <li key={indexLi} className="sidebar__menu__select__list__item">
                                     {li.to ? renderItemsHaveLink(li) : ''}
-                                    {li.type ? renderItemsHaveType(li) : ''}
+                                    {li.typeTheme ? renderItemsHaveTheme(li) : ''}
+                                    {!li.to && !li.typeTheme ? renderItemsNotLink(li) : ''}
                                     {isParent ? <i className="bx bx-chevron-right"></i> : ''}
                                 </li>
                             );
