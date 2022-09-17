@@ -1,8 +1,11 @@
+import { lazy } from 'react';
+
 import config from '~/config';
-import Contact from '~/pages/Contact';
-import Home from '~/pages/Home';
-import News from '~/pages/News';
-import PaymentGuide from '~/pages/PaymentGuide';
+
+const Home = lazy(() => import('~/pages/Home'));
+const News = lazy(() => import('~/pages/News'));
+const Contact = lazy(() => import('~/pages/Contact'));
+const PaymentGuide = lazy(() => import('~/pages/PaymentGuide'));
 
 export const publicRoutes = [
     {
