@@ -59,7 +59,7 @@ const TopHeader = () => {
                         VND
                     </a>
                     <Wrapper menu_toggle_ref={currencyRef} className="dropdown__content">
-                        <Menu type="currency" data={MEMU_ITEMS_CURRENCY}></Menu>
+                        <Menu type="currency" style={{ textTransform: 'uppercase' }} data={MEMU_ITEMS_CURRENCY}></Menu>
                     </Wrapper>
                 </li>
                 {translations ? (
@@ -68,7 +68,11 @@ const TopHeader = () => {
                             {translationSelected.title}
                         </a>
                         <Wrapper menu_toggle_ref={languageRef} className="dropdown__content">
-                            <Menu type="multilingual" data={translationsList}></Menu>
+                            <Menu
+                                type="multilingual"
+                                style={{ textTransform: 'uppercase' }}
+                                data={translationsList}
+                            ></Menu>
                         </Wrapper>
                     </li>
                 ) : (

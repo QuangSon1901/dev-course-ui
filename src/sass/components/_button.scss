@@ -20,6 +20,34 @@
         pointer-events: none;
         opacity: 0.5;
     }
+
+    & .icon-btn {
+        display: inline-flex;
+        width: 20px;
+    }
+
+    & .children-btn {
+        text-align: left;
+        max-width: 300px;
+        font-size: 1.4rem;
+        font-weight: 400;
+
+        @include mobile {
+            max-width: 200px;
+        }
+    }
+
+    & .img-btn {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+    }
+
+    &.line {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border-top: 1px solid var(--txt-thirst);
+    }
 }
 
 .primary {

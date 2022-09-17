@@ -94,17 +94,12 @@
             }
 
             &__user-menu {
-                width: 200px;
                 padding-right: 20px;
                 @include flex(center, flex-end);
                 color: var(--txt-color);
 
                 & > li ~ li {
                     margin-left: 20px;
-
-                    // @include tablet {
-                    //     margin-left: 0;
-                    // }
                 }
 
                 & > li > a {
@@ -114,6 +109,44 @@
 
                 &__search {
                     display: none;
+                }
+
+                &__notification {
+                    position: relative;
+
+                    &__quantity {
+                        width: 20px;
+                        height: 20px;
+                        position: absolute;
+                        top: -10px;
+                        right: -10px;
+                        font-size: 1.2rem;
+                        background-color: var(--main-color);
+                        border-radius: 50%;
+                        @include flex(center, center);
+                        color: var(--txt-white);
+
+                        @include mobile {
+                            width: 16px;
+                            height: 16px;
+                            font-size: 1rem;
+                            top: -6px;
+                            right: -6px;
+                        }
+                    }
+                }
+
+                &__user {
+                    position: relative;
+
+                    &__avatar {
+                        width: 30px;
+                        height: 30px;
+                        border-radius: 50%;
+                        overflow: hidden;
+                        @include flex(center, center);
+                        cursor: pointer;
+                    }
                 }
 
                 @include tablet {

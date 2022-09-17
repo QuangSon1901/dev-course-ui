@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import Button from '~/components/Button';
 import multilingualSlice from '~/components/Header/multilingualSlice';
 
-const MenuItem = ({ title, id, type }) => {
+const MenuItem = ({ title, id, type, style, leftIcon, line, img }) => {
     const dispatch = useDispatch();
 
     const handeClick = () => {
@@ -16,7 +16,15 @@ const MenuItem = ({ title, id, type }) => {
     };
 
     return (
-        <Button small className="btn-wrapper" onClick={handeClick}>
+        <Button
+            small
+            line={line}
+            img={img}
+            className="btn-wrapper"
+            style={style}
+            leftIcon={leftIcon}
+            onClick={handeClick}
+        >
             {title}
         </Button>
     );

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import images from '~/assets/images';
 
 const Button = ({
     to,
@@ -9,6 +10,11 @@ const Button = ({
     disable = false,
     small = false,
     className,
+    style,
+    leftIcon,
+    rightIcon,
+    img,
+    line,
     onClick,
     ...passProps
 }) => {
@@ -28,12 +34,24 @@ const Button = ({
 
     return (
         <Comp
-            className={`btn ${primary ? 'primary' : ''} ${disable ? 'disable' : ''} ${
-                small ? 'small' : ''
+            className={`btn ${primary ? 'primary' : ''} ${disable ? 'disable' : ''}  ${small ? 'small' : ''} ${
+                line ? 'line' : ''
             } ${className}`}
             onClick={onClick}
+            style={style}
         >
-            {children}
+            {leftIcon && (
+                <span style={{ marginRight: '8px' }} className="icon-btn">
+                    <i className={`${leftIcon}`}></i>
+                </span>
+            )}
+            {img && <img className="img-btn" src={images[img]} alt="" />}
+            <span className="children-btn">{children}</span>
+            {rightIcon && (
+                <span style={{ marginLeft: '8px' }} className="icon-btn">
+                    <i className={`${rightIcon}`}></i>
+                </span>
+            )}
         </Comp>
     );
 };

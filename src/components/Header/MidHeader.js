@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
+
 import images from '~/assets/images';
 import { multilingualSelector, themeSelector } from '~/redux/selector';
+import Button from '../Button';
+import { Wrapper } from '../Popper';
+import Menu from '../Popper/Menu';
 import Search from '../Search';
 import Sidebar from '../Sidebar';
 import themeSlice from '../ThemeMenu/themeSlice';
 import multilingualSlice from './multilingualSlice';
 
 const MidHeader = () => {
+    const authentication = true;
+
     const dispatch = useDispatch();
 
     const theme = useSelector(themeSelector);
@@ -16,6 +23,9 @@ const MidHeader = () => {
 
     const [sidebarMenu, setSidebarMenu] = useState(false);
     const [sidebarSearch, setSidebarSearch] = useState(false);
+
+    const userToggle = useRef(null);
+    const notificationToggle = useRef(null);
 
     const SIDEBAR_MENU = [
         {
@@ -297,6 +307,46 @@ const MidHeader = () => {
         dispatch(multilingualSlice.actions.CHANGE_LANGUAGE(id));
     };
 
+    const MEMU_ITEMS_USER = [
+        {
+            id: uuidv4(),
+            icon: 'bx bx-user',
+            title: translationSelected.messages.personalPage,
+            line: true,
+            to: '/me/profile',
+        },
+        {
+            id: uuidv4(),
+            icon: 'bx bx-bulb',
+            title: translationSelected.messages.myCourses,
+            to: '/me/courses',
+        },
+        {
+            id: uuidv4(),
+            icon: 'bx bx-log-out-circle',
+            title: translationSelected.messages.logout,
+            line: true,
+            to: '/logout',
+        },
+    ];
+
+    const MEMU_ITEMS_NOTIFICATION = [
+        {
+            id: uuidv4(),
+            img: 'devLogo',
+            title: '[DevIT] - Xác nhận thanh toán thành công',
+            line: true,
+            to: '/me/profile',
+        },
+        {
+            id: uuidv4(),
+            img: 'devLogo',
+            title: '[DevIT] - Chào mừng bạn đã gia nhập DevIT. Hãy luôn đam mê, kiên trì theo đuổi mục tiêu bạn nhé',
+            line: true,
+            to: '/me/courses',
+        },
+    ];
+
     return (
         <>
             <div className="header__wrapper__mid container">
@@ -313,15 +363,45 @@ const MidHeader = () => {
                             <i className="bx bx-search"></i>
                         </a>
                     </li>
-                    <li className="header__wrapper__mid__user-menu__notification">
-                        <a href="/">
-                            <i className="bx bx-bell"></i>
-                        </a>
-                    </li>
+                    {authentication ? (
+                        <li ref={notificationToggle} className="header__wrapper__mid__user-menu__notification">
+                            <a href="/" onClick={(e) => e.preventDefault()}>
+                                <i className="bx bx-bell"></i>
+                                <span className="header__wrapper__mid__user-menu__notification__quantity">32</span>
+                            </a>
+                            <Wrapper menu_toggle_ref={notificationToggle} className="dropdown__content">
+                                <Menu
+                                    type="user"
+                                    data={MEMU_ITEMS_NOTIFICATION}
+                                    style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start' }}
+                                    headerNotify
+                                    img
+                                    footer="/view-all"
+                                ></Menu>
+                            </Wrapper>
+                        </li>
+                    ) : (
+                        ''
+                    )}
                     <li className="header__wrapper__mid__user-menu__user">
-                        <a href="/">
-                            <i className="bx bx-user-circle"></i>
-                        </a>
+                        {authentication ? (
+                            <>
+                                <div ref={userToggle} className="header__wrapper__mid__user-menu__user__avatar">
+                                    <img src={images.userAvt} alt="" />
+                                </div>
+                                <Wrapper menu_toggle_ref={userToggle} className="dropdown__content">
+                                    <Menu
+                                        type="user"
+                                        data={MEMU_ITEMS_USER}
+                                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}
+                                        icon
+                                        headerUser
+                                    ></Menu>
+                                </Wrapper>
+                            </>
+                        ) : (
+                            <Button primary>Đăng nhập</Button>
+                        )}
                     </li>
                 </ul>
             </div>
