@@ -1,17 +1,22 @@
 import TopHeader from './TopHeader';
 import BottomHeader from './BottomHeader';
 import MidHeader from './MidHeader';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import ScrollTop from '../ScrollTop';
 
 const Header = () => {
+    const [scrollTop, setScrollTop] = useState(false);
+
     const headerRef = useRef(null);
 
     useEffect(() => {
         const shrink = () => {
             if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
                 headerRef.current.classList.add('shrink');
+                setScrollTop(true);
             } else {
                 headerRef.current.classList.remove('shrink');
+                setScrollTop(false);
             }
         };
 
@@ -35,6 +40,7 @@ const Header = () => {
                     </div>
                 </div>
             </header>
+            <ScrollTop active={scrollTop && scrollTop} />
         </>
     );
 };
