@@ -1,5 +1,8 @@
 .form-input {
     width: 100%;
+    position: relative;
+    margin-bottom: 14px;
+
     & > input {
         width: 100%;
         padding: 10px 10px;
@@ -9,6 +12,42 @@
         background-color: var(--bg-second);
         color: var(--txt-color);
         border-radius: 10px;
-        margin-bottom: 14px;
+
+        &.error {
+            border-color: $error-color;
+        }
+
+        &.error ~ i {
+            color: $error-color;
+            visibility: visible;
+            opacity: 1;
+        }
+
+        &.error ~ span {
+            display: block;
+        }
+
+        &:focus {
+            border: thin solid var(--txt-second);
+        }
+    }
+
+    & > i {
+        position: absolute;
+        height: 100%;
+        top: 25%;
+        right: 10px;
+        transform: translateY(-8%);
+        font-size: 2rem;
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    &__message-error {
+        float: left;
+        font-size: 1.2rem;
+        color: $error-color;
+        display: none;
+        margin-top: 2px;
     }
 }

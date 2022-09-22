@@ -10,8 +10,9 @@ const Input = (props) => {
                 value={props.value}
                 onChange={props.onChange}
                 className={`input-form ${props.className ? props.className : ''}`}
-            />
-            <span></span>
+            ></input>
+            <i className="bx bxs-error-circle"></i>
+            <span className="form-input__message-error">Incorect field!</span>
         </div>
     );
 };

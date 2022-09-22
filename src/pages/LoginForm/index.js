@@ -26,6 +26,7 @@ const LoginForm = () => {
                         name="email"
                         placeholder="Địa chỉ Email"
                         value={formValues.email}
+                        className="error"
                         onChange={handleChangeInput}
                     />
                     <Input
@@ -33,6 +34,7 @@ const LoginForm = () => {
                         name="password"
                         placeholder="Mật khẩu"
                         value={formValues.password}
+                        className="error"
                         onChange={handleChangeInput}
                     />
                     <Button primary large type="submit">
