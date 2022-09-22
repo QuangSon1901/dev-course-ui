@@ -9,6 +9,7 @@ const Button = ({
     primary = false,
     disable = false,
     small = false,
+    large = false,
     className,
     style,
     leftIcon,
@@ -20,7 +21,6 @@ const Button = ({
 }) => {
     let Comp = 'button';
     const props = {
-        onClick,
         ...passProps,
     };
 
@@ -34,11 +34,12 @@ const Button = ({
 
     return (
         <Comp
-            className={`btn ${primary ? 'primary' : ''} ${disable ? 'disable' : ''}  ${small ? 'small' : ''} ${
+            className={`btn ${primary ? 'primary' : ''} ${disable ? 'disable' : ''}  ${small ? 'small' : ''}  ${
                 line ? 'line' : ''
-            } ${className}`}
+            } ${large ? 'large' : ''} ${className}`}
             onClick={onClick}
             style={style}
+            {...props}
         >
             {leftIcon && (
                 <span style={{ marginRight: '8px' }} className="icon-btn">

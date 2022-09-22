@@ -15,8 +15,8 @@ function App() {
 
                     let Layout = MainLayout;
 
-                    if (item.layout) return (Layout = item.layout);
-                    else if (item.layout === null) return (Layout = Fragment);
+                    if (item.layout) Layout = item.layout;
+                    else if (item.layout === null) Layout = Fragment;
 
                     return (
                         <Route

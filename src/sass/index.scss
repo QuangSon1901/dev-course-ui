@@ -3,6 +3,7 @@
 @import './mixin';
 @import './base';
 
+@import './components/input';
 @import './components/header';
 @import './components/overlay';
 @import './components/sidebar';
@@ -13,3 +14,4 @@
 @import './components/theme-menu';
 @import './components/hero';
 @import './components/scroll-top';
+@import './components/auth';

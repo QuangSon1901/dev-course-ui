@@ -1,0 +1,95 @@
+.auth {
+    background-repeat: repeat-x;
+    background-size: cover;
+    background-attachment: fixed;
+    position: relative;
+    min-height: 100vh;
+    animation: slideLogin 20000s linear infinite;
+    transition: all 0.5s ease;
+    @include flex(center, center);
+
+    &__form {
+        @include flex(center, center);
+        flex-direction: column;
+        position: relative;
+        text-align: center;
+        z-index: 9999;
+
+        &__form {
+            --width: 640px;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            max-width: calc(100vw - 32px);
+            min-height: 600px;
+            padding: 48px 16px;
+            position: relative;
+            width: var(--width);
+            @include flex(center, flex-start);
+            flex-direction: column;
+
+            & > * ~ * {
+                margin-top: 20px;
+            }
+
+            & > img {
+                width: 44px;
+                height: 44px;
+            }
+
+            & > h1 {
+                font-size: 3rem;
+                font-weight: 700;
+                color: var(--txt-color);
+                margin-bottom: 40px;
+            }
+
+            &__container {
+                @include flex(center, center);
+                flex-direction: column;
+                max-width: 380px;
+                width: 100%;
+            }
+
+            &__change {
+                margin-top: 50px;
+                font-size: 1.6rem;
+
+                & > * ~ * {
+                    margin-left: 10px;
+                }
+
+                &__link {
+                    color: var(--main-color);
+                    font-weight: 600;
+                }
+            }
+
+            &__forget-pass {
+                font-size: 1.6rem;
+                color: var(--main-color);
+                font-weight: 600;
+            }
+
+            &__service-term {
+                font-size: 1.2rem;
+                margin-top: 50px;
+                line-height: 1.6rem;
+                @include flex(center, center);
+                flex-direction: column;
+
+                & &__link {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}
+
+@keyframes slideLogin {
+    0% {
+        background-position: 0%;
+    }
+    100% {
+        background-position: 90000%;
+    }
+}

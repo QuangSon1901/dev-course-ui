@@ -1,0 +1,14 @@
+.form-input {
+    width: 100%;
+    & > input {
+        width: 100%;
+        padding: 10px 10px;
+        font-size: 1.6rem;
+        outline: 0;
+        border: thin solid transparent;
+        background-color: var(--bg-second);
+        color: var(--txt-color);
+        border-radius: 10px;
+        margin-bottom: 14px;
+    }
+}

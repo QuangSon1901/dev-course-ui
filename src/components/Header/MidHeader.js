@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
 import images from '~/assets/images';
+import config from '~/config';
 import { multilingualSelector, themeSelector } from '~/redux/selector';
 import Button from '../Button';
 import { Wrapper } from '../Popper';
@@ -13,7 +14,7 @@ import themeSlice from '../ThemeMenu/themeSlice';
 import multilingualSlice from './multilingualSlice';
 
 const MidHeader = () => {
-    const authentication = true;
+    const authentication = false;
 
     const dispatch = useDispatch();
 
@@ -400,7 +401,9 @@ const MidHeader = () => {
                                 </Wrapper>
                             </>
                         ) : (
-                            <Button primary>Đăng nhập</Button>
+                            <Button to={config.routes.login} primary>
+                                Đăng nhập
+                            </Button>
                         )}
                     </li>
                 </ul>
