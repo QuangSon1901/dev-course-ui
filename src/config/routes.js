@@ -5,6 +5,8 @@ const routes = {
     paymentGuide: '/payment-guide',
     login: '/login',
     register: '/register',
+    logout: '/logout',
+    profile: '/me/profile',
 };
 
 export default routes;

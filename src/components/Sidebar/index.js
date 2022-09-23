@@ -3,12 +3,12 @@ import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import images from '~/assets/images';
 import config from '~/config';
-import { multilingualSelector, themeSelector } from '~/redux/selector';
+import { authSelector, multilingualSelector, themeSelector } from '~/redux/selector';
 import { disableScroll, enableScroll } from '~/utils/scrollBody';
 import Button from '../Button';
 
 const Sidebar = (props) => {
-    const authentication = false;
+    const { isAuthenticated, loading } = useSelector(authSelector);
 
     const theme = useSelector(themeSelector);
     const multilingual = useSelector(multilingualSelector);
@@ -44,7 +44,9 @@ const Sidebar = (props) => {
     }, []);
 
     const renderProfile = () => {
-        return authentication ? (
+        return loading ? (
+            'Loading'
+        ) : isAuthenticated ? (
             <>
                 <div className="sidebar__menu__avatar">
                     <img src={images.userAvt} alt="" />
@@ -176,7 +178,7 @@ const Sidebar = (props) => {
     };
 
     const renderLogout = () => {
-        return authentication ? (
+        return isAuthenticated ? (
             <div className="sidebar__menu__select">
                 <ul className="sidebar__menu__select__list">
                     <li className="sidebar__menu__select__list__item">

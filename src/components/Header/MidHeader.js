@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import images from '~/assets/images';
 import config from '~/config';
-import { multilingualSelector, themeSelector } from '~/redux/selector';
+import { authSelector, multilingualSelector, themeSelector } from '~/redux/selector';
 import Button from '../Button';
 import { Wrapper } from '../Popper';
 import Menu from '../Popper/Menu';
@@ -14,7 +14,7 @@ import themeSlice from '../ThemeMenu/themeSlice';
 import multilingualSlice from './multilingualSlice';
 
 const MidHeader = () => {
-    const authentication = false;
+    const { isAuthenticated, loading } = useSelector(authSelector);
 
     const dispatch = useDispatch();
 
@@ -314,7 +314,7 @@ const MidHeader = () => {
             icon: 'bx bx-user',
             title: translationSelected.messages.personalPage,
             line: true,
-            to: '/me/profile',
+            to: config.routes.profile,
         },
         {
             id: uuidv4(),
@@ -327,7 +327,7 @@ const MidHeader = () => {
             icon: 'bx bx-log-out-circle',
             title: translationSelected.messages.logout,
             line: true,
-            to: '/logout',
+            to: config.routes.logout,
         },
     ];
 
@@ -364,7 +364,7 @@ const MidHeader = () => {
                             <i className="bx bx-search"></i>
                         </a>
                     </li>
-                    {authentication ? (
+                    {isAuthenticated ? (
                         <li ref={notificationToggle} className="header__wrapper__mid__user-menu__notification">
                             <a href="/" onClick={(e) => e.preventDefault()}>
                                 <i className="bx bx-bell"></i>
@@ -385,7 +385,9 @@ const MidHeader = () => {
                         ''
                     )}
                     <li className="header__wrapper__mid__user-menu__user">
-                        {authentication ? (
+                        {loading ? (
+                            'Loading'
+                        ) : isAuthenticated ? (
                             <>
                                 <div ref={userToggle} className="header__wrapper__mid__user-menu__user__avatar">
                                     <img src={images.userAvt} alt="" />

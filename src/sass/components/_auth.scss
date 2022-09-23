@@ -4,10 +4,18 @@
     background-attachment: fixed;
     position: relative;
     min-height: 100vh;
-    animation: slideLogin 20000s linear infinite;
+    animation: slideLogin 40000s linear infinite;
     transition: all 0.5s ease;
     @include flex(center, center);
     flex-direction: column;
+
+    @include tablet {
+        animation: slideLogin 50000s linear infinite;
+    }
+
+    @include mobile {
+        animation: slideLogin 60000s linear infinite;
+    }
 
     &__form {
         @include flex(center, center);

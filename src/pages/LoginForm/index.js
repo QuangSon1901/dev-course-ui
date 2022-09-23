@@ -1,4 +1,5 @@
 import { Formik } from 'formik';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 
@@ -6,14 +7,16 @@ import images from '~/assets/images';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
 import config from '~/config';
+import { loginUser } from '~/layouts/AuthLayout/authSlice';
 
 const LoginForm = () => {
+    const dispatch = useDispatch();
     return (
         <div className="auth__form">
             <Formik
                 initialValues={{ email: '', password: '' }}
                 onSubmit={(values) => {
-                    alert(JSON.stringify(values, null, 2));
+                    dispatch(loginUser(values));
                 }}
                 validationSchema={Yup.object().shape({
                     email: Yup.string().email('Email sai định dạng!').required('Vui lòng nhập Email!'),

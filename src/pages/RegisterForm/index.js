@@ -1,5 +1,6 @@
 import { Formik } from 'formik';
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 
@@ -7,16 +8,19 @@ import images from '~/assets/images';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
 import config from '~/config';
+import { registerUser } from '~/layouts/AuthLayout/authSlice';
 
 const RegisterForm = () => {
+    const dispatch = useDispatch();
     return (
         <div className="auth__form">
             <Formik
-                initialValues={{ email: '', password: '', passwordConfirm: '' }}
+                initialValues={{ name: '', email: '', password: '', passwordConfirm: '' }}
                 onSubmit={(values) => {
-                    alert(JSON.stringify(values, null, 2));
+                    dispatch(registerUser(values));
                 }}
                 validationSchema={Yup.object().shape({
+                    name: Yup.string().required('Vui lòng nhập Họ tên!'),
                     email: Yup.string().email('Email sai định dạng!').required('Vui lòng nhập Email!'),
                     password: Yup.string().required('Vui lòng nhập Mật khẩu!'),
                     passwordConfirm: Yup.string()
@@ -31,6 +35,16 @@ const RegisterForm = () => {
                             <img src={images.devLogo} alt="" />
                             <h1>Đăng nhập vào Dev IT</h1>
                             <div className="auth__form__form__container">
+                                <Input
+                                    type="text"
+                                    name="name"
+                                    placeholder="Họ tên"
+                                    value={values.name}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    className={errors.name && touched.name ? 'error' : ''}
+                                    error={errors.name && touched.name ? errors.name : ''}
+                                />
                                 <Input
                                     type="text"
                                     name="email"

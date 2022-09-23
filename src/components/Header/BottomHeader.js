@@ -118,11 +118,16 @@ const BottomHeader = () => {
         const linkActive = document.querySelector('.header__wrapper__bottom__main-menu__item.active');
         const linkUnderline = document.querySelector('.header__wrapper__bottom__main-menu__underline');
 
-        const actWidth = linkActive.clientWidth;
-        const actPosition = linkActive.offsetLeft;
+        if (linkActive) {
+            const actWidth = linkActive.clientWidth;
+            const actPosition = linkActive.offsetLeft;
 
-        linkUnderline.style.width = actWidth + 'px';
-        linkUnderline.style.left = actPosition + 'px';
+            linkUnderline.style.width = actWidth + 'px';
+            linkUnderline.style.left = actPosition + 'px';
+        } else {
+            linkUnderline.style.left = 0;
+            linkUnderline.style.width = 0;
+        }
     });
 
     return (

@@ -32,6 +32,7 @@ const Menu = ({ data, type, style, icon, headerUser, headerNotify, img, footer }
                     leftIcon={icon && item.icon}
                     img={img && item.img}
                     line={item.line ? item.line : false}
+                    to={item.to}
                 />
             ))}
             {footer ? (

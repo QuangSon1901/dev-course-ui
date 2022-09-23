@@ -1,11 +1,14 @@
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import images from '~/assets/images';
 import config from '~/config';
-import { themeSelector } from '~/redux/selector';
+import { authSelector, themeSelector } from '~/redux/selector';
 
 const AuthLayout = ({ children }) => {
     const theme = useSelector(themeSelector);
+    const { isAuthenticated } = useSelector(authSelector);
+
+    if (isAuthenticated) return <Navigate to={config.routes.home} />;
 
     return (
         <div className={`${theme ? theme.theme : 'theme-mode-light'} ${theme ? theme.color : 'theme-color-blue'}`}>

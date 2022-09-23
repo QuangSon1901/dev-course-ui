@@ -9,6 +9,8 @@ const registerFormPromise = import('~/pages/RegisterForm');
 const newsPromise = import('~/pages/News');
 const contactPromise = import('~/pages/Contact');
 const paymentGuidePromise = import('~/pages/PaymentGuide');
+const profilePromise = import('~/pages/Profile');
+const logoutPromise = import('~/pages/Logout');
 
 // const Home = lazy(() => import('~/pages/Home'));
 // const LoginForm = lazy(() => import('~/pages/LoginForm'));
@@ -23,6 +25,8 @@ const RegisterForm = lazy(() => registerFormPromise);
 const News = lazy(() => newsPromise);
 const Contact = lazy(() => contactPromise);
 const PaymentGuide = lazy(() => paymentGuidePromise);
+const Profile = lazy(() => profilePromise);
+const Logout = lazy(() => logoutPromise);
 
 export const publicRoutes = [
     {
@@ -54,5 +58,16 @@ export const publicRoutes = [
         path: config.routes.register,
         component: RegisterForm,
         layout: AuthLayout,
+    },
+];
+
+export const privateRouters = [
+    {
+        path: config.routes.profile,
+        component: Profile,
+    },
+    {
+        path: config.routes.logout,
+        component: Logout,
     },
 ];
