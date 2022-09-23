@@ -7,6 +7,7 @@
     animation: slideLogin 20000s linear infinite;
     transition: all 0.5s ease;
     @include flex(center, center);
+    flex-direction: column;
 
     &__form {
         @include flex(center, center);
@@ -20,7 +21,7 @@
             background-color: var(--bg-color);
             border-radius: 8px;
             max-width: calc(100vw - 32px);
-            min-height: 600px;
+            min-height: 610px;
             padding: 48px 16px;
             position: relative;
             width: var(--width);
@@ -48,11 +49,15 @@
                 flex-direction: column;
                 max-width: 380px;
                 width: 100%;
+
+                & > button {
+                    font-size: 1.8rem;
+                }
             }
 
             &__change {
                 margin-top: 50px;
-                font-size: 1.6rem;
+                font-size: 1.4rem;
 
                 & > * ~ * {
                     margin-left: 10px;
@@ -65,7 +70,7 @@
             }
 
             &__forget-pass {
-                font-size: 1.6rem;
+                font-size: 1.4rem;
                 color: var(--main-color);
                 font-weight: 600;
             }
@@ -81,6 +86,24 @@
                     text-decoration: underline;
                 }
             }
+        }
+    }
+
+    &__sub {
+        @include flex(center, center);
+        padding: 10px;
+        z-index: 99999;
+
+        & > li {
+            font-size: 1.4rem;
+            color: var(--txt-white);
+            font-weight: 300;
+        }
+
+        & > li ~ li {
+            padding-left: 10px;
+            margin-left: 10px;
+            border-left: 1px solid var(--txt-white);
         }
     }
 }

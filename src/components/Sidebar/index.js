@@ -2,12 +2,13 @@ import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import images from '~/assets/images';
+import config from '~/config';
 import { multilingualSelector, themeSelector } from '~/redux/selector';
 import { disableScroll, enableScroll } from '~/utils/scrollBody';
 import Button from '../Button';
 
 const Sidebar = (props) => {
-    const authentication = true;
+    const authentication = false;
 
     const theme = useSelector(themeSelector);
     const multilingual = useSelector(multilingualSelector);
@@ -70,7 +71,9 @@ const Sidebar = (props) => {
         ) : (
             <>
                 <div className="sidebar__menu__login-btn">
-                    <Button primary>{translationSelected.messages.login}</Button>
+                    <Button to={config.routes.login} primary>
+                        {translationSelected.messages.login}
+                    </Button>
                 </div>
             </>
         );

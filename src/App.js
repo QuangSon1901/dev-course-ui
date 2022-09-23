@@ -24,7 +24,7 @@ function App() {
                             path={item.path}
                             element={
                                 <Layout>
-                                    <Suspense fallback={<span>Loading . . .</span>}>
+                                    <Suspense fallback={null}>
                                         <Page />
                                     </Suspense>
                                 </Layout>

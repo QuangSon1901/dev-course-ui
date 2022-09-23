@@ -1,46 +1,44 @@
 .form-input {
     width: 100%;
-    position: relative;
     margin-bottom: 14px;
 
-    & > input {
-        width: 100%;
-        padding: 10px 10px;
-        font-size: 1.6rem;
-        outline: 0;
-        border: thin solid transparent;
-        background-color: var(--bg-second);
-        color: var(--txt-color);
-        border-radius: 10px;
+    & > div {
+        position: relative;
 
-        &.error {
-            border-color: $error-color;
+        input {
+            width: 100%;
+            padding: 10px 10px;
+            font-size: 1.6rem;
+            outline: 0;
+            border: thin solid transparent;
+            background-color: var(--bg-second);
+            color: var(--txt-color);
+            border-radius: 10px;
+
+            &:focus {
+                border: thin solid var(--txt-second);
+            }
         }
 
-        &.error ~ i {
+        & > i {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            font-size: 2rem;
             color: $error-color;
-            visibility: visible;
-            opacity: 1;
-        }
-
-        &.error ~ span {
-            display: block;
-        }
-
-        &:focus {
-            border: thin solid var(--txt-second);
+            visibility: hidden;
+            opacity: 0;
         }
     }
 
-    & > i {
-        position: absolute;
-        height: 100%;
-        top: 25%;
-        right: 10px;
-        transform: translateY(-8%);
-        font-size: 2rem;
-        visibility: hidden;
-        opacity: 0;
+    &.error > div > i {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    &.error > div > input {
+        border-color: $error-color;
     }
 
     &__message-error {
@@ -49,5 +47,9 @@
         color: $error-color;
         display: none;
         margin-top: 2px;
+    }
+
+    &.error &__message-error {
+        display: block;
     }
 }
