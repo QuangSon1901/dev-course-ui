@@ -22,7 +22,7 @@
         flex-direction: column;
         position: relative;
         text-align: center;
-        z-index: 9999;
+        z-index: 999;
 
         &__form {
             --width: 640px;
@@ -66,6 +66,7 @@
             &__change {
                 margin-top: 50px;
                 font-size: 1.4rem;
+                color: var(--txt-color);
 
                 & > * ~ * {
                     margin-left: 10px;
@@ -89,6 +90,7 @@
                 line-height: 1.6rem;
                 @include flex(center, center);
                 flex-direction: column;
+                color: var(--txt-color);
 
                 & &__link {
                     text-decoration: underline;
@@ -100,12 +102,13 @@
     &__sub {
         @include flex(center, center);
         padding: 10px;
-        z-index: 99999;
+        z-index: 999;
 
         & > li {
             font-size: 1.4rem;
             color: var(--txt-white);
             font-weight: 300;
+            text-transform: capitalize;
         }
 
         & > li ~ li {

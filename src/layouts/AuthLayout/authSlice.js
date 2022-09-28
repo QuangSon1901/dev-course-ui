@@ -10,26 +10,49 @@ const authSlice = createSlice({
         loading: false,
         isAuthenticated: false,
         user: null,
+        submit: false,
+        notify: null,
+    },
+    reducers: {
+        clearNotify(state) {
+            state.notify = null;
+        },
     },
     extraReducers: (builder) => {
         builder
             .addCase(registerUser.pending, (state) => {
-                state.loading = true;
+                state.submit = true;
             })
             .addCase(registerUser.fulfilled, (state, action) => {
-                storage.set(process.env.REACT_APP_TOKEN, action.payload.token);
-                state.isAuthenticated = true;
-                state.user = action.payload.user;
-                state.loading = false;
+                const { payload } = action;
+                if (action.payload.success === 'success') {
+                    state.isAuthenticated = true;
+                    state.user = action.payload.user;
+                    state.submit = false;
+                    state.notify = { status: payload.status, success: payload.success, message: payload.message };
+                } else {
+                    state.isAuthenticated = false;
+                    state.user = null;
+                    state.submit = false;
+                    state.notify = { status: payload.status, success: payload.success, message: payload.message };
+                }
             })
             .addCase(loginUser.pending, (state) => {
-                state.loading = true;
+                state.submit = true;
             })
             .addCase(loginUser.fulfilled, (state, action) => {
-                storage.set(process.env.REACT_APP_TOKEN, action.payload.token);
-                state.isAuthenticated = true;
-                state.user = action.payload.user;
-                state.loading = false;
+                const { payload } = action;
+                if (action.payload.success === 'success') {
+                    state.isAuthenticated = true;
+                    state.user = action.payload.user;
+                    state.submit = false;
+                    state.notify = { status: payload.status, success: payload.success, message: payload.message };
+                } else {
+                    state.isAuthenticated = false;
+                    state.user = null;
+                    state.submit = false;
+                    state.notify = { status: payload.status, success: payload.success, message: payload.message };
+                }
             })
             .addCase(logoutUser.pending, (state) => {
                 state.loading = true;
@@ -59,21 +82,27 @@ const authSlice = createSlice({
 const registerUser = createAsyncThunk('auth/registerUser', async (form) => {
     try {
         const newUser = { ...form, role_id: 2, password_confirmation: form.passwordConfirm };
-        const res = await httpRequest.post('/register', newUser);
+        const res = await httpRequest.post('/auth/register', newUser);
+
+        if (res.success === 'success') storage.set(process.env.REACT_APP_TOKEN, res.token);
 
         return res;
     } catch (error) {
-        console.log(error);
+        if (error.response.data) return error.response.data;
+        return { success: false, message: error.message };
     }
 });
 
 const loginUser = createAsyncThunk('auth/loginUser', async (form) => {
     try {
-        const res = await httpRequest.post('/login', form);
+        const res = await httpRequest.post('/auth/login', form);
+
+        if (res.success === 'success') storage.set(process.env.REACT_APP_TOKEN, res.token);
 
         return res;
     } catch (error) {
-        console.log(error);
+        if (error.response.data) return error.response.data;
+        return { success: false, message: error.message };
     }
 });
 
@@ -84,7 +113,7 @@ const logoutUser = createAsyncThunk('auth/logoutUser', async () => {
     }
 
     try {
-        const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/logout`);
+        const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/logout`);
 
         localStorage.removeItem(process.env.REACT_APP_TOKEN);
         setAuthToken(null);
@@ -92,7 +121,8 @@ const logoutUser = createAsyncThunk('auth/logoutUser', async () => {
     } catch (error) {
         localStorage.removeItem(process.env.REACT_APP_TOKEN);
         setAuthToken(null);
-        console.log(error);
+        if (error.response.data) return error.response.data;
+        return { success: false, message: error.message };
     }
 });
 

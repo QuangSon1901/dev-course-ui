@@ -60,6 +60,15 @@
     }
 }
 
+.btn-primary {
+    background-color: var(--main-color);
+    color: var(--txt-white);
+    &:hover {
+        background-color: var(--main-color);
+        filter: brightness(110%);
+    }
+}
+
 .small {
     min-width: 88px;
     padding: 4px 16px;

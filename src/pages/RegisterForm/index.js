@@ -1,6 +1,7 @@
 import { Formik } from 'formik';
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import SweetAlert from 'react-bootstrap-sweetalert';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 
@@ -9,9 +10,18 @@ import Button from '~/components/Button';
 import Input from '~/components/Input';
 import config from '~/config';
 import { registerUser } from '~/layouts/AuthLayout/authSlice';
+import { authSelector } from '~/redux/selector';
 
 const RegisterForm = () => {
     const dispatch = useDispatch();
+    const { submit, notify } = useSelector(authSelector);
+    const [showSwalAlert, setShowSwalAlert] = useState(false);
+
+    useEffect(() => {
+        if (notify && notify.success === 'danger') {
+            setShowSwalAlert(true);
+        }
+    }, [notify]);
     return (
         <div className="auth__form">
             <Formik
@@ -77,8 +87,8 @@ const RegisterForm = () => {
                                         errors.passwordConfirm && touched.passwordConfirm ? errors.passwordConfirm : ''
                                     }
                                 />
-                                <Button primary large type="submit" disabled={isSubmitting}>
-                                    Đăng ký
+                                <Button primary large type="submit">
+                                    {submit ? 'Đang xử lý...' : 'Đăng ký'}
                                 </Button>
                             </div>
                             <div className="auth__form__form__change">
@@ -100,6 +110,19 @@ const RegisterForm = () => {
                     );
                 }}
             </Formik>
+            {notify && (
+                <SweetAlert
+                    danger={notify.success === 'danger' && true}
+                    style={{ zIndex: '99999' }}
+                    title="Lỗi!"
+                    confirmBtnBsStyle="primary"
+                    onConfirm={() => setShowSwalAlert(false)}
+                    onCancel={() => setShowSwalAlert(false)}
+                    show={showSwalAlert}
+                >
+                    <span style={{ fontSize: '1.6rem' }}>{notify.message || ''}</span>
+                </SweetAlert>
+            )}
         </div>
     );
 };
