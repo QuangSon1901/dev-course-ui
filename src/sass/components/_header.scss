@@ -54,12 +54,9 @@
 
         &__mid {
             height: $mid-header-size;
+            position: relative;
             @include flex(center, space-between);
             transition: height 0.3s ease;
-
-            & > * ~ * {
-                padding-left: 10px;
-            }
 
             @include tablet {
                 height: $mid-header-size-tablet;
@@ -225,8 +222,8 @@
                     pointer-events: none;
 
                     &__title {
-                        font-size: 1.6rem;
-                        font-weight: 400;
+                        font-size: 1.4rem;
+                        font-weight: 600;
                         padding-bottom: 10px;
                         margin-bottom: 10px;
                         border-bottom: 1px solid #ccc;
@@ -235,11 +232,12 @@
                     &__title ~ ul {
                         li {
                             cursor: pointer;
-                            font-size: 1.2rem;
+                            font-size: 1.4rem;
                             transition: all 0.3s ease;
+                            line-height: 2rem;
 
                             & i {
-                                margin-right: 4px;
+                                margin-right: 10px;
                             }
 
                             & a {

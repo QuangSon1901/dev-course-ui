@@ -20,7 +20,7 @@ const MenuItem = ({ title, id, type, style, leftIcon, line, img, to }) => {
             small
             line={line}
             img={img}
-            className="btn-wrapper"
+            className="btn-wrapper btn-default"
             style={style}
             leftIcon={leftIcon}
             onClick={handeClick}
