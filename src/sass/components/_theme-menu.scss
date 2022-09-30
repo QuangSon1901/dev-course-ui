@@ -6,8 +6,8 @@
     height: 100vh;
     padding: 20px;
     z-index: 99999;
-    background-color: var(--txt-white);
-    color: var(--txt-black);
+    background-color: var(--bg-second);
+    color: var(--txt-color);
     overflow-y: overlay;
     animation: openThemeMenu 0.5s ease;
     transition: right 0.5s ease;
@@ -17,7 +17,7 @@
         top: 17px;
         right: 20px;
         background-color: transparent;
-        color: var(--txt-black);
+        color: var(--txt-color);
         font-size: 2.4rem;
     }
 
