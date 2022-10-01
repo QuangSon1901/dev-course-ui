@@ -14,14 +14,14 @@ const clickOutsideRef = (content_ref, toggle_ref) => {
     });
 };
 
-const Wrapper = ({ children, className, menu_toggle_ref }) => {
+const Wrapper = ({ children, className, menu_toggle_ref, focus_ref = false, focus_active = false }) => {
     const menu_ref = useRef(null);
 
     useEffect(() => {
-        menu_toggle_ref && menu_ref && clickOutsideRef(menu_ref, menu_toggle_ref);
+        focus_ref === false && menu_toggle_ref && menu_ref && clickOutsideRef(menu_ref, menu_toggle_ref);
     }, []);
     return (
-        <div ref={menu_ref} className={`wrapper ${className}`}>
+        <div ref={menu_ref} className={`wrapper ${className} ${focus_active ? 'active' : ''}`}>
             {children}
         </div>
     );
