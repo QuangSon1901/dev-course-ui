@@ -1,20 +1,25 @@
 import React, { useEffect, useRef } from 'react';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import images from '~/assets/images';
+import useDebounce from '~/hooks/useDebounce';
 
-import { multilingualSelector } from '~/redux/selector';
+import { multilingualSelector, searchSelector } from '~/redux/selector';
 import Button from '../Button';
 import { Wrapper } from '../Popper';
+import SuggestSearch from '../SuggestSearch';
+import searchSlice, { searchHeader } from './searchSlice';
 
 const Search = () => {
+    const dispatch = useDispatch();
+    const searchRedux = useSelector(searchSelector);
+
     const multilingual = useSelector(multilingualSelector);
     const [searchValue, setSearchValue] = useState('');
-    const [searchResult, setSearchResult] = useState({});
     const [suggest, setSuggest] = useState(true);
-    const [loading, setLoading] = useState(false);
-
     const searchRef = useRef(null);
+
+    const debouncedValue = useDebounce(searchValue, 500);
 
     const handleChangeSearchValue = (e) => {
         e.preventDefault();
@@ -23,18 +28,17 @@ const Search = () => {
     };
 
     useEffect(() => {
-        if (!searchValue.trim()) return setSearchResult({});
+        if (!debouncedValue.trim()) {
+            handleClear();
+            return;
+        }
 
-        setLoading(true);
-
-        setTimeout(() => {
-            setLoading(false);
-        }, 100);
-    }, [searchValue]);
+        dispatch(searchHeader({ q: debouncedValue }));
+    }, [debouncedValue]);
 
     const handleClear = () => {
         setSearchValue('');
-        setSearchResult({});
+        dispatch(searchSlice.actions.clearData());
         searchRef.current.focus();
     };
 
@@ -50,139 +54,30 @@ const Search = () => {
                 placeholder={multilingual.translationSelected.messages.search + ' . . .'}
             />
             <i className="bx bx-search-alt search-btn"></i>
-            {loading && <i className="bx bx-loader-alt search-loading"></i>}
-            {!!searchValue && !loading && <i className="bx bxs-x-circle search-clear" onClick={handleClear}></i>}
+            {searchRedux.loading && <i className="bx bx-loader-alt search-loading"></i>}
+            {!!searchValue && !searchRedux.loading && (
+                <i className="bx bxs-x-circle search-clear" onClick={handleClear}></i>
+            )}
             <Wrapper focus_ref focus_active={suggest && searchValue.length > 0} className="search__dropdown__content">
                 <div className="search__dropdown__content__wrapp">
                     <div className="search__dropdown__content__wrapp__header">
-                        <i className="bx bx-search-alt"></i>
-                        <span>Kết quả tìm kiếm cho '{searchValue}'</span>
+                        {searchRedux.loading ? (
+                            <i className="bx bx-loader-alt bx-spin search__dropdown__content__wrapp__header__loading"></i>
+                        ) : (
+                            <i className="bx bx-search-alt"></i>
+                        )}
+
+                        {searchRedux.loading ? (
+                            <span>Tìm '{searchValue}'</span>
+                        ) : searchRedux.subjects_total === 0 &&
+                          searchRedux.programs_total === 0 &&
+                          searchRedux.teachers_total === 0 ? (
+                            <span>Không có kết quả cho '{searchValue}'</span>
+                        ) : (
+                            <span>Kết quả tìm kiếm cho '{searchValue}'</span>
+                        )}
                     </div>
-                    <div className="search__dropdown__content__wrapp__body">
-                        <div className="search__dropdown__content__wrapp__body__group">
-                            <div className="search__dropdown__content__wrapp__body__group__title">
-                                <h4>Môn học</h4>
-                                <span>Xem thêm</span>
-                            </div>
-                            <ul>
-                                <li>
-                                    <Button
-                                        large
-                                        className="btn-wrapper btn-default"
-                                        img="userAvt"
-                                        imgStyle={{ width: '32px', height: '32px', borderRadius: '50%' }}
-                                        style={{ justifyContent: 'flex-start' }}
-                                    >
-                                        Xây dựng Website với ReactJS
-                                    </Button>
-                                </li>
-                                <li>
-                                    <Button
-                                        large
-                                        className="btn-wrapper btn-default"
-                                        img="userAvt"
-                                        imgStyle={{ width: '32px', height: '32px', borderRadius: '50%' }}
-                                        style={{ justifyContent: 'flex-start' }}
-                                    >
-                                        Xây dựng Website với ReactJS
-                                    </Button>
-                                </li>
-                                <li>
-                                    <Button
-                                        large
-                                        className="btn-wrapper btn-default"
-                                        img="userAvt"
-                                        imgStyle={{ width: '32px', height: '32px', borderRadius: '50%' }}
-                                        style={{ justifyContent: 'flex-start' }}
-                                    >
-                                        Xây dựng Website với ReactJS
-                                    </Button>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="search__dropdown__content__wrapp__body__group">
-                            <div className="search__dropdown__content__wrapp__body__group__title">
-                                <h4>Khoá học</h4>
-                                <span>Xem thêm</span>
-                            </div>
-                            <ul>
-                                <li>
-                                    <Button
-                                        large
-                                        className="btn-wrapper btn-default"
-                                        img="userAvt"
-                                        imgStyle={{ width: '32px', height: '32px', borderRadius: '50%' }}
-                                        style={{ justifyContent: 'flex-start' }}
-                                    >
-                                        Xây dựng Website với ReactJS
-                                    </Button>
-                                </li>
-                                <li>
-                                    <Button
-                                        large
-                                        className="btn-wrapper btn-default"
-                                        img="userAvt"
-                                        imgStyle={{ width: '32px', height: '32px', borderRadius: '50%' }}
-                                        style={{ justifyContent: 'flex-start' }}
-                                    >
-                                        Xây dựng Website với ReactJS
-                                    </Button>
-                                </li>
-                                <li>
-                                    <Button
-                                        large
-                                        className="btn-wrapper btn-default"
-                                        img="userAvt"
-                                        imgStyle={{ width: '32px', height: '32px', borderRadius: '50%' }}
-                                        style={{ justifyContent: 'flex-start' }}
-                                    >
-                                        Xây dựng Website với ReactJS
-                                    </Button>
-                                </li>
-                            </ul>
-                        </div>
-                        <div className="search__dropdown__content__wrapp__body__group">
-                            <div className="search__dropdown__content__wrapp__body__group__title">
-                                <h4>Giảng viên</h4>
-                                <span>Xem thêm</span>
-                            </div>
-                            <ul>
-                                <li>
-                                    <Button
-                                        large
-                                        className="btn-wrapper btn-default"
-                                        img="userAvt"
-                                        imgStyle={{ width: '32px', height: '32px', borderRadius: '50%' }}
-                                        style={{ justifyContent: 'flex-start' }}
-                                    >
-                                        Xây dựng Website với ReactJS
-                                    </Button>
-                                </li>
-                                <li>
-                                    <Button
-                                        large
-                                        className="btn-wrapper btn-default"
-                                        img="userAvt"
-                                        imgStyle={{ width: '32px', height: '32px', borderRadius: '50%' }}
-                                        style={{ justifyContent: 'flex-start' }}
-                                    >
-                                        Xây dựng Website với ReactJS
-                                    </Button>
-                                </li>
-                                <li>
-                                    <Button
-                                        large
-                                        className="btn-wrapper btn-default"
-                                        img="userAvt"
-                                        imgStyle={{ width: '32px', height: '32px', borderRadius: '50%' }}
-                                        style={{ justifyContent: 'flex-start' }}
-                                    >
-                                        Xây dựng Website với ReactJS
-                                    </Button>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    <SuggestSearch data={searchRedux}></SuggestSearch>
                 </div>
             </Wrapper>
         </div>
