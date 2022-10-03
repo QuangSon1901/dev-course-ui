@@ -45,6 +45,7 @@ const Search = () => {
     return (
         <div className="search">
             <input
+                name="name"
                 ref={searchRef}
                 type="text"
                 value={searchValue}

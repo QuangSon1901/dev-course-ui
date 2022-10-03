@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Fragment, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -14,6 +15,11 @@ function App() {
 
     dispatch(getUser());
 
+    useEffect(() => {
+        document.body.ontouchend = function () {
+            document.querySelector('[name="name"]').focus();
+        };
+    }, []);
     return (
         <Router>
             <Routes>
