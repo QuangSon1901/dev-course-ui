@@ -15,11 +15,6 @@ function App() {
 
     dispatch(getUser());
 
-    useEffect(() => {
-        document.body.ontouchend = function () {
-            document.querySelector('[name="name"]').focus();
-        };
-    }, []);
     return (
         <Router>
             <Routes>

@@ -10,6 +10,8 @@ import Button from '../Button';
 const Sidebar = (props) => {
     const { isAuthenticated, loading } = useSelector(authSelector);
 
+    const searchRef = useRef(null);
+
     const theme = useSelector(themeSelector);
     const multilingual = useSelector(multilingualSelector);
     const { translationSelected } = multilingual;
@@ -36,6 +38,10 @@ const Sidebar = (props) => {
     useEffect(() => {
         document.addEventListener('click', clickOutSide);
         disableScroll();
+
+        searchRef.current.addEventListener('click', () => {
+            searchRef.current.focus();
+        });
         return () => {
             clearTimeout(unmountDelay);
             document.removeEventListener('click', clickOutSide);
@@ -228,7 +234,7 @@ const Sidebar = (props) => {
                     <h2 className="sidebar__title">Tìm kiếm khoá học</h2>
                     <div className="sidebar__search">
                         <div className="sidebar__search__input">
-                            <input type="text" placeholder="Search" />
+                            <input ref={searchRef} type="text" placeholder="Search" />
                             <i className="bx bx-loader-alt sidebar__search__input-loading"></i>
                         </div>
                         <div className="sidebar__search__suggess"></div>
