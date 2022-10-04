@@ -6,11 +6,10 @@ import config from '~/config';
 import { authSelector, multilingualSelector, themeSelector } from '~/redux/selector';
 import { disableScroll, enableScroll } from '~/utils/scrollBody';
 import Button from '../Button';
+import SidebarSearch from './SidebarSearch';
 
 const Sidebar = (props) => {
     const { isAuthenticated, loading } = useSelector(authSelector);
-
-    const searchRef = useRef(null);
 
     const theme = useSelector(themeSelector);
     const multilingual = useSelector(multilingualSelector);
@@ -39,9 +38,6 @@ const Sidebar = (props) => {
         document.addEventListener('click', clickOutSide);
         disableScroll();
 
-        searchRef.current.addEventListener('click', () => {
-            searchRef.current.focus();
-        });
         return () => {
             clearTimeout(unmountDelay);
             document.removeEventListener('click', clickOutSide);
@@ -228,17 +224,7 @@ const Sidebar = (props) => {
                 </div>
             ) : (
                 <div ref={sidebarRef} className={`sidebar`}>
-                    <button className="sidebar__close" onClick={handleCloseSidebar}>
-                        <i className="bx bx-x"></i>
-                    </button>
-                    <h2 className="sidebar__title">Tìm kiếm khoá học</h2>
-                    <div className="sidebar__search">
-                        <div className="sidebar__search__input">
-                            <input ref={searchRef} type="text" placeholder="Search" />
-                            <i className="bx bx-loader-alt sidebar__search__input-loading"></i>
-                        </div>
-                        <div className="sidebar__search__suggess"></div>
-                    </div>
+                    <SidebarSearch onClose={handleCloseSidebar} />
                 </div>
             )}
         </>

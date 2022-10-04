@@ -365,8 +365,8 @@ const MidHeader = () => {
                         </a>
                     </li>
                     {isAuthenticated ? (
-                        <li ref={notificationToggle} className="header__wrapper__mid__user-menu__notification">
-                            <a href="/" onClick={(e) => e.preventDefault()}>
+                        <li className="header__wrapper__mid__user-menu__notification">
+                            <a ref={notificationToggle} href="/" onClick={(e) => e.preventDefault()}>
                                 <i className="bx bx-bell"></i>
                                 <span className="header__wrapper__mid__user-menu__notification__quantity">32</span>
                             </a>

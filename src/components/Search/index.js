@@ -54,6 +54,7 @@ const Search = () => {
         setSearchResult(searchInit);
         searchRef.current.focus();
     };
+
     return (
         <div className="search">
             <input
@@ -62,13 +63,18 @@ const Search = () => {
                 value={searchValue}
                 onChange={(e) => handleChangeSearchValue(e)}
                 onFocus={() => setSuggest(true)}
-                onBlur={() => setSuggest(false)}
                 placeholder={multilingual.translationSelected.messages.search + ' . . .'}
             />
             <i className="bx bx-search-alt search-btn"></i>
             {loading && <i className="bx bx-loader-alt search-loading"></i>}
             {!!searchValue && !loading && <i className="bx bxs-x-circle search-clear" onClick={handleClear}></i>}
-            <Wrapper focus_ref focus_active={suggest && searchValue.length > 0} className="search__dropdown__content">
+            <Wrapper
+                menu_toggle_ref={searchRef}
+                setSuggest={setSuggest}
+                focus_ref
+                focus_active={suggest && searchValue.length > 0}
+                className="search__dropdown__content"
+            >
                 <div className="search__dropdown__content__wrapp">
                     <div className="search__dropdown__content__wrapp__header">
                         {loading ? (
