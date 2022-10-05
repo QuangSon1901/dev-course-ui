@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import useDebounce from '~/hooks/useDebounce';
 import { Wrapper } from '../Popper';
 import * as httpRequest from '~/utils/httpRequest';
+import SuggestSearch from '../SuggestSearch';
 
 const searchInit = {
     programs: [],
@@ -16,7 +17,6 @@ const SidebarSearch = ({ onClose }) => {
     const [searchValue, setSearchValue] = useState('');
     const [loading, setLoading] = useState(false);
     const [searchResult, setSearchResult] = useState(searchInit);
-    const [suggest, setSuggest] = useState(true);
     const searchRef = useRef(null);
 
     const debouncedValue = useDebounce(searchValue, 500);
@@ -61,18 +61,37 @@ const SidebarSearch = ({ onClose }) => {
                         ref={searchRef}
                         value={searchValue}
                         onChange={(e) => handleChangeSearchValue(e)}
-                        onFocus={() => setSuggest(true)}
                         type="text"
                         placeholder="Search"
                     />
                     {loading && <i className="bx bx-loader-alt sidebar__search__input-loading"></i>}
                 </div>
-                <Wrapper
-                    menu_toggle_ref={searchRef}
-                    setSuggest={setSuggest}
-                    focus_ref
-                    focus_active={suggest && searchValue.length > 0}
-                ></Wrapper>
+                {searchResult.programs_total || searchResult.subjects_total || searchResult.teachers_total ? (
+                    <Wrapper className="active">
+                        <div className="search__dropdown__content__wrapp">
+                            <div className="search__dropdown__content__wrapp__header">
+                                {loading ? (
+                                    <i className="bx bx-loader-alt bx-spin search__dropdown__content__wrapp__header__loading"></i>
+                                ) : (
+                                    <i className="bx bx-search-alt"></i>
+                                )}
+
+                                {loading ? (
+                                    <span>Tìm '{searchValue}'</span>
+                                ) : searchResult.subjects_total === 0 &&
+                                  searchResult.programs_total === 0 &&
+                                  searchResult.teachers_total === 0 ? (
+                                    <span>Không có kết quả cho '{searchValue}'</span>
+                                ) : (
+                                    <span>Kết quả tìm kiếm cho '{searchValue}'</span>
+                                )}
+                            </div>
+                            <SuggestSearch data={searchResult}></SuggestSearch>
+                        </div>
+                    </Wrapper>
+                ) : (
+                    ''
+                )}
             </div>
         </>
     );
