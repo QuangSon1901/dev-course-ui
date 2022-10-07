@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -12,6 +12,7 @@ import Search from '../Search';
 import Sidebar from '../Sidebar';
 import themeSlice from '../ThemeMenu/themeSlice';
 import multilingualSlice from './multilingualSlice';
+import * as httpRequest from '~/utils/httpRequest';
 
 const MidHeader = () => {
     const { isAuthenticated, loading } = useSelector(authSelector);
@@ -24,11 +25,15 @@ const MidHeader = () => {
 
     const [sidebarMenu, setSidebarMenu] = useState(false);
     const [sidebarSearch, setSidebarSearch] = useState(false);
+    const [programs, setPrograms] = useState({ program: [] });
 
     const userToggle = useRef(null);
     const notificationToggle = useRef(null);
 
-    const SIDEBAR_MENU = [
+    const handleChangeLanguage = (id) => {
+        dispatch(multilingualSlice.actions.CHANGE_LANGUAGE(id));
+    };
+    const SIDEBAR_MENU = useRef([
         {
             title: translationSelected.messages.category,
             data: [
@@ -43,120 +48,7 @@ const MidHeader = () => {
                     to: '/courses',
                     children: {
                         title: translationSelected.messages.educationProgram,
-                        data: [
-                            {
-                                title: translationSelected.messages.OfficeInformation,
-                                data: [
-                                    {
-                                        icon: 'bx bx-right-arrow-circle',
-                                        title: translationSelected.messages.CertificateInBasicITApplications,
-                                        to: '/news',
-                                    },
-                                    {
-                                        icon: 'bx bx-right-arrow-circle',
-                                        title: translationSelected.messages.AdvancedITApplicationCertificate,
-                                        to: '/payment-guide',
-                                    },
-                                    {
-                                        icon: 'bx bx-right-arrow-circle',
-                                        title: translationSelected.messages
-                                            .BasicITapplicationCertificationExamPreparation,
-                                        to: '/contact',
-                                    },
-                                ],
-                            },
-                            {
-                                title: translationSelected.messages.DataAnalytics,
-                                data: [
-                                    {
-                                        icon: 'bx bx-right-arrow-circle',
-                                        title: translationSelected.messages.DataAnalysiswithPowerBI,
-                                        to: '/news',
-                                    },
-                                    {
-                                        icon: 'bx bx-right-arrow-circle',
-                                        title: translationSelected.messages.AdvancedITApplicationCertificate,
-                                        to: '/payment-guide',
-                                    },
-                                    {
-                                        icon: 'bx bx-right-arrow-circle',
-                                        title: translationSelected.messages
-                                            .BasicITapplicationCertificationExamPreparation,
-                                        to: '/contact',
-                                    },
-                                ],
-                            },
-                            {
-                                title: translationSelected.messages.WebProgramming,
-                                data: [
-                                    {
-                                        icon: 'bx bx-right-arrow-circle',
-                                        title: translationSelected.messages.Pythonprogrammer,
-                                        to: '/news',
-                                    },
-                                    {
-                                        icon: 'bx bx-right-arrow-circle',
-                                        title: translationSelected.messages.PHPprogrammer,
-                                        to: '/payment-guide',
-                                    },
-                                    {
-                                        icon: 'bx bx-right-arrow-circle',
-                                        title: translationSelected.messages.JavaScriptProgrammers,
-                                        to: '/contact',
-                                    },
-                                    {
-                                        icon: 'bx bx-right-arrow-circle',
-                                        title: translationSelected.messages.DotNetprogrammer,
-                                        to: '/contact',
-                                    },
-                                ],
-                            },
-                            {
-                                title: translationSelected.messages.SoftwareTesting,
-                                data: [
-                                    {
-                                        icon: 'bx bx-right-arrow-circle',
-                                        title: translationSelected.messages.SoftwareTestingSpecialist,
-                                        to: '/news',
-                                    },
-                                    {
-                                        icon: 'bx bx-right-arrow-circle',
-                                        title: translationSelected.messages.Basicsoftwaretesting,
-                                        to: '/payment-guide',
-                                    },
-                                    {
-                                        icon: 'bx bx-right-arrow-circle',
-                                        title: translationSelected.messages.Automatedsoftwaretesting,
-                                        to: '/contact',
-                                    },
-                                ],
-                            },
-                            {
-                                title: translationSelected.messages.Internet,
-                                data: [
-                                    {
-                                        icon: 'bx bx-right-arrow-circle',
-                                        title: translationSelected.messages.Introductiontonetworkadministration,
-                                        to: '/news',
-                                    },
-                                    {
-                                        icon: 'bx bx-right-arrow-circle',
-                                        title: translationSelected.messages.Networkinfrastructuremanagement,
-                                        to: '/payment-guide',
-                                    },
-                                    {
-                                        icon: 'bx bx-right-arrow-circle',
-                                        title: translationSelected.messages.NetworkAdministration,
-                                        to: '/contact',
-                                    },
-                                    {
-                                        icon: 'bx bx-right-arrow-circle',
-                                        title: translationSelected.messages.Networksecurity,
-                                        to: '/contact',
-                                    },
-                                ],
-                            },
-                        ],
+                        data: [],
                     },
                 },
                 {
@@ -289,7 +181,7 @@ const MidHeader = () => {
                 },
             ],
         },
-    ];
+    ]);
 
     const handleChangeTheme = (themeType, themeClass) => {
         switch (themeType) {
@@ -302,10 +194,6 @@ const MidHeader = () => {
             default:
                 return;
         }
-    };
-
-    const handleChangeLanguage = (id) => {
-        dispatch(multilingualSlice.actions.CHANGE_LANGUAGE(id));
     };
 
     const MEMU_ITEMS_USER = [
@@ -348,6 +236,36 @@ const MidHeader = () => {
         },
     ];
 
+    useEffect(() => {
+        if (programs.program.length > 0) return;
+        const fetchPrograms = async () => {
+            try {
+                const res = await httpRequest.get('/programs', {
+                    params: { type: 'less' },
+                });
+
+                res.program.forEach((program) => {
+                    const newCourse = [];
+                    for (const { name, slug } of program.courses) {
+                        newCourse.push({
+                            title: name,
+                            icon: 'bx bx-right-arrow-circle',
+                            to: slug,
+                        });
+                    }
+
+                    const sideObject = {
+                        title: program.name,
+                        data: newCourse,
+                    };
+                    SIDEBAR_MENU.current[0].data[1].children.data.push(sideObject);
+                });
+                setPrograms(res);
+            } catch (error) {}
+        };
+
+        fetchPrograms();
+    }, [programs]);
     return (
         <>
             <div className="header__wrapper__mid container">
@@ -415,7 +333,7 @@ const MidHeader = () => {
                     classToggle=".header__wrapper__mid__menu-toggle"
                     onClose={() => setSidebarMenu(false)}
                     typeSidebar="sidebarMenu"
-                    items={SIDEBAR_MENU}
+                    items={SIDEBAR_MENU.current}
                     onChangeTheme={handleChangeTheme}
                     onChangeLanguage={handleChangeLanguage}
                 />

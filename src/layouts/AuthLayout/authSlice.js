@@ -130,15 +130,15 @@ const getUser = createAsyncThunk('auth/getUser', async () => {
     if (storage.get(process.env.REACT_APP_TOKEN)) {
         const token = storage.get(process.env.REACT_APP_TOKEN);
         setAuthToken(token);
-    }
 
-    try {
-        const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/auth`);
+        try {
+            const res = await axios.get(`${process.env.REACT_APP_BASE_URL}/auth`);
 
-        return res.data;
-    } catch (error) {
-        localStorage.removeItem(process.env.REACT_APP_TOKEN);
-        setAuthToken(null);
+            return res.data;
+        } catch (error) {
+            localStorage.removeItem(process.env.REACT_APP_TOKEN);
+            setAuthToken(null);
+        }
     }
 });
 

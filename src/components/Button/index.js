@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import images from '~/assets/images';
 
 const Button = ({
     to,
@@ -47,7 +46,7 @@ const Button = ({
                     <i className={`${leftIcon}`}></i>
                 </span>
             )}
-            {img && <img className="img-btn" style={imgStyle} src={images[img]} alt="" />}
+            {img && <img className="img-btn" style={imgStyle} src={img} alt="" />}
             <span className="children-btn">{children}</span>
             {rightIcon && (
                 <span style={{ marginLeft: '8px' }} className="icon-btn">

@@ -66,7 +66,7 @@ const translations = [
             blue: 'Màu xanh',
             search: 'Tìm kiếm khoá học',
             home: 'Trang chủ',
-            educationProgram: 'Chương trình đào tạo',
+            educationProgram: 'Danh mục khoá học',
             news: 'Tin tức',
             paymentGuide: 'Hướng dẫn thanh toán',
             contact: 'Liên hệ',

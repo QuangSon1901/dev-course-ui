@@ -7,13 +7,13 @@ const MegaDropdown = ({ data }) => {
             <Grid col={5} mdCol={3} smCol={2} gap={20}>
                 {data.map((item) => (
                     <div key={item.id}>
-                        <h3 className="header__wrapper__bottom__mega-dropdown__content__title">{item.title}</h3>
+                        <h3 className="header__wrapper__bottom__mega-dropdown__content__title">{item.name}</h3>
                         <ul>
-                            {item.data.map((item2) => (
+                            {item.courses.map((item2) => (
                                 <li key={item2.id}>
-                                    <a href="/">
+                                    <a href={'program/' + item2.slug}>
                                         <i className="bx bx-right-arrow-circle"></i>
-                                        {item2.title}
+                                        {item2.name}
                                     </a>
                                 </li>
                             ))}

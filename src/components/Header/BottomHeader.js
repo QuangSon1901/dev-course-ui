@@ -6,10 +6,14 @@ import { v4 as uuidv4 } from 'uuid';
 import { useSelector } from 'react-redux';
 import { multilingualSelector } from '~/redux/selector';
 import config from '~/config';
+import { useState } from 'react';
+import * as httpRequest from '~/utils/httpRequest';
 
 const BottomHeader = () => {
     const multilingual = useSelector(multilingualSelector);
     const { translationSelected } = multilingual;
+
+    const [programs, setPrograms] = useState({ program: [] });
 
     const MEMU_ITEMS_PROGRAM = [
         {
@@ -117,7 +121,6 @@ const BottomHeader = () => {
     useEffect(() => {
         const linkActive = document.querySelector('.header__wrapper__bottom__main-menu__item.active');
         const linkUnderline = document.querySelector('.header__wrapper__bottom__main-menu__underline');
-
         if (linkActive) {
             const actWidth = linkActive.clientWidth;
             const actPosition = linkActive.offsetLeft;
@@ -128,6 +131,17 @@ const BottomHeader = () => {
             linkUnderline.style.left = 0;
             linkUnderline.style.width = 0;
         }
+
+        if (programs.program.length > 0) return;
+        const fetchPrograms = async () => {
+            const res = await httpRequest.get('/programs', {
+                params: { type: 'less' },
+            });
+
+            setPrograms(res);
+        };
+
+        fetchPrograms();
     });
 
     return (
@@ -150,7 +164,7 @@ const BottomHeader = () => {
                         <i className="bx bxs-chevron-down"></i>
                     </NavLink>
                     <Wrapper menu_toggle_ref={programRef} className={'header__wrapper__bottom__mega-dropdown__content'}>
-                        <MegaDropdown data={MEMU_ITEMS_PROGRAM}></MegaDropdown>
+                        <MegaDropdown data={programs.program}></MegaDropdown>
                     </Wrapper>
                 </li>
                 <li>

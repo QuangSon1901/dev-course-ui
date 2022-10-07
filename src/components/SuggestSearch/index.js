@@ -1,23 +1,34 @@
 import React from 'react';
 import Button from '../Button';
+import images from '~/assets/images';
 
 const SuggestSearch = ({ data }) => {
     return (
         <div className="search__dropdown__content__wrapp__body">
-            {data.subjects.length > 0 && (
+            {data.courses.length > 0 && (
                 <div className="search__dropdown__content__wrapp__body__group">
                     <div className="search__dropdown__content__wrapp__body__group__title">
-                        <h4>Môn học</h4>
+                        <h4>Khoá học</h4>
                         <span>Xem thêm</span>
                     </div>
                     <ul>
-                        {data.subjects.map((item) => (
+                        {data.courses.map((item) => (
                             <li key={item.id}>
                                 <Button
                                     large
                                     className="btn-wrapper btn-default"
-                                    img="userAvt"
-                                    imgStyle={{ width: '32px', height: '32px', borderRadius: '50%' }}
+                                    img={
+                                        item.image
+                                            ? process.env.REACT_APP_BASE_URL_FILE_UPLOAD + item.image
+                                            : images.noImg
+                                    }
+                                    imgStyle={{
+                                        width: '32px',
+                                        height: '32px',
+                                        borderRadius: '50%',
+                                        objectFit: 'cover',
+                                    }}
+                                    href={'program/' + item.slug}
                                     style={{ justifyContent: 'flex-start' }}
                                 >
                                     {item.name}
@@ -30,7 +41,7 @@ const SuggestSearch = ({ data }) => {
             {data.programs.length > 0 && (
                 <div className="search__dropdown__content__wrapp__body__group">
                     <div className="search__dropdown__content__wrapp__body__group__title">
-                        <h4>Khoá học</h4>
+                        <h4>Danh mục khoá học</h4>
                         <span>Xem thêm</span>
                     </div>
                     <ul>
@@ -39,8 +50,18 @@ const SuggestSearch = ({ data }) => {
                                 <Button
                                     large
                                     className="btn-wrapper btn-default"
-                                    img="userAvt"
-                                    imgStyle={{ width: '32px', height: '32px', borderRadius: '50%' }}
+                                    img={
+                                        item.image
+                                            ? process.env.REACT_APP_BASE_URL_FILE_UPLOAD + item.image
+                                            : images.noImg
+                                    }
+                                    imgStyle={{
+                                        width: '32px',
+                                        height: '32px',
+                                        borderRadius: '50%',
+                                        objectFit: 'cover',
+                                    }}
+                                    href={'program/' + item.slug}
                                     style={{ justifyContent: 'flex-start' }}
                                 >
                                     {item.name}
@@ -62,8 +83,18 @@ const SuggestSearch = ({ data }) => {
                                 <Button
                                     large
                                     className="btn-wrapper btn-default"
-                                    img="userAvt"
-                                    imgStyle={{ width: '32px', height: '32px', borderRadius: '50%' }}
+                                    img={
+                                        item.image
+                                            ? process.env.REACT_APP_BASE_URL_FILE_UPLOAD + item.image
+                                            : images.noAvt
+                                    }
+                                    imgStyle={{
+                                        width: '32px',
+                                        height: '32px',
+                                        borderRadius: '50%',
+                                        objectFit: 'cover',
+                                    }}
+                                    href={'program/' + item.slug}
                                     style={{ justifyContent: 'flex-start' }}
                                 >
                                     {item.name}

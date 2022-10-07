@@ -7,8 +7,8 @@ import SuggestSearch from '../SuggestSearch';
 const searchInit = {
     programs: [],
     programs_total: 0,
-    subjects: [],
-    subjects_total: 0,
+    courses: [],
+    courses_total: 0,
     teachers: [],
     teachers_total: 0,
 };
@@ -66,7 +66,7 @@ const SidebarSearch = ({ onClose }) => {
                     />
                     {loading && <i className="bx bx-loader-alt sidebar__search__input-loading"></i>}
                 </div>
-                {searchResult.programs_total || searchResult.subjects_total || searchResult.teachers_total ? (
+                {searchResult.courses_total || searchResult.programs_total || searchResult.teachers_total ? (
                     <Wrapper className="active">
                         <div className="search__dropdown__content__wrapp">
                             <div className="search__dropdown__content__wrapp__header">
@@ -78,7 +78,7 @@ const SidebarSearch = ({ onClose }) => {
 
                                 {loading ? (
                                     <span>Tìm '{searchValue}'</span>
-                                ) : searchResult.subjects_total === 0 &&
+                                ) : searchResult.courses_total === 0 &&
                                   searchResult.programs_total === 0 &&
                                   searchResult.teachers_total === 0 ? (
                                     <span>Không có kết quả cho '{searchValue}'</span>

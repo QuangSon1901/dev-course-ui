@@ -5,6 +5,8 @@ const images = {
     userAvt: require('~/assets/images/user-avt.jpg'),
     devLogo: require('~/assets/images/logo-dev-icon.png'),
     loginBG: require('~/assets/images/login-bg.jpg'),
+    noImg: require('~/assets/images/no-image.jpg'),
+    noAvt: require('~/assets/images/no-avt.png'),
 };
 
 export default images;
