@@ -1,11 +1,12 @@
 import { Formik } from 'formik';
+import { Block, Loading } from 'notiflix';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
-import ReCAPTCHA from 'react-google-recaptcha';
 
+// import ReCAPTCHA from 'react-google-recaptcha';
 import images from '~/assets/images';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
@@ -19,17 +20,30 @@ const LoginForm = () => {
     const [errorRes, setErrorRes] = useState({
         password: '',
     });
-
-    const handleCaptcha = (e) => {
-        console.log('Captcha value:', e);
-    };
-
+    // const handleCaptcha = (e) => {
+    //     console.log('Captcha value:', e);
+    // };
     useEffect(() => {
         if (notify && notify.success === 'danger') {
-            setErrorRes({ ...errorRes, password: notify.message });
+            setTimeout(() => setErrorRes({ ...errorRes, password: notify.message }), 500);
             dispatch(authSlice.actions.clearNotify());
         }
+
+        return () => {
+            clearTimeout();
+        };
     }, [notify]);
+
+    const handleSubmitLoading = (loading) => {
+        switch (loading) {
+            case true:
+                Loading.circle({ zindex: 99999, svgColor: '#2835d5' });
+                return 'Đăng nhập';
+            default:
+                Loading.remove(500);
+                return 'Đăng nhập';
+        }
+    };
 
     return (
         <>
@@ -80,13 +94,12 @@ const LoginForm = () => {
                                             ''
                                         }
                                     />
-                                    <ReCAPTCHA
+                                    {/* <ReCAPTCHA
                                         sitekey="6LdU1VIiAAAAAFTpDdcI56xsrWCTSb8pcCEjY9WE"
                                         onChange={handleCaptcha}
-                                    />
-                                    ,
-                                    <Button primary large type="submit">
-                                        {submit ? 'Đang xử lý...' : 'Đăng nhập'}
+                                    /> */}
+                                    <Button primary large type="submit" className="login-submit">
+                                        {handleSubmitLoading(submit)}
                                     </Button>
                                 </div>
                                 <div className="auth__form__form__change">

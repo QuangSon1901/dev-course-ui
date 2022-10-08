@@ -1,3 +1,4 @@
+import { Loading } from 'notiflix';
 import { useSelector } from 'react-redux';
 import { Link, Navigate } from 'react-router-dom';
 import images from '~/assets/images';
@@ -8,7 +9,10 @@ const AuthLayout = ({ children }) => {
     const theme = useSelector(themeSelector);
     const { isAuthenticated } = useSelector(authSelector);
 
-    if (isAuthenticated) return <Navigate to={config.routes.home} />;
+    if (isAuthenticated) {
+        Loading.remove(500);
+        return <Navigate to={config.routes.home} />;
+    }
 
     return (
         <div className={`${theme ? theme.theme : 'theme-mode-light'} ${theme ? theme.color : 'theme-color-blue'}`}>

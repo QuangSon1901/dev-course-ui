@@ -110,19 +110,19 @@ const logoutUser = createAsyncThunk('auth/logoutUser', async () => {
     if (storage.get(process.env.REACT_APP_TOKEN)) {
         const token = storage.get(process.env.REACT_APP_TOKEN);
         setAuthToken(token);
-    }
 
-    try {
-        const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/logout`);
+        try {
+            const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/auth/logout`);
 
-        localStorage.removeItem(process.env.REACT_APP_TOKEN);
-        setAuthToken(null);
-        return res.data;
-    } catch (error) {
-        localStorage.removeItem(process.env.REACT_APP_TOKEN);
-        setAuthToken(null);
-        if (error.response.data) return error.response.data;
-        return { success: false, message: error.message };
+            localStorage.removeItem(process.env.REACT_APP_TOKEN);
+            setAuthToken(null);
+            return res.data;
+        } catch (error) {
+            localStorage.removeItem(process.env.REACT_APP_TOKEN);
+            setAuthToken(null);
+            if (error.response.data) return error.response.data;
+            return { success: false, message: error.message };
+        }
     }
 });
 

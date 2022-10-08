@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
+import { Block } from 'notiflix/build/notiflix-block-aio';
 
 import images from '~/assets/images';
 import config from '~/config';
@@ -12,7 +13,6 @@ import Search from '../Search';
 import Sidebar from '../Sidebar';
 import themeSlice from '../ThemeMenu/themeSlice';
 import multilingualSlice from './multilingualSlice';
-import * as httpRequest from '~/utils/httpRequest';
 
 const MidHeader = () => {
     const { isAuthenticated, loading } = useSelector(authSelector);
@@ -21,11 +21,10 @@ const MidHeader = () => {
 
     const theme = useSelector(themeSelector);
     const multilingual = useSelector(multilingualSelector);
-    const { translationSelected, translations } = multilingual;
+    const { translationSelected } = multilingual;
 
     const [sidebarMenu, setSidebarMenu] = useState(false);
     const [sidebarSearch, setSidebarSearch] = useState(false);
-    const [programs, setPrograms] = useState({ program: [] });
 
     const userToggle = useRef(null);
     const notificationToggle = useRef(null);
@@ -103,50 +102,58 @@ const MidHeader = () => {
                             <i className="bx bx-search"></i>
                         </a>
                     </li>
-                    {isAuthenticated ? (
-                        <li className="header__wrapper__mid__user-menu__notification">
-                            <a ref={notificationToggle} href="/" onClick={(e) => e.preventDefault()}>
-                                <i className="bx bx-bell"></i>
-                                <span className="header__wrapper__mid__user-menu__notification__quantity">32</span>
-                            </a>
-                            <Wrapper menu_toggle_ref={notificationToggle} className="dropdown__content">
-                                <Menu
-                                    type="user"
-                                    data={MEMU_ITEMS_NOTIFICATION}
-                                    style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'flex-start' }}
-                                    headerNotify
-                                    img
-                                    footer="/view-all"
-                                ></Menu>
-                            </Wrapper>
-                        </li>
-                    ) : (
-                        ''
-                    )}
-                    <li className="header__wrapper__mid__user-menu__user">
-                        {loading ? (
-                            'Loading'
-                        ) : isAuthenticated ? (
-                            <>
-                                <div ref={userToggle} className="header__wrapper__mid__user-menu__user__avatar">
-                                    <img src={images.userAvt} alt="" />
-                                </div>
-                                <Wrapper menu_toggle_ref={userToggle} className="dropdown__content">
+                    {loading ? (
+                        'loading'
+                    ) : isAuthenticated ? (
+                        <>
+                            <li className="header__wrapper__mid__user-menu__notification">
+                                <a ref={notificationToggle} href="/" onClick={(e) => e.preventDefault()}>
+                                    <i className="bx bx-bell"></i>
+                                    <span className="header__wrapper__mid__user-menu__notification__quantity">32</span>
+                                </a>
+                                <Wrapper menu_toggle_ref={notificationToggle} className="dropdown__content">
                                     <Menu
                                         type="user"
-                                        data={MEMU_ITEMS_USER}
-                                        style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-start' }}
-                                        icon
-                                        headerUser
+                                        data={MEMU_ITEMS_NOTIFICATION}
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'flex-start',
+                                            justifyContent: 'flex-start',
+                                        }}
+                                        headerNotify
+                                        img
+                                        footer="/view-all"
                                     ></Menu>
                                 </Wrapper>
-                            </>
-                        ) : (
+                            </li>
+                            <li className="header__wrapper__mid__user-menu__user">
+                                <>
+                                    <div ref={userToggle} className="header__wrapper__mid__user-menu__user__avatar">
+                                        <img src={images.userAvt} alt="" />
+                                    </div>
+                                    <Wrapper menu_toggle_ref={userToggle} className="dropdown__content">
+                                        <Menu
+                                            type="user"
+                                            data={MEMU_ITEMS_USER}
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'flex-start',
+                                            }}
+                                            icon
+                                            headerUser
+                                        ></Menu>
+                                    </Wrapper>
+                                </>
+                            </li>
+                        </>
+                    ) : (
+                        <li className="header__wrapper__mid__user-menu__user">
                             <Button to={config.routes.login} primary>
                                 Đăng nhập
                             </Button>
-                        )}
-                    </li>
+                        </li>
+                    )}
                 </ul>
             </div>
             {sidebarMenu ? (

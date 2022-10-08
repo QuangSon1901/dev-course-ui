@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Fragment, Suspense } from 'react';
 import { useDispatch } from 'react-redux';
 
@@ -47,7 +46,6 @@ function App() {
 
                     if (item.layout) Layout = item.layout;
                     else if (item.layout === null) Layout = Fragment;
-
                     return (
                         <Route key={index} path={item.path} element={<ProtectedRoute />}>
                             <Route

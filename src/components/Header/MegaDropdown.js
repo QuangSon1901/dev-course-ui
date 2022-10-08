@@ -4,20 +4,18 @@ import * as httpRequest from '~/utils/httpRequest';
 
 const MegaDropdown = () => {
     const [programs, setPrograms] = useState({ program: [] });
-
     useEffect(() => {
         const fetchPrograms = async () => {
             const res = await httpRequest.get('/programs', {
                 params: { type: 'less' },
             });
-
             setPrograms(res);
         };
 
         fetchPrograms();
     }, []);
     return (
-        <div className="grid">
+        <div className="grid mega-dropdown">
             <Grid col={5} mdCol={3} smCol={2} gap={20}>
                 {programs.program.map((item) => (
                     <div key={item.id}>

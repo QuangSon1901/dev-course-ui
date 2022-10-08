@@ -11,6 +11,7 @@ import Input from '~/components/Input';
 import config from '~/config';
 import authSlice, { registerUser } from '~/layouts/AuthLayout/authSlice';
 import { authSelector } from '~/redux/selector';
+import { Loading } from 'notiflix';
 
 const RegisterForm = () => {
     const dispatch = useDispatch();
@@ -21,10 +22,26 @@ const RegisterForm = () => {
 
     useEffect(() => {
         if (notify && notify.success === 'danger') {
-            setErrorRes({ ...errorRes, email: notify.message });
+            setTimeout(() => setErrorRes({ ...errorRes, email: notify.message }), 500);
             dispatch(authSlice.actions.clearNotify());
         }
+
+        return () => {
+            clearTimeout();
+        };
     }, [notify]);
+
+    const handleSubmitLoading = (loading) => {
+        switch (loading) {
+            case true:
+                Loading.circle({ zindex: 99999, svgColor: '#2835d5' });
+                return 'Đăng ký';
+            default:
+                Loading.remove(500);
+                return 'Đăng ký';
+        }
+    };
+
     return (
         <div className="auth__form">
             <Formik
@@ -98,7 +115,7 @@ const RegisterForm = () => {
                                     }
                                 />
                                 <Button primary large type="submit">
-                                    {submit ? 'Đang xử lý...' : 'Đăng ký'}
+                                    {handleSubmitLoading(submit)}
                                 </Button>
                             </div>
                             <div className="auth__form__form__change">
