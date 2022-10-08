@@ -1,10 +1,10 @@
 import { Formik } from 'formik';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import SweetAlert from 'react-bootstrap-sweetalert';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 import images from '~/assets/images';
 import Button from '~/components/Button';
@@ -16,16 +16,18 @@ import { authSelector } from '~/redux/selector';
 const LoginForm = () => {
     const dispatch = useDispatch();
     const { submit, notify } = useSelector(authSelector);
-    const [showSwalAlert, setShowSwalAlert] = useState(false);
+    const [errorRes, setErrorRes] = useState({
+        password: '',
+    });
 
-    const handleCancelSwalAlert = () => {
-        setShowSwalAlert(false);
-        dispatch(authSlice.actions.clearNotify());
+    const handleCaptcha = (e) => {
+        console.log('Captcha value:', e);
     };
 
     useEffect(() => {
         if (notify && notify.success === 'danger') {
-            setShowSwalAlert(true);
+            setErrorRes({ ...errorRes, password: notify.message });
+            dispatch(authSlice.actions.clearNotify());
         }
     }, [notify]);
 
@@ -43,7 +45,7 @@ const LoginForm = () => {
                     })}
                 >
                     {(props) => {
-                        const { values, touched, errors, isSubmitting, handleChange, handleBlur, handleSubmit } = props;
+                        const { values, touched, errors, handleChange, handleBlur, handleSubmit } = props;
                         return (
                             <form className="auth__form__form" onSubmit={handleSubmit}>
                                 <img src={images.devLogo} alt="" />
@@ -54,7 +56,9 @@ const LoginForm = () => {
                                         name="email"
                                         placeholder="Địa chỉ Email"
                                         value={values.email}
-                                        onChange={handleChange}
+                                        onChange={(e) => {
+                                            handleChange(e);
+                                        }}
                                         onBlur={handleBlur}
                                         className={errors.email && touched.email ? 'error' : ''}
                                         error={errors.email && touched.email ? errors.email : ''}
@@ -64,11 +68,23 @@ const LoginForm = () => {
                                         name="password"
                                         placeholder="Mật khẩu"
                                         value={values.password}
-                                        onChange={handleChange}
+                                        onChange={(e) => {
+                                            setErrorRes({ ...errorRes, password: '' });
+                                            handleChange(e);
+                                        }}
                                         onBlur={handleBlur}
                                         className={errors.password && touched.password ? 'error' : ''}
-                                        error={errors.password && touched.password ? errors.password : ''}
+                                        error={
+                                            (errors.password && touched.password && errors.password) ||
+                                            (errorRes.password && errorRes.password) ||
+                                            ''
+                                        }
                                     />
+                                    <ReCAPTCHA
+                                        sitekey="6LdU1VIiAAAAAFTpDdcI56xsrWCTSb8pcCEjY9WE"
+                                        onChange={handleCaptcha}
+                                    />
+                                    ,
                                     <Button primary large type="submit">
                                         {submit ? 'Đang xử lý...' : 'Đăng nhập'}
                                     </Button>
@@ -95,19 +111,6 @@ const LoginForm = () => {
                         );
                     }}
                 </Formik>
-                {notify && (
-                    <SweetAlert
-                        danger={notify.success === 'danger' && true}
-                        style={{ zIndex: '99999' }}
-                        title="Lỗi!"
-                        confirmBtnBsStyle="primary"
-                        onConfirm={handleCancelSwalAlert}
-                        onCancel={handleCancelSwalAlert}
-                        show={showSwalAlert}
-                    >
-                        <span style={{ fontSize: '1.6rem' }}>{notify.message || ''}</span>
-                    </SweetAlert>
-                )}
             </div>
         </>
     );

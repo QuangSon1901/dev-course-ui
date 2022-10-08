@@ -33,155 +33,6 @@ const MidHeader = () => {
     const handleChangeLanguage = (id) => {
         dispatch(multilingualSlice.actions.CHANGE_LANGUAGE(id));
     };
-    const SIDEBAR_MENU = useRef([
-        {
-            title: translationSelected.messages.category,
-            data: [
-                {
-                    icon: 'bx bx-home',
-                    title: translationSelected.messages.home,
-                    to: '/',
-                },
-                {
-                    icon: 'bx bx-slideshow',
-                    title: translationSelected.messages.educationProgram,
-                    to: '/courses',
-                    children: {
-                        title: translationSelected.messages.educationProgram,
-                        data: [],
-                    },
-                },
-                {
-                    icon: 'bx bx-news',
-                    title: translationSelected.messages.news,
-                    to: '/news',
-                },
-                {
-                    icon: 'bx bx-help-circle',
-                    title: translationSelected.messages.paymentGuide,
-                    to: '/payment-guide',
-                },
-                {
-                    icon: 'bx bx-support',
-                    title: translationSelected.messages.contact,
-                    to: '/contact',
-                },
-            ],
-        },
-        {
-            title: 'Cài đặt',
-            data: [
-                {
-                    icon: 'bx bx-money',
-                    title: 'Loại tiền tệ',
-                    to: '/currency',
-                    children: {
-                        title: 'Loại tiền tệ',
-                        data: [
-                            {
-                                data: [
-                                    {
-                                        icon: 'bx bx-money',
-                                        title: 'VND',
-                                        to: '/news',
-                                    },
-                                    {
-                                        icon: 'bx bx-money',
-                                        title: 'JPN',
-                                        to: '/news',
-                                    },
-                                    {
-                                        icon: 'bx bx-money',
-                                        title: 'EUR',
-                                        to: '/news',
-                                    },
-                                    {
-                                        icon: 'bx bx-money',
-                                        title: 'SPN',
-                                        to: '/news',
-                                    },
-                                    {
-                                        icon: 'bx bx-money',
-                                        title: 'USD',
-                                        to: '/news',
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                },
-                {
-                    icon: 'bx bx-globe',
-                    title: 'Ngôn ngữ',
-                    to: '/language',
-                    children: {
-                        title: 'Ngôn ngữ',
-                        data: [
-                            {
-                                data: [...translations],
-                            },
-                        ],
-                    },
-                },
-                {
-                    icon: 'bx bx-palette',
-                    title: 'Cài đặt chủ đề',
-                    to: '/theme',
-                    children: {
-                        title: 'Cài đặt chủ đề',
-                        data: [
-                            {
-                                title: 'Chọn chủ đề',
-                                data: [
-                                    {
-                                        title: 'Màu sáng',
-                                        typeTheme: {
-                                            id: 'light',
-                                            type: 'theme',
-                                            background: 'light-background',
-                                            class: 'theme-mode-light',
-                                        },
-                                    },
-                                    {
-                                        title: 'Màu tối',
-                                        typeTheme: {
-                                            type: 'theme',
-                                            id: 'dark',
-                                            background: 'dark-background',
-                                            class: 'theme-mode-dark',
-                                        },
-                                    },
-                                ],
-                            },
-                            {
-                                title: 'Chọn màu',
-                                data: [
-                                    {
-                                        title: 'Màu xanh',
-                                        typeTheme: {
-                                            id: 'blue',
-                                            type: 'color',
-                                            background: 'blue-color',
-                                            class: 'theme-color-blue',
-                                        },
-                                    },
-                                    {
-                                        title: 'Màu đỏ',
-                                        typeTheme: {
-                                            id: 'red',
-                                            type: 'color',
-                                            background: 'red-color',
-                                            class: 'theme-color-red',
-                                        },
-                                    },
-                                ],
-                            },
-                        ],
-                    },
-                },
-            ],
-        },
-    ]);
 
     const handleChangeTheme = (themeType, themeClass) => {
         switch (themeType) {
@@ -236,36 +87,6 @@ const MidHeader = () => {
         },
     ];
 
-    useEffect(() => {
-        if (programs.program.length > 0) return;
-        const fetchPrograms = async () => {
-            try {
-                const res = await httpRequest.get('/programs', {
-                    params: { type: 'less' },
-                });
-
-                res.program.forEach((program) => {
-                    const newCourse = [];
-                    for (const { name, slug } of program.courses) {
-                        newCourse.push({
-                            title: name,
-                            icon: 'bx bx-right-arrow-circle',
-                            to: slug,
-                        });
-                    }
-
-                    const sideObject = {
-                        title: program.name,
-                        data: newCourse,
-                    };
-                    SIDEBAR_MENU.current[0].data[1].children.data.push(sideObject);
-                });
-                setPrograms(res);
-            } catch (error) {}
-        };
-
-        fetchPrograms();
-    }, [programs]);
     return (
         <>
             <div className="header__wrapper__mid container">
@@ -333,7 +154,6 @@ const MidHeader = () => {
                     classToggle=".header__wrapper__mid__menu-toggle"
                     onClose={() => setSidebarMenu(false)}
                     typeSidebar="sidebarMenu"
-                    items={SIDEBAR_MENU.current}
                     onChangeTheme={handleChangeTheme}
                     onChangeLanguage={handleChangeLanguage}
                 />

@@ -1,11 +1,25 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Grid from '../Grid';
+import * as httpRequest from '~/utils/httpRequest';
 
-const MegaDropdown = ({ data }) => {
+const MegaDropdown = () => {
+    const [programs, setPrograms] = useState({ program: [] });
+
+    useEffect(() => {
+        const fetchPrograms = async () => {
+            const res = await httpRequest.get('/programs', {
+                params: { type: 'less' },
+            });
+
+            setPrograms(res);
+        };
+
+        fetchPrograms();
+    }, []);
     return (
         <div className="grid">
             <Grid col={5} mdCol={3} smCol={2} gap={20}>
-                {data.map((item) => (
+                {programs.program.map((item) => (
                     <div key={item.id}>
                         <h3 className="header__wrapper__bottom__mega-dropdown__content__title">{item.name}</h3>
                         <ul>

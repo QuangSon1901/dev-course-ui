@@ -9,17 +9,20 @@ import images from '~/assets/images';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
 import config from '~/config';
-import { registerUser } from '~/layouts/AuthLayout/authSlice';
+import authSlice, { registerUser } from '~/layouts/AuthLayout/authSlice';
 import { authSelector } from '~/redux/selector';
 
 const RegisterForm = () => {
     const dispatch = useDispatch();
     const { submit, notify } = useSelector(authSelector);
-    const [showSwalAlert, setShowSwalAlert] = useState(false);
+    const [errorRes, setErrorRes] = useState({
+        email: '',
+    });
 
     useEffect(() => {
         if (notify && notify.success === 'danger') {
-            setShowSwalAlert(true);
+            setErrorRes({ ...errorRes, email: notify.message });
+            dispatch(authSlice.actions.clearNotify());
         }
     }, [notify]);
     return (
@@ -39,7 +42,7 @@ const RegisterForm = () => {
                 })}
             >
                 {(props) => {
-                    const { values, touched, errors, isSubmitting, handleChange, handleBlur, handleSubmit } = props;
+                    const { values, touched, errors, handleChange, handleBlur, handleSubmit } = props;
                     return (
                         <form className="auth__form__form" onSubmit={handleSubmit}>
                             <img src={images.devLogo} alt="" />
@@ -60,10 +63,17 @@ const RegisterForm = () => {
                                     name="email"
                                     placeholder="Địa chỉ Email"
                                     value={values.email}
-                                    onChange={handleChange}
+                                    onChange={(e) => {
+                                        setErrorRes({ ...errorRes, email: '' });
+                                        handleChange(e);
+                                    }}
                                     onBlur={handleBlur}
                                     className={errors.email && touched.email ? 'error' : ''}
-                                    error={errors.email && touched.email ? errors.email : ''}
+                                    error={
+                                        (errors.email && touched.email && errors.email) ||
+                                        (errorRes.email && errorRes.email) ||
+                                        ''
+                                    }
                                 />
                                 <Input
                                     type="password"
@@ -110,19 +120,6 @@ const RegisterForm = () => {
                     );
                 }}
             </Formik>
-            {notify && (
-                <SweetAlert
-                    danger={notify.success === 'danger' && true}
-                    style={{ zIndex: '99999' }}
-                    title="Lỗi!"
-                    confirmBtnBsStyle="primary"
-                    onConfirm={() => setShowSwalAlert(false)}
-                    onCancel={() => setShowSwalAlert(false)}
-                    show={showSwalAlert}
-                >
-                    <span style={{ fontSize: '1.6rem' }}>{notify.message || ''}</span>
-                </SweetAlert>
-            )}
         </div>
     );
 };
