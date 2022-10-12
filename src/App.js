@@ -1,4 +1,4 @@
-import { Fragment, Suspense } from 'react';
+import { Fragment, Suspense, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -8,11 +8,16 @@ import MainLayout from './layouts/MainLayout';
 import { privateRouters, publicRoutes } from './routes';
 
 import './sass/index.scss';
+import notiflixInit from './utils/notiflixInit';
 
 function App() {
     const dispatch = useDispatch();
 
     dispatch(getUser());
+
+    useEffect(() => {
+        notiflixInit();
+    }, []);
 
     return (
         <Router>

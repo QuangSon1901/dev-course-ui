@@ -1,0 +1,94 @@
+.card {
+    padding: 10px 0 30px;
+    display: grid;
+    grid-gap: 30px;
+    grid-auto-columns: 270px;
+    grid-auto-flow: column;
+
+    &__item {
+        overflow: hidden;
+        width: 272px;
+        background-color: var(--bg-color);
+        border-radius: 4px;
+        border-top-right-radius: 80px;
+        color: var(--txt-color);
+        display: flex;
+        flex-direction: column;
+        min-height: 430px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        @include tablet {
+            min-height: 400px;
+        }
+
+        &:hover {
+            transform: scale(1.02);
+            box-shadow: 3px 3px 5px 3px rgb(0 0 0 / 10%);
+        }
+
+        &__picture {
+            & > img {
+                border-top-right-radius: 80px;
+                display: block;
+                height: 130px;
+                object-fit: cover;
+                width: 100%;
+            }
+        }
+
+        &__body {
+            display: flex;
+            flex: 1 1;
+            flex-direction: column;
+            padding: 25px 20px 35px;
+            background-color: var(--bg-second);
+
+            &__brand {
+                align-items: flex-end;
+                display: flex;
+                margin-bottom: 6px;
+                order: -1;
+
+                & > i {
+                    font-size: 2rem;
+                    margin-right: 10px;
+                }
+
+                & > span {
+                    font-size: 1.6rem;
+                    font-weight: 600;
+                }
+            }
+
+            &__title {
+                flex-basis: 89px;
+                margin-bottom: 20px;
+
+                & > h2 {
+                    font-size: 2.2rem;
+                    margin: 0;
+                    margin-top: 10px;
+                }
+
+                @include tablet {
+                    flex-basis: 69px;
+                }
+            }
+
+            &__rate {
+                @include flex(center, flex-start);
+                font-size: 1.6rem;
+
+                & > * ~ * {
+                    margin-left: 10px;
+                }
+            }
+
+            &__more {
+                font-size: 1.6rem;
+                margin: 10px 0 20px;
+            }
+        }
+    }
+}

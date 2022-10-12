@@ -1,5 +1,5 @@
 import { Formik } from 'formik';
-import { Block, Loading } from 'notiflix';
+import { Confirm, Loading, Report } from 'notiflix';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -33,6 +33,23 @@ const LoginForm = () => {
             clearTimeout();
         };
     }, [notify]);
+
+    const handleForgetPass = () => {
+        Confirm.prompt(
+            'Gửi yêu cầu lấy lại mật khẩu?',
+            'Vui lòng nhập Email bạn đã đăng ký?',
+            '',
+            'Answer',
+            'Cancel',
+            (clientAnswer) => {
+                Report.warning(
+                    'Gửi yêu cầu thất bại',
+                    'Tính năng đang gặp một chút sự cố. Vui lòng thử lại sau!',
+                    'Okay',
+                );
+            },
+        );
+    };
 
     const handleSubmitLoading = (loading) => {
         switch (loading) {
@@ -109,7 +126,7 @@ const LoginForm = () => {
                                     </Link>
                                 </div>
                                 <div className="auth__form__form__forget-pass">
-                                    <Link to="/">Quên mật khẩu?</Link>
+                                    <span onClick={handleForgetPass}>Quên mật khẩu?</span>
                                 </div>
                                 <div className="auth__form__form__service-term">
                                     <span>Việc bạn tiếp tục trang web này đồng nghĩa bạn đồng ý với</span>

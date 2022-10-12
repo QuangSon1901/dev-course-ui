@@ -56,6 +56,10 @@ img {
     max-width: 100%;
 }
 
+input:focus-visible {
+    outline: none;
+}
+
 @each $color, $val in $colors {
     .color-#{$color} {
         color: $val;

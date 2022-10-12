@@ -95,6 +95,10 @@
                 font-size: 1.4rem;
                 color: var(--main-color);
                 font-weight: 600;
+
+                & > span {
+                    cursor: pointer;
+                }
             }
 
             &__service-term {

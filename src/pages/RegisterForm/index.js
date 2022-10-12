@@ -1,7 +1,6 @@
 import { Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import SweetAlert from 'react-bootstrap-sweetalert';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
 

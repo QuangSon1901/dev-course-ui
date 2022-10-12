@@ -1,13 +1,30 @@
 .section {
+    padding-top: 40px;
     margin-bottom: 80px;
 
+    @include tablet {
+        padding-top: 30px;
+        margin-bottom: 60px;
+    }
+
     & > * ~ * {
-        margin-top: 70px;
+        margin-top: 40px;
+
+        @include tablet {
+            margin-top: 30px;
+        }
     }
 
     &__title {
-        font-size: 2rem;
+        font-size: 2.6rem;
+        font-weight: 700;
         text-transform: capitalize;
         text-align: center;
+        margin: 0 auto;
+        color: var(--txt-color);
+
+        @include mobile {
+            max-width: 300px;
+        }
     }
 }
