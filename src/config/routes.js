@@ -5,6 +5,7 @@ const routes = {
     paymentGuide: '/payment-guide',
     login: '/login',
     register: '/register',
+    resetPass: '/reset-password',
     logout: '/logout',
     profile: '/me/profile',
 };

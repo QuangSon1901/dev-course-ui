@@ -1,56 +1,55 @@
 import { Formik } from 'formik';
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Loading, Report } from 'notiflix';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import images from '~/assets/images';
 import Button from '~/components/Button';
 import Input from '~/components/Input';
 import config from '~/config';
-import authSlice, { registerUser } from '~/layouts/AuthLayout/authSlice';
-import { authSelector } from '~/redux/selector';
-import { Loading } from 'notiflix';
+import * as httpRequest from '~/utils/httpRequest';
 
-const RegisterForm = () => {
-    const dispatch = useDispatch();
-    const { submit, notify } = useSelector(authSelector);
-    const [errorRes, setErrorRes] = useState({
-        email: '',
-    });
-
-    useEffect(() => {
-        if (notify && notify.success === 'danger') {
-            setTimeout(() => setErrorRes({ ...errorRes, email: notify.message }), 500);
-            dispatch(authSlice.actions.clearNotify());
-        }
-
-        return () => {
-            clearTimeout();
-        };
-    }, [notify]);
+const ResetPassForm = () => {
+    let { token } = useParams();
+    const navigate = useNavigate();
 
     const handleSubmitLoading = (loading) => {
         switch (loading) {
             case true:
                 Loading.circle();
-                return 'Đăng ký';
+                return 'Xác nhận';
             default:
                 Loading.remove(500);
-                return 'Đăng ký';
+                return 'Xác nhận';
+        }
+    };
+
+    const handleSubmitReset = async (values) => {
+        Loading.circle();
+        try {
+            const res = await httpRequest.put(`/auth/reset-password/${token}`, {
+                password: values.password,
+                password_confirmation: values.passwordConfirm,
+            });
+            Loading.remove(500);
+            Report.success('Gửi yêu cầu thành công', res.message, 'Đăng nhập ngay', () => {
+                navigate('/login');
+            });
+        } catch (error) {
+            Loading.remove(500);
+            if (error.response.data) return Report.failure('Gửi yêu cầu thất bại', error.response.data.message, 'Okay');
+            return Report.failure('Gửi yêu cầu thất bại', 'Hệ thống gặp chút xự cố, vui lòng thử lại sau!', 'Okay');
         }
     };
 
     return (
         <div className="auth__form">
             <Formik
-                initialValues={{ name: '', email: '', password: '', passwordConfirm: '' }}
+                initialValues={{ password: '', passwordConfirm: '' }}
                 onSubmit={(values) => {
-                    dispatch(registerUser(values));
+                    handleSubmitReset(values);
                 }}
                 validationSchema={Yup.object().shape({
-                    name: Yup.string().required('Vui lòng nhập Họ tên!'),
-                    email: Yup.string().email('Email sai định dạng!').required('Vui lòng nhập Email!'),
                     password: Yup.string().required('Vui lòng nhập Mật khẩu!'),
                     passwordConfirm: Yup.string()
                         .required('Vui lòng nhập lại Mật khẩu!')
@@ -62,35 +61,8 @@ const RegisterForm = () => {
                     return (
                         <form className="auth__form__form" onSubmit={handleSubmit}>
                             <img src={images.devLogo} alt="" />
-                            <h1>Đăng nhập vào Dev IT</h1>
+                            <h1>Lấy lại mật khẩu</h1>
                             <div className="auth__form__form__container">
-                                <Input
-                                    type="text"
-                                    name="name"
-                                    placeholder="Họ tên"
-                                    value={values.name}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    className={errors.name && touched.name ? 'error' : ''}
-                                    error={errors.name && touched.name ? errors.name : ''}
-                                />
-                                <Input
-                                    type="text"
-                                    name="email"
-                                    placeholder="Địa chỉ Email"
-                                    value={values.email}
-                                    onChange={(e) => {
-                                        setErrorRes({ ...errorRes, email: '' });
-                                        handleChange(e);
-                                    }}
-                                    onBlur={handleBlur}
-                                    className={errors.email && touched.email ? 'error' : ''}
-                                    error={
-                                        (errors.email && touched.email && errors.email) ||
-                                        (errorRes.email && errorRes.email) ||
-                                        ''
-                                    }
-                                />
                                 <Input
                                     type="password"
                                     name="password"
@@ -114,7 +86,7 @@ const RegisterForm = () => {
                                     }
                                 />
                                 <Button primary large type="submit">
-                                    {handleSubmitLoading(submit)}
+                                    {handleSubmitLoading()}
                                 </Button>
                             </div>
                             <div className="auth__form__form__change">
@@ -140,4 +112,4 @@ const RegisterForm = () => {
     );
 };
 
-export default RegisterForm;
+export default ResetPassForm;

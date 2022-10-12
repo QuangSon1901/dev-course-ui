@@ -7,7 +7,7 @@ import { Loading } from 'notiflix';
 function ProtectedRoute({ element, ...rest }) {
     const { isAuthenticated, loading } = useSelector(authSelector);
 
-    if (loading) return Loading.circle({ zindex: 99999, svgColor: '#2835d5' });
+    if (loading) return Loading.circle();
 
     Loading.remove(500);
     return isAuthenticated ? <Outlet /> : <Navigate to={config.routes.login} />;

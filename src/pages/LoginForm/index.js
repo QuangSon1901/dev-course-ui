@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as Yup from 'yup';
+import * as httpRequest from '~/utils/httpRequest';
 
 // import ReCAPTCHA from 'react-google-recaptcha';
 import images from '~/assets/images';
@@ -39,14 +40,30 @@ const LoginForm = () => {
             'Gửi yêu cầu lấy lại mật khẩu?',
             'Vui lòng nhập Email bạn đã đăng ký?',
             '',
-            'Answer',
-            'Cancel',
+            'Xác nhận',
+            'Huỷ',
             (clientAnswer) => {
-                Report.warning(
-                    'Gửi yêu cầu thất bại',
-                    'Tính năng đang gặp một chút sự cố. Vui lòng thử lại sau!',
-                    'Okay',
-                );
+                const sendMailResetPass = async (email) => {
+                    Loading.circle();
+                    try {
+                        const res = await httpRequest.post('/auth/reset-password', {
+                            email,
+                        });
+                        Loading.remove(500);
+                        Report.success('Gửi yêu cầu thành công', res.message, 'Okay');
+                    } catch (error) {
+                        Loading.remove(500);
+                        if (error.response.data)
+                            return Report.failure('Gửi yêu cầu thất bại', error.response.data.message, 'Okay');
+                        return Report.failure(
+                            'Gửi yêu cầu thất bại',
+                            'Hệ thống gặp chút xự cố, vui lòng thử lại sau!',
+                            'Okay',
+                        );
+                    }
+                };
+
+                sendMailResetPass(clientAnswer);
             },
         );
     };
@@ -54,7 +71,7 @@ const LoginForm = () => {
     const handleSubmitLoading = (loading) => {
         switch (loading) {
             case true:
-                Loading.circle({ zindex: 99999, svgColor: '#2835d5' });
+                Loading.circle();
                 return 'Đăng nhập';
             default:
                 Loading.remove(500);

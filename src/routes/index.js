@@ -6,6 +6,7 @@ import AuthLayout from '~/layouts/AuthLayout';
 const homePromise = import('~/pages/Home');
 const loginFormPromise = import('~/pages/LoginForm');
 const registerFormPromise = import('~/pages/RegisterForm');
+const resetPassFormPromise = import('~/pages/ResetPassForm');
 const newsPromise = import('~/pages/News');
 const contactPromise = import('~/pages/Contact');
 const paymentGuidePromise = import('~/pages/PaymentGuide');
@@ -22,6 +23,7 @@ const logoutPromise = import('~/pages/Logout');
 const Home = lazy(() => homePromise);
 const LoginForm = lazy(() => loginFormPromise);
 const RegisterForm = lazy(() => registerFormPromise);
+const ResetPassForm = lazy(() => resetPassFormPromise);
 const News = lazy(() => newsPromise);
 const Contact = lazy(() => contactPromise);
 const PaymentGuide = lazy(() => paymentGuidePromise);
@@ -57,6 +59,11 @@ export const publicRoutes = [
     {
         path: config.routes.register,
         component: RegisterForm,
+        layout: AuthLayout,
+    },
+    {
+        path: config.routes.resetPass,
+        component: ResetPassForm,
         layout: AuthLayout,
     },
 ];
