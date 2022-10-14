@@ -25,7 +25,7 @@ const Home = () => {
     return (
         <>
             <Hero />
-            <div className="home__section-support">
+            <div className="home__section-support bg-second">
                 <Section>
                     <SectionTitle
                         title="Học tốt hơn với sự hỗ trợ trong suốt quá trình"
@@ -96,7 +96,7 @@ const Home = () => {
                 </Section>
             </div>
 
-            <div className="home__new-courses bg-second">
+            <div className="home__new-courses bg-main">
                 <Section>
                     <SectionTitle
                         title="Khoá học lập trình vừa ra mắt"
@@ -104,7 +104,7 @@ const Home = () => {
                     />
                     <div className="container">
                         <SectionBody>
-                            <ScrollContainer hideScrollbars={true} horizontal vertical={false} className="card">
+                            <ScrollContainer horizontal vertical={false} className="card">
                                 {newCourses.map((item) => (
                                     <CardItem
                                         key={item.id}
@@ -116,9 +116,63 @@ const Home = () => {
                                 ))}
                             </ScrollContainer>
                         </SectionBody>
-                        <Button primaryOutline medium>
+                        {/* <Button primaryOutline medium>
                             Xem thêm
-                        </Button>
+                        </Button> */}
+                    </div>
+                </Section>
+            </div>
+
+            <div className="home__new-courses bg-second">
+                <Section>
+                    <SectionTitle
+                        title="Khoá học lập trình vừa ra mắt"
+                        desc="Các khóa học lập trình online vừa được DevIT ra mắt"
+                    />
+                    <div className="container">
+                        <SectionBody>
+                            <ScrollContainer horizontal vertical={false} className="card">
+                                {newCourses.map((item) => (
+                                    <CardItem
+                                        key={item.id}
+                                        name={item.name}
+                                        image={item.image}
+                                        slug={item.slug}
+                                        to={'course/' + item.slug}
+                                    />
+                                ))}
+                            </ScrollContainer>
+                        </SectionBody>
+                        {/* <Button primaryOutline medium>
+                            Xem thêm
+                        </Button> */}
+                    </div>
+                </Section>
+            </div>
+
+            <div className="home__new-courses bg-main">
+                <Section>
+                    <SectionTitle
+                        title="Khoá học lập trình vừa ra mắt"
+                        desc="Các khóa học lập trình online vừa được DevIT ra mắt"
+                    />
+                    <div className="container">
+                        <SectionBody>
+                            <ScrollContainer horizontal vertical={false} className="card">
+                                {newCourses.map((item) => (
+                                    <CardItem
+                                        key={item.id}
+                                        name={item.name}
+                                        image={item.image}
+                                        slug={item.slug}
+                                        to={'course/' + item.slug}
+                                    />
+                                ))}
+                            </ScrollContainer>
+                        </SectionBody>
+                        {/* <Button primaryOutline medium>
+                            Xem thêm
+                        </Button> */}
                     </div>
                 </Section>
             </div>

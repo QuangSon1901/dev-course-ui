@@ -10,7 +10,7 @@
         width: 272px;
         background-color: var(--bg-color);
         border-radius: 8px;
-        border: 1px solid #ccc;
+        border: 1px solid var(--txt-border);
         color: var(--txt-color);
         display: flex;
         flex-direction: column;
@@ -61,6 +61,7 @@
             &__title {
                 flex-basis: 89px;
                 margin-bottom: 20px;
+                text-align: left;
 
                 & > h2 {
                     font-size: 2rem;

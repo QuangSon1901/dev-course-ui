@@ -1,0 +1,118 @@
+.footer {
+    background-color: #181821;
+    color: var(--txt-white);
+    padding: 80px 30px;
+    @include tablet {
+        padding: 80px;
+    }
+    @include mobile {
+        padding: 40px 0;
+    }
+    & .footer__top {
+        display: grid;
+        gap: 50px;
+        grid-template-columns: 1fr 1fr 1fr;
+
+        @include tablet {
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        &__middle {
+            display: grid;
+            gap: 50px;
+            grid-template-columns: 1fr 1fr 1fr;
+
+            @include tablet {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        &__group {
+            &__header {
+                margin-bottom: 30px;
+                @include tablet {
+                    margin-bottom: 10px;
+                }
+                @include flex('center', 'flex-start');
+                & > img {
+                    width: 40px;
+                    height: 40px;
+                    margin-right: 20px;
+                }
+                & > h2 {
+                    font-size: 1.6rem;
+                    font-weight: 600;
+                    line-height: 2.2rem;
+                    text-transform: uppercase;
+                }
+            }
+
+            &__body {
+                @include flex(flex-start, flex-start);
+                flex-direction: column;
+
+                & > * {
+                    font-size: 1.4rem;
+                    color: #a9b3bb;
+                    padding: 4px 0;
+                    line-height: 2rem;
+                }
+            }
+        }
+    }
+
+    & .footer__bottom {
+        margin-top: 40px;
+        @include flex(center, space-between);
+        color: #a9b3bb;
+
+        @include tablet {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        &__copyright {
+            font-size: 1.4rem;
+            font-weight: 400;
+
+            @include tablet {
+                margin-bottom: 20px;
+            }
+        }
+
+        &__contact {
+            font-size: 3rem;
+
+            & > * ~ * {
+                margin-left: 10px;
+            }
+
+            & > i {
+                cursor: pointer;
+                transition: color 0.2s linear;
+            }
+
+            &__youtube:hover {
+                color: #ff0000;
+            }
+
+            &__facebook:hover {
+                color: #0674e7;
+            }
+
+            &__instagram:hover {
+                color: #f7007c;
+            }
+
+            &__telegram:hover {
+                color: #0674e7;
+            }
+
+            &__twitter:hover {
+                color: #0674e7;
+            }
+        }
+    }
+}
