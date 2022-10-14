@@ -53,7 +53,7 @@ const LoginForm = () => {
                         Report.success('Gửi yêu cầu thành công', res.message, 'Okay');
                     } catch (error) {
                         Loading.remove(500);
-                        if (error.response.data)
+                        if (error.response.data.status)
                             return Report.failure('Gửi yêu cầu thất bại', error.response.data.message, 'Okay');
                         return Report.failure(
                             'Gửi yêu cầu thất bại',
