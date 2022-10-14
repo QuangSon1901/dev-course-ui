@@ -1,0 +1,30 @@
+.section-support {
+    margin-top: 60px;
+    &__list {
+        &__item {
+            background-color: var(--bg-color);
+            text-align: center;
+
+            &__img > img {
+                width: 80px;
+                height: 80px;
+                margin-bottom: 20px;
+            }
+
+            &__body {
+                &__title {
+                    font-size: 1.8rem;
+                    font-weight: 600;
+                    margin-bottom: 20px;
+                    color: var(--txt-color);
+                }
+
+                &__desc {
+                    font-size: 1.6rem;
+                    color: var(--txt-color);
+                    line-height: 2.4rem;
+                }
+            }
+        }
+    }
+}

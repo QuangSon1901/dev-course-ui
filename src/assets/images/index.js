@@ -7,6 +7,10 @@ const images = {
     loginBG: require('~/assets/images/login-bg.jpg'),
     noImg: require('~/assets/images/no-image.jpg'),
     noAvt: require('~/assets/images/no-avt.png'),
+    iconSupport: require('~/assets/images/icon-support.svg').default,
+    iconFeedback: require('~/assets/images/icon-feedback.svg').default,
+    iconHighlyVetted: require('~/assets/images/icon-highly-vetted.svg').default,
+    iconResponseTime: require('~/assets/images/icon-response-time.svg').default,
 };
 
 export default images;

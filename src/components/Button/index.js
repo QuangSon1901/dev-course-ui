@@ -6,8 +6,10 @@ const Button = ({
     href,
     children,
     primary = false,
+    primaryOutline = false,
     disable = false,
     small = false,
+    medium = false,
     large = false,
     className,
     style,
@@ -34,9 +36,11 @@ const Button = ({
 
     return (
         <Comp
-            className={`btn ${primary ? 'primary' : ''} ${disable ? 'disable' : ''}  ${small ? 'small' : ''}  ${
-                line ? 'line' : ''
-            } ${large ? 'large' : ''} ${className}`}
+            className={`btn ${primary ? 'primary' : ''} ${primaryOutline ? 'primary-outline' : ''} ${
+                disable ? 'disable' : ''
+            }  ${small ? 'small' : ''} ${medium ? 'medium' : ''}  ${line ? 'line' : ''} ${
+                large ? 'large' : ''
+            } ${className}`}
             onClick={onClick}
             style={style}
             {...props}

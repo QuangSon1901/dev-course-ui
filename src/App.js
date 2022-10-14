@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './components/Routing';
 import { getUser } from './layouts/AuthLayout/authSlice';
 import MainLayout from './layouts/MainLayout';
+import NotFound from './pages/NotFound';
 import { privateRouters, publicRoutes } from './routes';
 
 import './sass/index.scss';
@@ -66,6 +67,7 @@ function App() {
                         </Route>
                     );
                 })}
+                <Route path="*" element={<NotFound />} />
             </Routes>
         </Router>
     );

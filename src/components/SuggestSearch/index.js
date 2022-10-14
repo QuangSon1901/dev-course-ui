@@ -28,7 +28,7 @@ const SuggestSearch = ({ data }) => {
                                         borderRadius: '50%',
                                         objectFit: 'cover',
                                     }}
-                                    href={'program/' + item.slug}
+                                    href={'course/' + item.slug}
                                     style={{ justifyContent: 'flex-start' }}
                                 >
                                     {item.name}
@@ -61,7 +61,7 @@ const SuggestSearch = ({ data }) => {
                                         borderRadius: '50%',
                                         objectFit: 'cover',
                                     }}
-                                    href={'program/' + item.slug}
+                                    href={'course/' + item.slug}
                                     style={{ justifyContent: 'flex-start' }}
                                 >
                                     {item.name}
@@ -94,7 +94,7 @@ const SuggestSearch = ({ data }) => {
                                         borderRadius: '50%',
                                         objectFit: 'cover',
                                     }}
-                                    href={'program/' + item.slug}
+                                    href={'course/' + item.slug}
                                     style={{ justifyContent: 'flex-start' }}
                                 >
                                     {item.name}

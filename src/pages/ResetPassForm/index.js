@@ -50,7 +50,7 @@ const ResetPassForm = () => {
                     handleSubmitReset(values);
                 }}
                 validationSchema={Yup.object().shape({
-                    password: Yup.string().required('Vui lòng nhập Mật khẩu!'),
+                    password: Yup.string().required('Vui lòng nhập Mật khẩu mới!'),
                     passwordConfirm: Yup.string()
                         .required('Vui lòng nhập lại Mật khẩu!')
                         .oneOf([Yup.ref('password'), null], 'Mật khẩu chưa đúng!'),
@@ -66,7 +66,7 @@ const ResetPassForm = () => {
                                 <Input
                                     type="password"
                                     name="password"
-                                    placeholder="Mật khẩu"
+                                    placeholder="Mật khẩu mới"
                                     value={values.password}
                                     onChange={handleChange}
                                     onBlur={handleBlur}

@@ -5,7 +5,12 @@ const Section = (props) => {
 };
 
 export const SectionTitle = (props) => {
-    return <div className="section__title">{props.children}</div>;
+    return (
+        <>
+            <div className="section__title">{props.title}</div>
+            <div className="section__desc">{props.desc}</div>
+        </>
+    );
 };
 
 export const SectionBody = (props) => {

@@ -23,7 +23,7 @@ const MegaDropdown = () => {
                         <ul>
                             {item.courses.map((item2) => (
                                 <li key={item2.id}>
-                                    <a href={'program/' + item2.slug}>
+                                    <a href={'course/' + item2.slug}>
                                         <i className="bx bx-right-arrow-circle"></i>
                                         {item2.name}
                                     </a>

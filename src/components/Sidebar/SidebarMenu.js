@@ -224,7 +224,7 @@ const SidebarMenu = (props) => {
                             const renderItemsHaveLink = (render) => (
                                 <NavLink
                                     className="sidebar__menu__select__list__item__link"
-                                    to={'program/' + render.to}
+                                    to={'course/' + render.to}
                                     onClick={(isParent && ((e) => addHistory(e))) || (() => props.onClose())}
                                 >
                                     <i className={`${render.icon}`}></i>
