@@ -10,7 +10,7 @@ import Input from '~/components/Input';
 import config from '~/config';
 import authSlice, { registerUser } from '~/layouts/AuthLayout/authSlice';
 import { authSelector } from '~/redux/selector';
-import { Loading } from 'notiflix';
+import { Loading, Report } from 'notiflix';
 
 const RegisterForm = () => {
     const dispatch = useDispatch();
@@ -20,8 +20,20 @@ const RegisterForm = () => {
     });
 
     useEffect(() => {
-        if (notify && notify.success === 'danger') {
-            setTimeout(() => setErrorRes({ ...errorRes, email: notify.message }), 500);
+        if (notify) {
+            switch (notify.success) {
+                case 'danger':
+                    setTimeout(() => setErrorRes({ ...errorRes, email: notify.message }), 500);
+                    break;
+                case 'error':
+                    Report.warning(
+                        'Xử lý yêu cầu thất bại',
+                        'Không thể xử lý yêu cầu ngay lúc này, vui lòng kiểm tra lại kết nối!',
+                        'Okay',
+                    );
+                    break;
+                default:
+            }
             dispatch(authSlice.actions.clearNotify());
         }
 

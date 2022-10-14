@@ -1,7 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
-import { Block } from 'notiflix/build/notiflix-block-aio';
 
 import images from '~/assets/images';
 import config from '~/config';
@@ -13,10 +12,10 @@ import Search from '../Search';
 import Sidebar from '../Sidebar';
 import themeSlice from '../ThemeMenu/themeSlice';
 import multilingualSlice from './multilingualSlice';
+import Image from '../Image';
 
 const MidHeader = () => {
-    const { isAuthenticated, loading } = useSelector(authSelector);
-
+    const { isAuthenticated, loading, user } = useSelector(authSelector);
     const dispatch = useDispatch();
 
     const theme = useSelector(themeSelector);
@@ -129,7 +128,13 @@ const MidHeader = () => {
                             <li className="header__wrapper__mid__user-menu__user">
                                 <>
                                     <div ref={userToggle} className="header__wrapper__mid__user-menu__user__avatar">
-                                        <img src={images.userAvt} alt="" />
+                                        <Image
+                                            src={
+                                                (user && process.env.REACT_APP_BASE_URL_FILE_UPLOAD + user.avatar) || ''
+                                            }
+                                            fallback={images.noAvt}
+                                            alt=""
+                                        />
                                     </div>
                                     <Wrapper menu_toggle_ref={userToggle} className="dropdown__content">
                                         <Menu

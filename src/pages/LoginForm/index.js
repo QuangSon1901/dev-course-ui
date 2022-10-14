@@ -14,6 +14,7 @@ import Input from '~/components/Input';
 import config from '~/config';
 import authSlice, { loginUser } from '~/layouts/AuthLayout/authSlice';
 import { authSelector } from '~/redux/selector';
+import sendMail from '~/utils/senMail';
 
 const LoginForm = () => {
     const dispatch = useDispatch();
@@ -25,8 +26,20 @@ const LoginForm = () => {
     //     console.log('Captcha value:', e);
     // };
     useEffect(() => {
-        if (notify && notify.success === 'danger') {
-            setTimeout(() => setErrorRes({ ...errorRes, password: notify.message }), 500);
+        if (notify) {
+            switch (notify.success) {
+                case 'danger':
+                    setTimeout(() => setErrorRes({ ...errorRes, password: notify.message }), 500);
+                    break;
+                case 'error':
+                    Report.warning(
+                        'Xử lý yêu cầu thất bại',
+                        'Không thể xử lý yêu cầu ngay lúc này, vui lòng kiểm tra lại kết nối!',
+                        'Okay',
+                    );
+                    break;
+                default:
+            }
             dispatch(authSlice.actions.clearNotify());
         }
 
@@ -49,8 +62,15 @@ const LoginForm = () => {
                         const res = await httpRequest.post('/auth/reset-password', {
                             email,
                         });
-                        Loading.remove(500);
-                        Report.success('Gửi yêu cầu thành công', res.message, 'Okay');
+
+                        if (res.success === 'success') {
+                            sendMail(
+                                'Dev - IT',
+                                email,
+                                'https://tinhocstar.site/reset-password/' + res.token,
+                                res.message,
+                            );
+                        }
                     } catch (error) {
                         Loading.remove(500);
                         if (error.response.data.status)

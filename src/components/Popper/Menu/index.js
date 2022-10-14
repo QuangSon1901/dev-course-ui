@@ -3,14 +3,23 @@ import React from 'react';
 import MenuItem from './MenuItem';
 import images from '~/assets/images';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { authSelector } from '~/redux/selector';
+import Image from '~/components/Image';
 
 const Menu = ({ data, type, style, icon, headerUser, headerNotify, img, footer }) => {
+    const { user } = useSelector(authSelector);
+
     return (
         <div className="menu__wrapper">
             {headerUser ? (
                 <div className="menu__wrapper__avatar">
-                    <img src={images.userAvt} alt="" />
-                    <h3>Vũ Quang Sơn</h3>
+                    <Image
+                        src={(user && process.env.REACT_APP_BASE_URL_FILE_UPLOAD + user.avatar) || ''}
+                        fallback={images.noAvt}
+                        alt=""
+                    />
+                    <h3>{user && user.name}</h3>
                 </div>
             ) : (
                 ''

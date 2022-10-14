@@ -7,8 +7,9 @@ import { NavLink } from 'react-router-dom';
 import Button from '../Button';
 import config from '~/config';
 import * as httpRequest from '~/utils/httpRequest';
+import Image from '../Image';
 const SidebarMenu = (props) => {
-    const { isAuthenticated, loading } = useSelector(authSelector);
+    const { isAuthenticated, loading, user } = useSelector(authSelector);
 
     const theme = useSelector(themeSelector);
     const multilingual = useSelector(multilingualSelector);
@@ -175,8 +176,12 @@ const SidebarMenu = (props) => {
         ) : isAuthenticated ? (
             <>
                 <div className="sidebar__menu__avatar">
-                    <img src={images.userAvt} alt="" />
-                    <h3>Vũ Quang Sơn</h3>
+                    <Image
+                        src={(user && process.env.REACT_APP_BASE_URL_FILE_UPLOAD + user.avatar) || ''}
+                        fallback={images.noAvt}
+                        alt=""
+                    />
+                    <h3>{user && user.name}</h3>
                 </div>
                 <div className="sidebar__menu__select">
                     <span>{translationSelected.messages.personal}</span>

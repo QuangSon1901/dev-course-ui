@@ -104,7 +104,7 @@ const Home = () => {
                     />
                     <div className="container">
                         <SectionBody>
-                            <ScrollContainer horizontal vertical={false} className="card">
+                            <ScrollContainer hideScrollbars={false} horizontal vertical={false} className="card">
                                 {newCourses.map((item) => (
                                     <CardItem
                                         key={item.id}
@@ -131,7 +131,7 @@ const Home = () => {
                     />
                     <div className="container">
                         <SectionBody>
-                            <ScrollContainer horizontal vertical={false} className="card">
+                            <ScrollContainer hideScrollbars={false} horizontal vertical={false} className="card">
                                 {newCourses.map((item) => (
                                     <CardItem
                                         key={item.id}
@@ -158,7 +158,7 @@ const Home = () => {
                     />
                     <div className="container">
                         <SectionBody>
-                            <ScrollContainer horizontal vertical={false} className="card">
+                            <ScrollContainer hideScrollbars={false} horizontal vertical={false} className="card">
                                 {newCourses.map((item) => (
                                     <CardItem
                                         key={item.id}

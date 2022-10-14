@@ -3,6 +3,7 @@ import axios from 'axios';
 const request = axios.create({
     baseURL: process.env.REACT_APP_BASE_URL,
     headers: { Accept: 'application/json' },
+    timeout: 10000,
 });
 
 export const get = async (path, options = {}) => {

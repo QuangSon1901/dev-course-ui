@@ -5,6 +5,12 @@
     grid-auto-columns: 270px;
     grid-auto-flow: column;
 
+    &::-webkit-scrollbar {
+        -webkit-appearance: none;
+        height: 0;
+        width: 0;
+    }
+
     &__item {
         overflow: hidden;
         width: 272px;
