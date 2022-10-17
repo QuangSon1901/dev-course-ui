@@ -18,6 +18,7 @@ const Button = ({
     img,
     imgStyle,
     line,
+    hover = true,
     onClick,
     ...passProps
 }) => {
@@ -38,8 +39,8 @@ const Button = ({
         <Comp
             className={`btn ${primary ? 'primary' : ''} ${primaryOutline ? 'primary-outline' : ''} ${
                 disable ? 'disable' : ''
-            }  ${small ? 'small' : ''} ${medium ? 'medium' : ''}  ${line ? 'line' : ''} ${
-                large ? 'large' : ''
+            }  ${small ? 'small' : ''} ${medium ? 'medium' : ''}  ${line ? 'line' : ''} ${large ? 'large' : ''} ${
+                hover === false ? 'hover-none' : ''
             } ${className}`}
             onClick={onClick}
             style={style}

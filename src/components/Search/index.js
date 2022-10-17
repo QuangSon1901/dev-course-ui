@@ -9,12 +9,7 @@ import { Wrapper } from '../Popper';
 import SuggestSearch from '../SuggestSearch';
 
 const searchInit = {
-    subjects: [],
-    subjects_total: 0,
-    courses: [],
-    courses_total: 0,
-    teachers: [],
-    teachers_total: 0,
+    suggests: [],
 };
 
 const Search = () => {
@@ -54,7 +49,6 @@ const Search = () => {
         setSearchResult(searchInit);
         searchRef.current.focus();
     };
-
     return (
         <div className="search">
             <input
@@ -85,15 +79,13 @@ const Search = () => {
 
                         {loading ? (
                             <span>Tìm '{searchValue}'</span>
-                        ) : searchResult.courses_total === 0 &&
-                          searchResult.subjects_total === 0 &&
-                          searchResult.teachers_total === 0 ? (
+                        ) : searchResult.suggests.length === 0 ? (
                             <span>Không có kết quả cho '{searchValue}'</span>
                         ) : (
                             <span>Kết quả tìm kiếm cho '{searchValue}'</span>
                         )}
                     </div>
-                    <SuggestSearch data={searchResult}></SuggestSearch>
+                    <SuggestSearch data={searchResult.suggests}></SuggestSearch>
                 </div>
             </Wrapper>
         </div>

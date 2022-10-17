@@ -13,6 +13,7 @@ import Sidebar from '../Sidebar';
 import themeSlice from '../ThemeMenu/themeSlice';
 import multilingualSlice from './multilingualSlice';
 import Image from '../Image';
+import Skeleton from '../Skeleton';
 
 const MidHeader = () => {
     const { isAuthenticated, loading, user } = useSelector(authSelector);
@@ -102,7 +103,10 @@ const MidHeader = () => {
                         </a>
                     </li>
                     {loading ? (
-                        'loading'
+                        <Skeleton width="120" height="30">
+                            <rect x="20" y="5" rx="3" ry="3" width="50" height="20" />
+                            <circle cx="105" cy="15" r="15" />
+                        </Skeleton>
                     ) : isAuthenticated ? (
                         <>
                             <li className="header__wrapper__mid__user-menu__notification">

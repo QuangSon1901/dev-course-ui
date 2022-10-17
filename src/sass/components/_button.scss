@@ -106,3 +106,9 @@
         font-size: 1.6rem;
     }
 }
+
+.hover-none {
+    &:hover {
+        background-color: transparent;
+    }
+}
