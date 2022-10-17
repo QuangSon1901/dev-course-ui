@@ -1,23 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { authSelector, multilingualSelector, themeSelector } from '~/redux/selector';
+import { authSelector, combineSelector, multilingualSelector, themeSelector } from '~/redux/selector';
 
 import images from '~/assets/images';
 import { NavLink } from 'react-router-dom';
 import Button from '../Button';
 import config from '~/config';
-import * as httpRequest from '~/utils/httpRequest';
 import Image from '../Image';
 const SidebarMenu = (props) => {
     const { isAuthenticated, loading, user } = useSelector(authSelector);
+    const { menuPrograms } = useSelector(combineSelector);
 
     const theme = useSelector(themeSelector);
     const multilingual = useSelector(multilingualSelector);
     const { translationSelected, translations } = multilingual;
 
-    const [programs, setPrograms] = useState({ program: [] });
+    const [menuAdd, setMenuAdd] = useState(false);
 
-    const SIDEBAR_MENU = useRef([
+    const SIDEBAR_MENU = [
         {
             title: translationSelected.messages.category,
             data: [
@@ -165,9 +165,9 @@ const SidebarMenu = (props) => {
                 },
             ],
         },
-    ]);
+    ];
 
-    const [history, setHistory] = useState([{ data: SIDEBAR_MENU.current }]);
+    const [history, setHistory] = useState([{ data: SIDEBAR_MENU }]);
     const current = history[history.length - 1];
 
     const renderProfile = () => {
@@ -177,7 +177,7 @@ const SidebarMenu = (props) => {
             <>
                 <div className="sidebar__menu__avatar">
                     <Image
-                        src={(user && process.env.REACT_APP_BASE_URL_FILE_UPLOAD + user.avatar) || ''}
+                        src={(user.avatar && process.env.REACT_APP_BASE_URL_FILE_UPLOAD + user.avatar) || ''}
                         fallback={images.noAvt}
                         alt=""
                     />
@@ -326,35 +326,26 @@ const SidebarMenu = (props) => {
     };
 
     useEffect(() => {
-        if (programs.program.length > 0) return;
-        const fetchPrograms = async () => {
-            try {
-                const res = await httpRequest.get('/programs', {
-                    params: { type: 'less' },
+        if (menuAdd) return;
+        menuPrograms.forEach((program) => {
+            const newCourse = [];
+            for (const { name, slug } of program.category_courses) {
+                newCourse.push({
+                    title: name,
+                    icon: 'bx bx-right-arrow-circle',
+                    to: slug,
                 });
+            }
 
-                res.program.forEach((program) => {
-                    const newCourse = [];
-                    for (const { name, slug } of program.courses) {
-                        newCourse.push({
-                            title: name,
-                            icon: 'bx bx-right-arrow-circle',
-                            to: slug,
-                        });
-                    }
+            const sideObject = {
+                title: program.name,
+                data: newCourse,
+            };
+            SIDEBAR_MENU[0].data[1].children.data.push(sideObject);
+        });
+        setMenuAdd(false);
+    });
 
-                    const sideObject = {
-                        title: program.name,
-                        data: newCourse,
-                    };
-                    SIDEBAR_MENU.current[0].data[1].children.data.push(sideObject);
-                });
-                setPrograms(res);
-            } catch (error) {}
-        };
-
-        fetchPrograms();
-    }, [programs]);
     return (
         <>
             <button className="sidebar__close" onClick={props.onClose}>

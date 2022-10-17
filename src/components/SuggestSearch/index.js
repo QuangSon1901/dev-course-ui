@@ -38,14 +38,14 @@ const SuggestSearch = ({ data }) => {
                     </ul>
                 </div>
             )}
-            {data.programs.length > 0 && (
+            {data.subjects.length > 0 && (
                 <div className="search__dropdown__content__wrapp__body__group">
                     <div className="search__dropdown__content__wrapp__body__group__title">
-                        <h4>Danh mục khoá học</h4>
+                        <h4>Môn học</h4>
                         <span>Xem thêm</span>
                     </div>
                     <ul>
-                        {data.programs.map((item) => (
+                        {data.subjects.map((item) => (
                             <li key={item.id}>
                                 <Button
                                     large

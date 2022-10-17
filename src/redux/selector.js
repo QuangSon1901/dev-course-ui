@@ -6,4 +6,6 @@ const authSelector = (state) => state.auth;
 
 const searchSelector = (state) => state.search;
 
-export { multilingualSelector, themeSelector, authSelector, searchSelector };
+const combineSelector = (state) => state.combine;
+
+export { multilingualSelector, themeSelector, authSelector, searchSelector, combineSelector };

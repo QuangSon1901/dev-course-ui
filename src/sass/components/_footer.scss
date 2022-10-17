@@ -5,9 +5,11 @@
     @include tablet {
         padding: 80px;
     }
+
     @include mobile {
         padding: 40px 0;
     }
+
     & .footer__top {
         display: grid;
         gap: 50px;
@@ -23,7 +25,7 @@
             gap: 50px;
             grid-template-columns: 1fr 1fr 1fr;
 
-            @include tablet {
+            @include mobile {
                 grid-template-columns: 1fr;
                 gap: 30px;
             }

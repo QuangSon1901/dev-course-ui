@@ -1,7 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 import * as httpRequest from '~/utils/httpRequest';
-import setAuthToken from '~/utils/setAuthToken';
 import { storage } from '~/utils/storage';
 
 const authSlice = createSlice({

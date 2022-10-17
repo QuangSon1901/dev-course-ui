@@ -9,8 +9,8 @@ import { Wrapper } from '../Popper';
 import SuggestSearch from '../SuggestSearch';
 
 const searchInit = {
-    programs: [],
-    programs_total: 0,
+    subjects: [],
+    subjects_total: 0,
     courses: [],
     courses_total: 0,
     teachers: [],
@@ -86,7 +86,7 @@ const Search = () => {
                         {loading ? (
                             <span>Tìm '{searchValue}'</span>
                         ) : searchResult.courses_total === 0 &&
-                          searchResult.programs_total === 0 &&
+                          searchResult.subjects_total === 0 &&
                           searchResult.teachers_total === 0 ? (
                             <span>Không có kết quả cho '{searchValue}'</span>
                         ) : (

@@ -130,7 +130,9 @@ const MidHeader = () => {
                                     <div ref={userToggle} className="header__wrapper__mid__user-menu__user__avatar">
                                         <Image
                                             src={
-                                                (user && process.env.REACT_APP_BASE_URL_FILE_UPLOAD + user.avatar) || ''
+                                                (user.avatar &&
+                                                    process.env.REACT_APP_BASE_URL_FILE_UPLOAD + user.avatar) ||
+                                                ''
                                             }
                                             fallback={images.noAvt}
                                             alt=""

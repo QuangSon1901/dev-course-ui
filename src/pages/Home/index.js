@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import ScrollContainer from 'react-indiana-drag-scroll';
 import images from '~/assets/images';
-import Button from '~/components/Button';
 import { CardItem } from '~/components/Card';
 import Grid from '~/components/Grid';
 import Hero from '~/components/Hero';

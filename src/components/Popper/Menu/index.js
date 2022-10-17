@@ -15,7 +15,7 @@ const Menu = ({ data, type, style, icon, headerUser, headerNotify, img, footer }
             {headerUser ? (
                 <div className="menu__wrapper__avatar">
                     <Image
-                        src={(user && process.env.REACT_APP_BASE_URL_FILE_UPLOAD + user.avatar) || ''}
+                        src={(user.avatar && process.env.REACT_APP_BASE_URL_FILE_UPLOAD + user.avatar) || ''}
                         fallback={images.noAvt}
                         alt=""
                     />

@@ -18,7 +18,7 @@ const AuthLayout = ({ children }) => {
         <div className={`${theme ? theme.theme : 'theme-mode-light'} ${theme ? theme.color : 'theme-color-blue'}`}>
             <div className="overlay"></div>
             <div className="auth" style={{ backgroundImage: `url(${images.loginBG})` }}>
-                {children}
+                <div className="auth__form">{children}</div>
                 <ul className="auth__sub">
                     <li>
                         <Link to={config.routes.home}>Về trang chủ</Link>

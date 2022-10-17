@@ -6,6 +6,7 @@ import ProtectedRoute from './components/Routing';
 import { getUser } from './layouts/AuthLayout/authSlice';
 import MainLayout from './layouts/MainLayout';
 import NotFound from './pages/NotFound';
+import { combineApi } from './redux/reducerCombine';
 import { privateRouters, publicRoutes } from './routes';
 
 import './sass/index.scss';
@@ -14,9 +15,9 @@ import notiflixInit from './utils/notiflixInit';
 function App() {
     const dispatch = useDispatch();
 
-    dispatch(getUser());
-
     useEffect(() => {
+        dispatch(getUser());
+        dispatch(combineApi());
         notiflixInit();
     }, []);
 
