@@ -1,6 +1,7 @@
 import React, { useEffect, useReducer, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
+import images from '~/assets/images';
 
 import { multilingualSelector } from '~/redux/selector';
 import { Wrapper } from '../Popper';
@@ -11,18 +12,22 @@ const MEMU_ITEMS_CURRENCY = [
     {
         id: uuidv4(),
         title: 'JPN',
+        img: images.japanFlag,
     },
     {
         id: uuidv4(),
         title: 'EUR',
+        img: images.europeFlag,
     },
     {
         id: uuidv4(),
         title: 'SPN',
+        img: images.spainFlag,
     },
     {
         id: uuidv4(),
         title: 'USD',
+        img: images.americaFlag,
     },
 ];
 
@@ -59,7 +64,12 @@ const TopHeader = () => {
                         VND
                     </a>
                     <Wrapper menu_toggle_ref={currencyRef} className="dropdown__content">
-                        <Menu type="currency" style={{ textTransform: 'uppercase' }} data={MEMU_ITEMS_CURRENCY}></Menu>
+                        <Menu
+                            type="currency"
+                            style={{ textTransform: 'uppercase', padding: '0px', justifyContent: 'space-around' }}
+                            data={MEMU_ITEMS_CURRENCY}
+                            img
+                        ></Menu>
                     </Wrapper>
                 </li>
                 {translations ? (
@@ -70,8 +80,9 @@ const TopHeader = () => {
                         <Wrapper menu_toggle_ref={languageRef} className="dropdown__content">
                             <Menu
                                 type="multilingual"
-                                style={{ textTransform: 'uppercase' }}
+                                style={{ textTransform: 'uppercase', padding: '0px', justifyContent: 'space-between' }}
                                 data={translationsList}
+                                img
                             ></Menu>
                         </Wrapper>
                     </li>

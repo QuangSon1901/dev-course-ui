@@ -2,6 +2,7 @@ import emailjs from 'emailjs-com';
 import { Loading, Report } from 'notiflix';
 
 const sendMail = (from_name, to_mail, url, toastMessage) => {
+    console.log(url);
     emailjs
         .send(
             'service_6622pea',

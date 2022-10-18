@@ -51,7 +51,6 @@ const MidHeader = () => {
             id: uuidv4(),
             icon: 'bx bx-user',
             title: translationSelected.messages.personalPage,
-            line: true,
             to: config.routes.profile,
         },
         {
@@ -150,6 +149,7 @@ const MidHeader = () => {
                                                 display: 'flex',
                                                 alignItems: 'center',
                                                 justifyContent: 'flex-start',
+                                                padding: '0px',
                                             }}
                                             icon
                                             headerUser

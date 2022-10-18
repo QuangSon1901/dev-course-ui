@@ -12,6 +12,12 @@ const images = {
     iconFeedback: require('~/assets/images/icon-feedback.svg').default,
     iconHighlyVetted: require('~/assets/images/icon-highly-vetted.svg').default,
     iconResponseTime: require('~/assets/images/icon-response-time.svg').default,
+    japanFlag: require('~/assets/images/japan.png'),
+    europeFlag: require('~/assets/images/european-union.png'),
+    spainFlag: require('~/assets/images/spain.png'),
+    americaFlag: require('~/assets/images/united-states-of-america.png'),
+    vnFlag: require('~/assets/images/vietnam.png'),
+    englishFlag: require('~/assets/images/united-kingdom.png'),
 };
 
 export default images;

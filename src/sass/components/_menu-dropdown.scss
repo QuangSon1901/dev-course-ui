@@ -2,10 +2,12 @@
     width: max-content;
     display: flex;
     flex-direction: column;
+    padding: 8px 16px 0;
 
     &__avatar {
         width: 100%;
-        padding: 8px 16px;
+        padding: 8px 0;
+
         @include flex(center, flex-start);
 
         & > img {

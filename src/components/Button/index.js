@@ -52,7 +52,7 @@ const Button = ({
                 </span>
             )}
             {img && <img className="img-btn" style={imgStyle} src={img} alt="" />}
-            <span className="children-btn">{children}</span>
+            <div className="children-btn">{children}</div>
             {rightIcon && (
                 <span style={{ marginLeft: '8px' }} className="icon-btn">
                     <i className={`${rightIcon}`}></i>

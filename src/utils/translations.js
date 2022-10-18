@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import images from '~/assets/images';
 
 const translations = [
     {
@@ -6,6 +7,7 @@ const translations = [
         icon: 'bx bx-globe',
         locale: 'en-US',
         title: 'English',
+        img: images.englishFlag,
         messages: {
             theme: 'Theme',
             themeSettings: 'Theme settings',
@@ -55,6 +57,7 @@ const translations = [
         icon: 'bx bx-globe',
         locale: 'vn',
         title: 'Vietnamese',
+        img: images.vnFlag,
         messages: {
             theme: 'Chủ đề',
             themeSettings: 'Thiết lập chủ đề',
@@ -64,7 +67,7 @@ const translations = [
             dark: 'Màu tối',
             red: 'Màu đỏ',
             blue: 'Màu xanh',
-            search: 'Tìm kiếm khoá học',
+            search: 'Tìm kiếm khoá học, danh mục, chủ đề,',
             home: 'Trang chủ',
             educationProgram: 'Danh mục khoá học',
             news: 'Tin tức',
@@ -104,6 +107,7 @@ const translations = [
         locale: 'jp',
         icon: 'bx bx-globe',
         title: 'Japanese',
+        img: images.japanFlag,
         messages: {
             theme: 'Topikku',
             themeSettings: 'Tēma settei',

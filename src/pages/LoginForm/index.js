@@ -67,7 +67,7 @@ const LoginForm = () => {
                             sendMail(
                                 'Dev - IT',
                                 email,
-                                'https://tinhocstar.site/reset-password/' + res.token,
+                                `https://tinhocstar.site/reset-password/${email}/${res.token}`,
                                 res.message,
                             );
                         }

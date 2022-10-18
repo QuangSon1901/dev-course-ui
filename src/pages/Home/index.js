@@ -1,27 +1,17 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import ScrollContainer from 'react-indiana-drag-scroll';
+import { useSelector } from 'react-redux';
 import images from '~/assets/images';
 import { CardItem } from '~/components/Card';
 import Grid from '~/components/Grid';
 import Hero from '~/components/Hero';
 import Section, { SectionBody, SectionTitle } from '~/components/Section';
 import Skeleton from '~/components/Skeleton';
-import * as httpRequest from '~/utils/httpRequest';
+import { combineSelector } from '~/redux/selector';
 
 const Home = () => {
-    const [newCourses, setNewCourses] = useState([]);
-
-    useEffect(() => {
-        if (newCourses.length > 0) return;
-        const fetchListNewCourse = async () => {
-            try {
-                const res = await httpRequest.get('/courses');
-                setNewCourses(res);
-            } catch (error) {}
-        };
-        fetchListNewCourse();
-    }, []);
+    const { loading, homeData } = useSelector(combineSelector);
     return (
         <>
             <Hero />
@@ -96,290 +86,81 @@ const Home = () => {
                 </Section>
             </div>
 
-            <div className="home__new-courses bg-main">
-                <Section>
-                    <SectionTitle
-                        title="Khoá học lập trình vừa ra mắt"
-                        desc="Các khóa học lập trình online vừa được DevIT ra mắt"
-                    />
-                    <div className="container">
-                        <SectionBody>
-                            {newCourses.length === 0 ? (
-                                <Skeleton width={1326} height={411}>
-                                    <rect x="10" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="30" y="165" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="30" y="200" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="30" y="306" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="30" y="338" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="310" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="330" y="166" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="330" y="201" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="330" y="307" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="330" y="339" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="610" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="630" y="166" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="630" y="201" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="630" y="307" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="630" y="339" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="910" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="930" y="166" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="930" y="201" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="930" y="307" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="930" y="339" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="1210" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="1230" y="166" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="1230" y="201" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="1230" y="307" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="1230" y="339" rx="8" ry="8" width="230" height="18" />
-                                </Skeleton>
-                            ) : (
+            {loading ? (
+                <div className="home__new-courses bg-main">
+                    <Section>
+                        <Skeleton speed={2} width={820} height={60}>
+                            <rect x="30" y="306" rx="8" ry="8" width="230" height="18" />
+                            <rect x="30" y="338" rx="8" ry="8" width="230" height="18" />
+                            <rect x="330" y="307" rx="8" ry="8" width="230" height="18" />
+                            <rect x="330" y="339" rx="8" ry="8" width="230" height="18" />
+                            <rect x="210" y="0" rx="8" ry="8" width="400" height="24" />
+                            <rect x="200" y="30" rx="8" ry="8" width="420" height="18" />
+                        </Skeleton>
+                        <div className="container">
+                            <SectionBody>
                                 <ScrollContainer hideScrollbars={false} horizontal vertical={false} className="card">
-                                    {newCourses.map((item) => (
-                                        <CardItem
-                                            key={item.id}
-                                            name={item.name}
-                                            image={item.image}
-                                            slug={item.slug}
-                                            to={'course/' + item.slug}
-                                        />
-                                    ))}
+                                    <Skeleton width={1326} height={411}>
+                                        <rect x="10" y="11" rx="8" ry="8" width="270" height="130" />
+                                        <rect x="30" y="165" rx="8" ry="8" width="100" height="18" />
+                                        <rect x="30" y="200" rx="8" ry="8" width="230" height="50" />
+                                        <rect x="30" y="306" rx="8" ry="8" width="230" height="18" />
+                                        <rect x="30" y="338" rx="8" ry="8" width="230" height="18" />
+                                        <rect x="310" y="11" rx="8" ry="8" width="270" height="130" />
+                                        <rect x="330" y="166" rx="8" ry="8" width="100" height="18" />
+                                        <rect x="330" y="201" rx="8" ry="8" width="230" height="50" />
+                                        <rect x="330" y="307" rx="8" ry="8" width="230" height="18" />
+                                        <rect x="330" y="339" rx="8" ry="8" width="230" height="18" />
+                                        <rect x="610" y="11" rx="8" ry="8" width="270" height="130" />
+                                        <rect x="630" y="166" rx="8" ry="8" width="100" height="18" />
+                                        <rect x="630" y="201" rx="8" ry="8" width="230" height="50" />
+                                        <rect x="630" y="307" rx="8" ry="8" width="230" height="18" />
+                                        <rect x="630" y="339" rx="8" ry="8" width="230" height="18" />
+                                        <rect x="910" y="11" rx="8" ry="8" width="270" height="130" />
+                                        <rect x="930" y="166" rx="8" ry="8" width="100" height="18" />
+                                        <rect x="930" y="201" rx="8" ry="8" width="230" height="50" />
+                                        <rect x="930" y="307" rx="8" ry="8" width="230" height="18" />
+                                        <rect x="930" y="339" rx="8" ry="8" width="230" height="18" />
+                                        <rect x="1210" y="11" rx="8" ry="8" width="270" height="130" />
+                                        <rect x="1230" y="166" rx="8" ry="8" width="100" height="18" />
+                                        <rect x="1230" y="201" rx="8" ry="8" width="230" height="50" />
+                                        <rect x="1230" y="307" rx="8" ry="8" width="230" height="18" />
+                                        <rect x="1230" y="339" rx="8" ry="8" width="230" height="18" />
+                                    </Skeleton>
                                 </ScrollContainer>
-                            )}
-                        </SectionBody>
-                        {/* <Button primaryOutline medium>
-                            Xem thêm
-                        </Button> */}
+                            </SectionBody>
+                        </div>
+                    </Section>
+                </div>
+            ) : (
+                homeData.map((item, index) => (
+                    <div className="home__new-courses bg-main" key={index}>
+                        <Section>
+                            <SectionTitle title={item.title} desc={item.sub_title} />
+                            <div className="container">
+                                <SectionBody>
+                                    <ScrollContainer
+                                        hideScrollbars={false}
+                                        horizontal
+                                        vertical={false}
+                                        className="card"
+                                    >
+                                        {item.data.map((item) => (
+                                            <CardItem
+                                                key={item.id}
+                                                name={item.name}
+                                                image={item.image}
+                                                slug={item.slug}
+                                                to={'course/' + item.slug}
+                                            />
+                                        ))}
+                                    </ScrollContainer>
+                                </SectionBody>
+                            </div>
+                        </Section>
                     </div>
-                </Section>
-            </div>
-
-            <div className="home__new-courses bg-second">
-                <Section>
-                    <SectionTitle
-                        title="Các khóa học nổi bật cho ReactJS"
-                        desc="Các khóa học lập trình ReactJS nổi bậc được nhiều người yêu thích"
-                    />
-                    <div className="container">
-                        <SectionBody>
-                            {newCourses.length === 0 ? (
-                                <Skeleton width={1326} height={411} backgroundColor="#ccc" foregroundColor="#f5f5f5">
-                                    <rect x="10" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="30" y="165" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="30" y="200" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="30" y="306" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="30" y="338" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="310" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="330" y="166" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="330" y="201" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="330" y="307" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="330" y="339" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="610" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="630" y="166" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="630" y="201" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="630" y="307" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="630" y="339" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="910" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="930" y="166" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="930" y="201" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="930" y="307" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="930" y="339" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="1210" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="1230" y="166" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="1230" y="201" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="1230" y="307" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="1230" y="339" rx="8" ry="8" width="230" height="18" />
-                                </Skeleton>
-                            ) : (
-                                <ScrollContainer hideScrollbars={false} horizontal vertical={false} className="card">
-                                    {newCourses.map((item) => (
-                                        <CardItem
-                                            key={item.id}
-                                            name={item.name}
-                                            image={item.image}
-                                            slug={item.slug}
-                                            to={'course/' + item.slug}
-                                        />
-                                    ))}
-                                </ScrollContainer>
-                            )}
-                        </SectionBody>
-                        {/* <Button primaryOutline medium>
-                            Xem thêm
-                        </Button> */}
-                    </div>
-                </Section>
-            </div>
-
-            <div className="home__new-courses bg-main">
-                <Section>
-                    <SectionTitle
-                        title="Các khóa học nổi bật cho Python"
-                        desc="Các khóa học lập trình Python nổi bậc được nhiều người yêu thích"
-                    />
-                    <div className="container">
-                        <SectionBody>
-                            {newCourses.length === 0 ? (
-                                <Skeleton width={1326} height={411}>
-                                    <rect x="10" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="30" y="165" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="30" y="200" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="30" y="306" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="30" y="338" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="310" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="330" y="166" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="330" y="201" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="330" y="307" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="330" y="339" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="610" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="630" y="166" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="630" y="201" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="630" y="307" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="630" y="339" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="910" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="930" y="166" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="930" y="201" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="930" y="307" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="930" y="339" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="1210" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="1230" y="166" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="1230" y="201" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="1230" y="307" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="1230" y="339" rx="8" ry="8" width="230" height="18" />
-                                </Skeleton>
-                            ) : (
-                                <ScrollContainer hideScrollbars={false} horizontal vertical={false} className="card">
-                                    {newCourses.map((item) => (
-                                        <CardItem
-                                            key={item.id}
-                                            name={item.name}
-                                            image={item.image}
-                                            slug={item.slug}
-                                            to={'course/' + item.slug}
-                                        />
-                                    ))}
-                                </ScrollContainer>
-                            )}
-                        </SectionBody>
-                        {/* <Button primaryOutline medium>
-                            Xem thêm
-                        </Button> */}
-                    </div>
-                </Section>
-            </div>
-
-            <div className="home__new-courses bg-second">
-                <Section>
-                    <SectionTitle
-                        title="Top các khoá học về phát triển phần mềm"
-                        desc="Các khóa học về phát triển phần mềm nổi bậc được nhiều người yêu thích"
-                    />
-                    <div className="container">
-                        <SectionBody>
-                            {newCourses.length === 0 ? (
-                                <Skeleton width={1326} height={411}>
-                                    <rect x="10" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="30" y="165" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="30" y="200" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="30" y="306" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="30" y="338" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="310" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="330" y="166" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="330" y="201" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="330" y="307" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="330" y="339" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="610" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="630" y="166" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="630" y="201" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="630" y="307" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="630" y="339" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="910" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="930" y="166" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="930" y="201" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="930" y="307" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="930" y="339" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="1210" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="1230" y="166" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="1230" y="201" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="1230" y="307" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="1230" y="339" rx="8" ry="8" width="230" height="18" />
-                                </Skeleton>
-                            ) : (
-                                <ScrollContainer hideScrollbars={false} horizontal vertical={false} className="card">
-                                    {newCourses.map((item) => (
-                                        <CardItem
-                                            key={item.id}
-                                            name={item.name}
-                                            image={item.image}
-                                            slug={item.slug}
-                                            to={'course/' + item.slug}
-                                        />
-                                    ))}
-                                </ScrollContainer>
-                            )}
-                        </SectionBody>
-                        {/* <Button primaryOutline medium>
-                            Xem thêm
-                        </Button> */}
-                    </div>
-                </Section>
-            </div>
-
-            <div className="home__new-courses bg-main">
-                <Section>
-                    <SectionTitle
-                        title="Top các khoá học về IT & Software"
-                        desc="Các khóa học về IT & Software nổi bậc được nhiều người yêu thích"
-                    />
-                    <div className="container">
-                        <SectionBody>
-                            {newCourses.length === 0 ? (
-                                <Skeleton width={1326} height={411}>
-                                    <rect x="10" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="30" y="165" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="30" y="200" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="30" y="306" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="30" y="338" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="310" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="330" y="166" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="330" y="201" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="330" y="307" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="330" y="339" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="610" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="630" y="166" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="630" y="201" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="630" y="307" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="630" y="339" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="910" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="930" y="166" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="930" y="201" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="930" y="307" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="930" y="339" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="1210" y="11" rx="8" ry="8" width="270" height="130" />
-                                    <rect x="1230" y="166" rx="8" ry="8" width="100" height="18" />
-                                    <rect x="1230" y="201" rx="8" ry="8" width="230" height="50" />
-                                    <rect x="1230" y="307" rx="8" ry="8" width="230" height="18" />
-                                    <rect x="1230" y="339" rx="8" ry="8" width="230" height="18" />
-                                </Skeleton>
-                            ) : (
-                                <ScrollContainer hideScrollbars={false} horizontal vertical={false} className="card">
-                                    {newCourses.map((item) => (
-                                        <CardItem
-                                            key={item.id}
-                                            name={item.name}
-                                            image={item.image}
-                                            slug={item.slug}
-                                            to={'course/' + item.slug}
-                                        />
-                                    ))}
-                                </ScrollContainer>
-                            )}
-                        </SectionBody>
-                        {/* <Button primaryOutline medium>
-                            Xem thêm
-                        </Button> */}
-                    </div>
-                </Section>
-            </div>
+                ))
+            )}
         </>
     );
 };

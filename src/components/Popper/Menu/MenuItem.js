@@ -25,6 +25,7 @@ const MenuItem = ({ title, id, type, style, leftIcon, line, img, to }) => {
             leftIcon={leftIcon}
             onClick={handeClick}
             to={to}
+            hover={false}
         >
             {title}
         </Button>

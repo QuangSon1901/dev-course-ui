@@ -6,6 +6,7 @@ const reducerCombine = createSlice({
     initialState: {
         loading: false,
         menuPrograms: [],
+        homeData: [],
     },
     extraReducers: (builder) => {
         builder
@@ -14,9 +15,11 @@ const reducerCombine = createSlice({
             })
             .addCase(combineApi.fulfilled, (state, action) => {
                 state.loading = false;
+
                 switch (action.payload.success) {
                     case 'success':
                         state.menuPrograms = action.payload.menu_programs;
+                        state.homeData = action.payload.data;
                         break;
                     default:
                 }
