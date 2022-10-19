@@ -3,13 +3,18 @@ import useDebounce from '~/hooks/useDebounce';
 import { Wrapper } from '../Popper';
 import * as httpRequest from '~/utils/httpRequest';
 import SuggestSearch from '../SuggestSearch';
+import { useParams } from 'react-router-dom';
 
 const searchInit = {
     suggests: [],
 };
 
 const SidebarSearch = ({ onClose }) => {
-    const [searchValue, setSearchValue] = useState('');
+    const { query } = useParams();
+
+    const initQuery = query ? query : '';
+
+    const [searchValue, setSearchValue] = useState(initQuery);
     const [loading, setLoading] = useState(false);
     const [searchResult, setSearchResult] = useState(searchInit);
     const searchRef = useRef(null);

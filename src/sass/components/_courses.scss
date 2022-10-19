@@ -13,19 +13,34 @@
         &__item {
             @include flex(flex-start, space-between);
 
+            @include mobile {
+                flex-direction: column;
+            }
+
             &__content {
                 @include flex(flex-start, flex-start);
 
                 & > * ~ * {
                     margin-left: 20px;
+
+                    @include mobile {
+                        margin-left: 6px;
+                    }
                 }
 
                 &:hover &__image {
                     border: 1px solid var(--txt-color);
+
+                    @include tablet {
+                        border: 1px solid transparent;
+                    }
                 }
 
                 &:hover &__image > &__image__overlay {
                     background-color: rgba(0, 0, 0, 10%);
+                    @include tablet {
+                        background-color: transparent;
+                    }
                 }
 
                 &__image {
@@ -35,6 +50,11 @@
                     overflow: hidden;
                     border: 1px solid transparent;
                     transition: all 0.3s ease;
+
+                    @include mobile {
+                        min-width: 60px;
+                        min-height: 40px;
+                    }
 
                     & > img,
                     &__overlay {
@@ -53,6 +73,10 @@
 
                     & > * ~ * {
                         margin-top: 10px;
+
+                        @include mobile {
+                            margin-top: 4px;
+                        }
                     }
 
                     &__title {
@@ -66,12 +90,23 @@
                         line-height: 1.6rem;
                         font-weight: 400;
                         color: var(--txt-color);
+
+                        @include mobile {
+                            display: none;
+                        }
                     }
 
                     &__teacher {
                         font-size: 1.2rem;
                         font-weight: 400;
                         color: var(--txt-second);
+
+                        @include mobile {
+                            -webkit-line-clamp: 1;
+                            -webkit-box-orient: vertical;
+                            display: -webkit-box;
+                            overflow: hidden;
+                        }
                     }
 
                     &__preview {
@@ -97,6 +132,10 @@
                     }
 
                     &__tag {
+                        @include mobile {
+                            display: none;
+                        }
+
                         &__best-seller {
                             padding: 6px 10px;
                             border-radius: 4px;
@@ -117,12 +156,73 @@
                 font-weight: 700;
                 color: var(--txt-color);
 
+                @include mobile {
+                    float: right;
+                    margin-top: 6px;
+                    margin-left: 66px;
+                    flex-direction: row;
+                }
+
                 &__original {
                     margin-top: 10px;
                     text-decoration: line-through;
                     font-weight: 400;
                     color: var(--txt-second);
+
+                    @include mobile {
+                        margin-top: 0;
+                        margin-left: 10px;
+                    }
                 }
+            }
+        }
+    }
+
+    &__paginate {
+        @include flex(center, center);
+        font-size: 1.6rem;
+        font-weight: 700;
+        margin-top: 50px;
+
+        & i {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        & > * {
+            margin: 0 5px;
+            padding: 5px 5px;
+        }
+
+        &__btn {
+            width: 4rem;
+            height: 4rem;
+            margin: 0 10px;
+            @include flex(center, center);
+            border-radius: 50%;
+            border: 1px solid var(--txt-color);
+
+            &:hover {
+                background-color: var(--bg-second);
+            }
+
+            &--disable {
+                pointer-events: none;
+                border-color: #ccc;
+                color: #ccc;
+            }
+        }
+
+        &__page {
+            border-bottom: 2px solid transparent;
+
+            &:hover {
+                color: var(--main-color);
+            }
+
+            &--active {
+                color: var(--main-color);
+                border-bottom: 2px solid var(--main-color);
             }
         }
     }

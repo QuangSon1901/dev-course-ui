@@ -1,9 +1,76 @@
 .filter {
+    background-color: var(--bg-color);
+
+    &__tablet {
+        &__header {
+            display: none;
+
+            @include tablet {
+                @include flex(center, space-between);
+                padding: 20px;
+            }
+
+            &__close {
+                @include flex(center, center);
+                font-size: 2.4rem;
+            }
+        }
+
+        @include tablet {
+            background-color: var(--bg-second);
+            position: fixed;
+            top: 0;
+            right: -30vw;
+            bottom: 0;
+            width: 30vw;
+            z-index: 9999;
+            transition: all 0.3s ease;
+
+            &--active {
+                right: 0;
+            }
+        }
+
+        @include mobile {
+            position: fixed;
+            top: 0;
+            right: -100vw;
+            bottom: 0;
+            width: 100vw;
+            z-index: 9999;
+            transition: all 0.3s ease;
+
+            &--active {
+                right: 0;
+            }
+        }
+    }
+
+    &__overlay {
+        opacity: 0;
+        visibility: hidden;
+        @include tablet {
+            &--active {
+                opacity: 0.5;
+                visibility: visible;
+            }
+        }
+    }
+
     &__list {
         margin-right: 40px;
         width: 266px;
         display: grid;
         grid-template-columns: 1fr;
+
+        @include tablet {
+            width: auto;
+        }
+
+        @include tablet {
+            margin-right: 20px;
+            margin-left: 20px;
+        }
 
         &__item {
             border-top: 1px solid #ccc;

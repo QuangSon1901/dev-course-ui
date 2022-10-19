@@ -7,23 +7,28 @@ import * as httpRequest from '~/utils/httpRequest';
 import { multilingualSelector } from '~/redux/selector';
 import { Wrapper } from '../Popper';
 import SuggestSearch from '../SuggestSearch';
+import { useParams } from 'react-router-dom';
 
 const searchInit = {
     suggests: [],
 };
 
 const Search = () => {
+    const { query } = useParams();
+
+    const initQuery = query ? query : '';
+
     const multilingual = useSelector(multilingualSelector);
-    const [searchValue, setSearchValue] = useState('');
+    const [searchValue, setSearchValue] = useState(initQuery);
     const [loading, setLoading] = useState(false);
     const [searchResult, setSearchResult] = useState(searchInit);
-    const [suggest, setSuggest] = useState(true);
+    const [suggest, setSuggest] = useState(false);
     const searchRef = useRef(null);
 
     const debouncedValue = useDebounce(searchValue, 500);
 
-    const handleChangeSearchValue = (e) => {
-        !e.target.value.startsWith(' ') && setSearchValue(e.target.value);
+    const handleChangeSearchValue = (value) => {
+        !value.startsWith(' ') && setSearchValue(value);
     };
 
     useEffect(() => {
@@ -55,7 +60,7 @@ const Search = () => {
                 ref={searchRef}
                 type="text"
                 value={searchValue}
-                onChange={(e) => handleChangeSearchValue(e)}
+                onChange={(e) => handleChangeSearchValue(e.target.value)}
                 onFocus={() => setSuggest(true)}
                 placeholder={multilingual.translationSelected.messages.search + ' . . .'}
             />
@@ -85,7 +90,11 @@ const Search = () => {
                             <span>Kết quả tìm kiếm cho '{searchValue}'</span>
                         )}
                     </div>
-                    <SuggestSearch data={searchResult.suggests}></SuggestSearch>
+                    <SuggestSearch
+                        data={searchResult.suggests}
+                        onSuggest={setSuggest}
+                        onChangeValue={handleChangeSearchValue}
+                    ></SuggestSearch>
                 </div>
             </Wrapper>
         </div>

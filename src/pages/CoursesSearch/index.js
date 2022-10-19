@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Courses from '~/components/Courses';
 import Filter from '~/components/Filter';
 
@@ -31,7 +32,7 @@ const CoursesSearch = () => {
                         <div className="courses__search__filter-panel__btn__count">7,764 results</div>
                     </div>
                     <div className={`courses__search__body ${toggleFilter ? '' : 'courses__search__body--hide'} `}>
-                        <Filter />
+                        <Filter toggleFilter={toggleFilter} onToggleFilter={setToggleFilter} />
                         <Courses />
                     </div>
                 </div>
