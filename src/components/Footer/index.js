@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import images from '~/assets/images';
-import Grid from '../Grid';
 
 const Footer = () => {
     return (
