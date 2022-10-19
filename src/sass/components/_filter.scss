@@ -1,0 +1,98 @@
+.filter {
+    &__list {
+        margin-right: 40px;
+        width: 266px;
+        display: grid;
+        grid-template-columns: 1fr;
+
+        &__item {
+            border-top: 1px solid #ccc;
+
+            &__header {
+                @include flex(center, space-between);
+                padding: 16px 0;
+                cursor: pointer;
+
+                & > * {
+                    font-size: 1.8rem;
+                    font-weight: 700;
+                }
+
+                & > i {
+                    transition: transform 0.3s ease;
+                }
+
+                &__arrow--active {
+                    transform: rotate(-180deg);
+                }
+            }
+
+            &__body {
+                margin-top: 10px;
+                overflow: hidden;
+                height: 100%;
+
+                &--active {
+                    margin-top: 0;
+                    height: 0;
+                }
+
+                &__gradient {
+                    -webkit-mask-image: linear-gradient(#fff, #fff, rgba(255, 255, 255, 0));
+                    max-height: 125px;
+                }
+
+                & > li {
+                    margin-bottom: 20px;
+                }
+
+                &__item {
+                    @include flex(center, flex-start);
+
+                    & > input {
+                        width: 16px;
+                        height: 16px;
+                        cursor: pointer;
+                        margin-right: 10px;
+                    }
+
+                    &__star {
+                        color: #f7c30e;
+                        font-size: 1.4rem;
+                        margin-right: 4px;
+                    }
+
+                    & > label {
+                        @include flex(center, flex-start);
+                        flex-wrap: nowrap;
+                        text-transform: capitalize;
+                        font-size: 1.4rem;
+                        color: var(--txt-fourth);
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            &__more {
+                @include flex(center, flex-start);
+                margin: 10px 0;
+                font-size: 1.2rem;
+                font-weight: 700;
+                color: var(--main-color);
+                cursor: pointer;
+
+                & > i {
+                    font-size: 1.6rem;
+                }
+
+                & > span {
+                    padding: 10px 0;
+                }
+
+                & > span:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+}

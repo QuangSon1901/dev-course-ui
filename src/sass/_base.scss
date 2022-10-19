@@ -103,6 +103,10 @@ input:focus-visible {
     }
 }
 
+.hidden {
+    display: none;
+}
+
 .bg-second {
     background-color: var(--bg-second);
 }
