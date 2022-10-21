@@ -1,5 +1,6 @@
 .filter {
     background-color: var(--bg-color);
+    color: var(--txt-color);
 
     &__tablet {
         &__header {
@@ -13,6 +14,10 @@
             &__close {
                 @include flex(center, center);
                 font-size: 2.4rem;
+
+                & > i {
+                    color: var(--txt-color);
+                }
             }
         }
 
@@ -124,7 +129,7 @@
                     }
 
                     &__star {
-                        color: #f7c30e;
+                        color: $star-color;
                         font-size: 1.4rem;
                         margin-right: 4px;
                     }

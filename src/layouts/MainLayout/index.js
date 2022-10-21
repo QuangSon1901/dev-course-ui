@@ -11,7 +11,7 @@ const MainLayout = ({ children }) => {
     return (
         <div className={`${theme ? theme.theme : 'theme-mode-light'} ${theme ? theme.color : 'theme-color-blue'}`}>
             <Header />
-            {children}
+            <div style={{ minHeight: '100vh' }}>{children}</div>
             <Footer />
         </div>
     );

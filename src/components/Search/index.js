@@ -7,7 +7,7 @@ import * as httpRequest from '~/utils/httpRequest';
 import { multilingualSelector } from '~/redux/selector';
 import { Wrapper } from '../Popper';
 import SuggestSearch from '../SuggestSearch';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const searchInit = {
     suggests: [],
@@ -15,6 +15,7 @@ const searchInit = {
 
 const Search = () => {
     const { query } = useParams();
+    const navigate = useNavigate();
 
     const initQuery = query ? query : '';
 
@@ -54,6 +55,14 @@ const Search = () => {
         setSearchResult(searchInit);
         searchRef.current.focus();
     };
+
+    const handleSubmit = () => {
+        if (!debouncedValue.trim()) return;
+
+        navigate('/courses/search/' + debouncedValue);
+        setSuggest(false);
+    };
+
     return (
         <div className="search">
             <input
@@ -62,9 +71,10 @@ const Search = () => {
                 value={searchValue}
                 onChange={(e) => handleChangeSearchValue(e.target.value)}
                 onFocus={() => setSuggest(true)}
+                onKeyUp={(event) => event.keyCode === 13 && handleSubmit()}
                 placeholder={multilingual.translationSelected.messages.search + ' . . .'}
             />
-            <i className="bx bx-search-alt search-btn"></i>
+            <i className="bx bx-search-alt search-btn" onClick={handleSubmit}></i>
             {loading && <i className="bx bx-loader-alt search-loading"></i>}
             {!!searchValue && !loading && <i className="bx bxs-x-circle search-clear" onClick={handleClear}></i>}
             <Wrapper

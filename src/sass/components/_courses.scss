@@ -119,11 +119,12 @@
 
                         &__star-total {
                             font-weight: 700;
-                            color: var(--main-color);
+                            color: #b4690e;
                         }
 
                         &__star {
-                            color: #f7c30e;
+                            font-size: 1.2rem;
+                            color: $star-color;
                         }
 
                         &__count-courses {

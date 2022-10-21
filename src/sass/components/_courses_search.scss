@@ -1,7 +1,9 @@
 .courses__search-page {
     position: relative;
+    min-height: 100vh;
     width: 100%;
     padding-top: calc($top-header-size + $mid-header-size + $bottom-header-size);
+    color: var(--txt-color);
 
     @include tablet {
         padding-top: calc($top-header-size-tablet + $mid-header-size-tablet);
@@ -12,15 +14,15 @@
     }
 
     .courses__search {
-        padding: 40px;
+        padding: 30px 40px;
         overflow: hidden;
 
         @include tablet {
-            padding: 30px;
+            padding: 20px 30px;
         }
 
         @include mobile {
-            padding: 20px;
+            padding: 10px 20px;
         }
 
         & > * {
@@ -28,9 +30,27 @@
         }
 
         &__header {
-            font-size: 2.6rem;
+            font-size: 2.8rem;
             font-weight: 700;
             color: var(--txt-color);
+            margin-bottom: 2rem;
+
+            &-sub {
+                font-size: 2rem;
+                font-weight: 700;
+                margin-bottom: 1.6rem;
+
+                & > span {
+                    color: var(--main-color);
+                }
+            }
+
+            &-error {
+                list-style-type: disc;
+                margin-left: 40px;
+                font-size: 1.4rem;
+                line-height: 2.4rem;
+            }
         }
 
         &__filter-panel {
@@ -58,7 +78,7 @@
                     margin-right: 10px;
                     outline: none;
 
-                    @include mobile {
+                    @include tablet {
                         height: 52px;
                     }
 
@@ -85,10 +105,16 @@
                     }
 
                     &__select {
+                        background-color: var(--bg-color);
+
+                        & > option {
+                            color: var(--txt-color);
+                        }
+
                         &:hover {
                             background-color: var(--bg-second);
                             @include tablet {
-                                background-color: transparent;
+                                background-color: var(--bg-color);
                             }
                         }
                         -webkit-appearance: none;
@@ -110,13 +136,17 @@
                         padding: 20px 50px 0 20px;
                         color: var(--txt-color);
 
+                        @include tablet {
+                            height: 52px;
+                        }
+
                         @include mobile {
                             width: 100%;
-                            height: 52px;
                         }
                     }
 
                     &__span {
+                        pointer-events: none;
                         position: absolute;
                         top: 10px;
                         left: 16px;
@@ -127,6 +157,7 @@
                     }
 
                     &__arrow {
+                        pointer-events: none;
                         position: absolute;
                         top: 50%;
                         right: 20px;
