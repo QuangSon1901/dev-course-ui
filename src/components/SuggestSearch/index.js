@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from '../Button';
 
-const SuggestSearch = ({ data, onSuggest, onChangeValue }) => {
+const SuggestSearch = ({ data, onSuggest, onChangeValue, debouncedValue }) => {
     const handleSubmit = (value) => {
         onSuggest(false);
         onChangeValue(value);

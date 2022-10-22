@@ -104,6 +104,7 @@ const Search = () => {
                         data={searchResult.suggests}
                         onSuggest={setSuggest}
                         onChangeValue={handleChangeSearchValue}
+                        debouncedValue={debouncedValue}
                     ></SuggestSearch>
                 </div>
             </Wrapper>
