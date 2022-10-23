@@ -17,6 +17,14 @@
         bottom: 2%;
         opacity: 1;
         visibility: visible;
+
+        @include tablet {
+            bottom: 8%;
+        }
+
+        @include mobile {
+            bottom: 8%;
+        }
     }
 
     @include flex(center, center);

@@ -1,0 +1,16 @@
+.tag {
+    width: max-content;
+    // @include mobile {
+    //     display: none;
+    // }
+
+    &__best-seller {
+        padding: 6px 10px;
+        border-radius: 4px;
+        border: 1px solid #000;
+        font-size: 1.2rem;
+        background-color: #eceb98;
+        color: #3d3c0a;
+        font-weight: 700;
+    }
+}

@@ -18,6 +18,7 @@ const images = {
     americaFlag: require('~/assets/images/united-states-of-america.png'),
     vnFlag: require('~/assets/images/vietnam.png'),
     englishFlag: require('~/assets/images/united-kingdom.png'),
+    messi: require('~/assets/images/13183418150-16260118104581506368878.jpg'),
 };
 
 export default images;

@@ -1,34 +1,29 @@
 import { Loading } from 'notiflix';
 import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 
-const Paginate = ({ data, setSearchParams }) => {
+const Paginate = ({ data }) => {
     const checkPaginateBtn = (item, index) => {
         switch (item.label) {
             case '&laquo; Previous':
-                return <ButtonPrevNext setSearchParams={setSearchParams} key={index} url={item.url} type="prev" />;
+                return <ButtonPrevNext key={index} url={item.url} type="prev" />;
             case 'Next &raquo;':
-                return <ButtonPrevNext setSearchParams={setSearchParams} key={index} url={item.url} type="next" />;
+                return <ButtonPrevNext key={index} url={item.url} type="next" />;
             default:
-                return (
-                    <ButtonNumber
-                        setSearchParams={setSearchParams}
-                        key={index}
-                        url={item.url}
-                        active={item.active}
-                        page={item.label}
-                    />
-                );
+                return <ButtonNumber key={index} url={item.url} active={item.active} page={item.label} />;
         }
     };
     return <div className="paginate">{data && data.map((item, index) => checkPaginateBtn(item, index))}</div>;
 };
 
-const ButtonPrevNext = ({ url, type, setSearchParams }) => {
+const ButtonPrevNext = ({ url, type }) => {
+    let [searchParams, setSearchParams] = useSearchParams();
+
     const handleSetParam = () => {
         if (url) {
             Loading.circle();
             handleScollTop();
-            return setSearchParams({ page: url.split('page=')[1] });
+            return setSearchParams({ query: searchParams.get('query'), page: url.split('page=')[1] });
         }
     };
     return (
@@ -38,12 +33,14 @@ const ButtonPrevNext = ({ url, type, setSearchParams }) => {
     );
 };
 
-const ButtonNumber = ({ url, active, page, setSearchParams }) => {
+const ButtonNumber = ({ url, active, page }) => {
+    let [searchParams, setSearchParams] = useSearchParams();
+
     const handleSetParam = () => {
         if (url) {
             Loading.circle();
             handleScollTop();
-            return setSearchParams({ page: url.split('page=')[1] });
+            return setSearchParams({ query: searchParams.get('query'), page: url.split('page=')[1] });
         }
     };
     return (

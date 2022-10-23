@@ -1,8 +1,10 @@
 import React from 'react';
 import Paginate from '../Paginate';
 import Skeleton from '../Skeleton';
+import Tag from '../Tag';
 
-const Courses = ({ dataSearch = {}, setSearchParams, result }) => {
+const Courses = ({ dataSearch = {}, result }) => {
+    console.log(dataSearch);
     return (
         <div className="courses">
             <ul className="courses__list">
@@ -30,7 +32,7 @@ const Courses = ({ dataSearch = {}, setSearchParams, result }) => {
                 )}
                 {result && dataSearch.data && dataSearch.data.map((item) => <CourseItem key={item.id} data={item} />)}
             </ul>
-            {result && <Paginate data={dataSearch.links} setSearchParams={setSearchParams} />}
+            {result && <Paginate data={dataSearch.links} />}
         </div>
     );
 };
@@ -58,9 +60,7 @@ const CourseItem = ({ data }) => {
                         </div>
                         <div className="courses__list__item__content__content__preview__count-courses">(2022)</div>
                     </div>
-                    <div className="courses__list__item__content__content__tag">
-                        <div className="courses__list__item__content__content__tag__best-seller">BestSeller</div>
-                    </div>
+                    <Tag />
                 </div>
             </div>
             <div className="courses__list__item__price">

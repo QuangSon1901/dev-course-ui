@@ -1,7 +1,8 @@
 import React from 'react';
+import config from '~/config';
 import Button from '../Button';
 
-const SuggestSearch = ({ data, onSuggest, onChangeValue, debouncedValue }) => {
+const SuggestSearch = ({ data, onSuggest, onChangeValue }) => {
     const handleSubmit = (value) => {
         onSuggest(false);
         onChangeValue(value);
@@ -14,10 +15,12 @@ const SuggestSearch = ({ data, onSuggest, onChangeValue, debouncedValue }) => {
         >
             <ul className="search__dropdown__content__wrapp__body__list">
                 {data.length > 0 &&
-                    data.map((item) => {
-                        let url = item.keyword ? '/courses/search/' + item.keyword : '/courses/' + item.slug;
+                    data.map((item, index) => {
+                        let url = item.keyword
+                            ? `${config.routes.coursesSearch}?query=${item.keyword}`
+                            : '/courses/' + item.slug;
                         return (
-                            <li className="search__dropdown__content__wrapp__body__item" key={item.id}>
+                            <li className="search__dropdown__content__wrapp__body__item" key={index}>
                                 <Button
                                     to={url}
                                     onClick={() => handleSubmit(item.keyword ? item.keyword : '')}

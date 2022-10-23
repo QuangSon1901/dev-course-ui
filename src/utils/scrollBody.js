@@ -10,4 +10,12 @@ function enableScroll() {
     body.style.overflowY = 'overlay';
 }
 
-export { disableScroll, enableScroll };
+const handleScoll = (top) => {
+    var rootElement = document.documentElement;
+    rootElement.scrollTo({
+        top,
+        behavior: 'smooth',
+    });
+};
+
+export { disableScroll, enableScroll, handleScoll };

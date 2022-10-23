@@ -13,6 +13,7 @@ const paymentGuidePromise = import('~/pages/PaymentGuide');
 const profilePromise = import('~/pages/Profile');
 const logoutPromise = import('~/pages/Logout');
 const coursesSearchPromise = import('~/pages/CoursesSearch');
+const coursePromise = import('~/pages/Course');
 
 // const Home = lazy(() => import('~/pages/Home'));
 // const LoginForm = lazy(() => import('~/pages/LoginForm'));
@@ -31,6 +32,7 @@ const PaymentGuide = lazy(() => paymentGuidePromise);
 const Profile = lazy(() => profilePromise);
 const Logout = lazy(() => logoutPromise);
 const CoursesSearch = lazy(() => coursesSearchPromise);
+const Course = lazy(() => coursePromise);
 
 export const publicRoutes = [
     {
@@ -71,6 +73,10 @@ export const publicRoutes = [
     {
         path: config.routes.coursesSearch,
         component: CoursesSearch,
+    },
+    {
+        path: config.routes.course,
+        component: Course,
     },
 ];
 

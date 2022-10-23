@@ -7,17 +7,18 @@ import * as httpRequest from '~/utils/httpRequest';
 import { multilingualSelector } from '~/redux/selector';
 import { Wrapper } from '../Popper';
 import SuggestSearch from '../SuggestSearch';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import config from '~/config';
 
 const searchInit = {
     suggests: [],
 };
 
 const Search = () => {
-    const { query } = useParams();
+    const [paramsSearch, setParamsSearch] = useSearchParams();
     const navigate = useNavigate();
 
-    const initQuery = query ? query : '';
+    const initQuery = paramsSearch.get('query') ? paramsSearch.get('query') : '';
 
     const multilingual = useSelector(multilingualSelector);
     const [searchValue, setSearchValue] = useState(initQuery);
@@ -57,10 +58,14 @@ const Search = () => {
     };
 
     const handleSubmit = () => {
-        if (!debouncedValue.trim()) return;
+        if (!searchValue.trim()) return;
 
-        navigate('/courses/search/' + debouncedValue);
+        navigate({
+            pathname: config.routes.coursesSearch,
+            search: `?query=${searchValue}`,
+        });
         setSuggest(false);
+        searchRef.current.blur();
     };
 
     return (

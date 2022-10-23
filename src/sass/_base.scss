@@ -37,12 +37,14 @@ body {
 }
 
 a {
+    user-select: none;
     text-decoration: none;
     color: unset;
     display: inline-block;
 }
 
 button {
+    user-select: none;
     outline: 0;
     border: 0;
     background-color: transparent;
@@ -54,6 +56,7 @@ ul {
 }
 
 img {
+    user-select: none;
     max-width: 100%;
 }
 

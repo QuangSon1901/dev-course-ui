@@ -3,16 +3,18 @@ import useDebounce from '~/hooks/useDebounce';
 import { Wrapper } from '../Popper';
 import * as httpRequest from '~/utils/httpRequest';
 import SuggestSearch from '../SuggestSearch';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import config from '~/config';
 
 const searchInit = {
     suggests: [],
 };
 
 const SidebarSearch = ({ onClose }) => {
-    const { query } = useParams();
+    const [paramsSearch, setParamsSearch] = useSearchParams();
+    const navigate = useNavigate();
 
-    const initQuery = query ? query : '';
+    const initQuery = paramsSearch.get('query') ? paramsSearch.get('query') : '';
 
     const [searchValue, setSearchValue] = useState(initQuery);
     const [loading, setLoading] = useState(false);
@@ -49,6 +51,16 @@ const SidebarSearch = ({ onClose }) => {
         searchRef.current.focus();
     };
 
+    const handleSubmit = () => {
+        if (!searchValue.trim()) return;
+
+        navigate({
+            pathname: config.routes.coursesSearch,
+            search: `?query=${searchValue}`,
+        });
+        onClose();
+    };
+
     return (
         <>
             <button className="sidebar__close" onClick={onClose}>
@@ -61,6 +73,7 @@ const SidebarSearch = ({ onClose }) => {
                         ref={searchRef}
                         value={searchValue}
                         onChange={(e) => handleChangeSearchValue(e)}
+                        onKeyUp={(event) => event.keyCode === 13 && handleSubmit()}
                         type="text"
                         placeholder="Search"
                     />

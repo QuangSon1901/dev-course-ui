@@ -112,3 +112,9 @@
         background-color: transparent;
     }
 }
+
+.hover-none.primary-outline {
+    &:hover {
+        color: var(--main-color);
+    }
+}

@@ -8,10 +8,10 @@ import Skeleton from '~/components/Skeleton';
 import * as httpRequest from '~/utils/httpRequest';
 
 const CoursesSearch = () => {
-    const { query } = useParams();
     let [searchParams, setSearchParams] = useSearchParams();
 
     const page = searchParams.get('page');
+    const query = searchParams.get('query');
 
     const [toggleFilter, setToggleFilter] = useState(true);
     const [dataSearch, setDataSearch] = useState({});
@@ -109,7 +109,7 @@ const CoursesSearch = () => {
                         onToggleFilter={setToggleFilter}
                         result={result}
                     />
-                    <Courses dataSearch={dataSearch} setSearchParams={setSearchParams} result={result} />
+                    <Courses dataSearch={dataSearch} result={result} />
                 </div>
             </div>
         </div>

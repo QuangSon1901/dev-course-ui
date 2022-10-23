@@ -1,0 +1,601 @@
+.course {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    padding-top: calc($top-header-size + $mid-header-size + $bottom-header-size);
+
+    @include tablet {
+        padding-top: calc($top-header-size-tablet + $mid-header-size-tablet);
+    }
+
+    @include mobile {
+        padding-top: $mid-header-size-mobile;
+    }
+
+    &__container {
+        padding: 30px 20px;
+
+        @include mobile {
+            padding: 10px 0;
+        }
+
+        & > .container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+
+            @include tablet {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        &__content {
+            color: var(--txt-color);
+
+            &__header {
+                padding-bottom: 20px;
+                border-bottom: 1px solid #d1d7dc;
+
+                &__breadcumb {
+                    font-size: 1.4rem;
+                    font-weight: 700;
+                    color: var(--main-color);
+                    @include flex(center, flex-start);
+
+                    & > * ~ * {
+                        margin-left: 4px;
+                    }
+
+                    & > i {
+                        color: var(--txt-color);
+                    }
+
+                    &__link {
+                        text-transform: capitalize;
+                        vertical-align: middle;
+                    }
+
+                    & > *:last-child {
+                        display: none;
+                    }
+                }
+
+                &__name-course {
+                    font-size: 3rem;
+                    font-weight: 700;
+                    line-height: 3rem;
+                    padding: 16px 0 10px;
+                }
+
+                &__sub-name-course {
+                    font-size: 2rem;
+                }
+
+                &__preview {
+                    @include flex(center, flex-start);
+                    padding: 16px 0;
+                    font-size: 1.4rem;
+
+                    & > * ~ * {
+                        margin-left: 10px;
+                    }
+
+                    &__star-total,
+                    &__star {
+                        font-weight: 700;
+                        color: $star-color;
+                    }
+
+                    &__count-courses {
+                        color: var(--main-color);
+                        text-decoration: underline;
+                    }
+                }
+
+                &__teacher {
+                    font-size: 1.4rem;
+                    font-weight: 700;
+                    text-transform: capitalize;
+
+                    & > a {
+                        color: var(--main-color);
+                    }
+                }
+            }
+
+            &__body {
+                &__section {
+                    margin: 30px 0 40px;
+
+                    &__title {
+                        @include flex(center, space-between);
+                        font-weight: 700;
+                        margin-bottom: 16px;
+
+                        &__more {
+                            font-size: 1.6rem;
+                            color: var(--main-color);
+                            text-transform: capitalize;
+                            cursor: pointer;
+                        }
+                    }
+                }
+
+                &__learn-list {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr);
+                    grid-column-gap: 40px;
+                    grid-row-gap: 0;
+
+                    @include mobile {
+                        grid-template-columns: repeat(1, 1fr);
+                        grid-column-gap: 10px;
+                        grid-row-gap: 10px;
+                    }
+
+                    & > li {
+                        font-size: 1.4rem;
+                        line-height: 2.4rem;
+                        @include flex(flex-start, flex-start);
+                        & > i {
+                            font-size: 2rem;
+                            color: #f05123;
+                            margin-right: 10px;
+                        }
+                    }
+                }
+
+                &__course-header {
+                    font-size: 1.4rem;
+                    @include flex(center, space-between);
+
+                    &__open-toggle {
+                        user-select: none;
+                        color: var(--main-color);
+                        cursor: pointer;
+                        font-weight: 700;
+                    }
+                }
+
+                &__course-list {
+                    margin-top: 20px;
+                    width: 100%;
+                    font-size: 1.4rem;
+
+                    & > * ~ * {
+                        margin-top: 10px;
+                    }
+
+                    &__item {
+                        user-select: none;
+                        width: 100%;
+
+                        &--active &__collapse {
+                            display: none;
+                        }
+
+                        &__header {
+                            cursor: pointer;
+                            width: 100%;
+                            padding: 16px 20px;
+                            border-radius: 8px;
+                            background-color: var(--bg-second);
+                            border: 1px solid rgba(0, 0, 0, 0.03);
+                            @include flex(center, space-between);
+
+                            & > div {
+                                @include flex(center, space-between);
+                                pointer-events: none;
+                                user-select: none;
+
+                                & > i {
+                                    font-weight: 700;
+                                    font-size: 2rem;
+                                    color: #f05123;
+                                    margin-right: 10px;
+                                }
+                            }
+
+                            & > span {
+                                pointer-events: none;
+                                user-select: none;
+                            }
+                        }
+
+                        &__collapse {
+                            width: 100%;
+
+                            &__item {
+                                padding: 16px 30px;
+                                @include flex(center, space-between);
+                                border-bottom: 1px solid rgba(0, 0, 0, 0.03);
+
+                                & > div {
+                                    @include flex(center, space-between);
+                                    pointer-events: none;
+                                    user-select: none;
+
+                                    & > i {
+                                        font-weight: 700;
+                                        font-size: 1.6rem;
+                                        color: #f05123;
+                                        margin-right: 10px;
+                                        opacity: 0.5;
+                                    }
+                                }
+
+                                & > span {
+                                    pointer-events: none;
+                                    user-select: none;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &__ul {
+                    list-style-type: disc;
+                    padding-left: 20px;
+                    font-size: 1.4rem;
+
+                    & > li {
+                        padding-left: 10px;
+                    }
+                }
+
+                &__description {
+                    font-size: 1.4rem;
+                    line-height: 3rem;
+
+                    &__text {
+                        height: 26rem;
+                        overflow: hidden;
+                        -webkit-mask-image: linear-gradient(#fff, #fff, rgba(255, 255, 255, 0));
+                    }
+
+                    &__show-all {
+                        margin-top: 10px;
+                        cursor: pointer;
+                        user-select: none;
+                        font-size: 1.4rem;
+                        font-weight: 700;
+                        color: var(--main-color);
+                        @include flex(center, flex-start);
+
+                        & > i {
+                            transition: transform 0.3s ease;
+                        }
+                    }
+
+                    &--active &__text {
+                        height: auto;
+                        -webkit-mask-image: none;
+                    }
+
+                    &--active &__show-all {
+                        & > i {
+                            transform: rotate(180deg);
+                        }
+                    }
+                }
+
+                &__opening-schedule {
+                    @include flex(flex-start, flex-start);
+                    flex-direction: column;
+
+                    & > ul {
+                        & > li {
+                            line-height: 2rem;
+                            & > span:first-child {
+                                display: inline-block;
+                                width: 20px;
+                                margin-right: 20px;
+                            }
+                        }
+                    }
+
+                    &__table {
+                        margin: 20px 0;
+                        width: 100%;
+
+                        &__header {
+                            background-color: var(--bg-second);
+                            font-size: 1.4rem;
+                            border-radius: 8px;
+                            border: 1px solid rgba(0, 0, 0, 0.03);
+
+                            @include mobile {
+                                display: none;
+                            }
+                        }
+
+                        &__row {
+                            @include mobile {
+                                margin: 10px 0;
+                                background-color: var(--bg-second);
+                                border-radius: 8px;
+                                border: 1px solid rgba(0, 0, 0, 0.03);
+                            }
+
+                            &__content {
+                                @include mobile {
+                                    @include flex(center, flex-start);
+                                }
+
+                                &__row {
+                                    width: 100%;
+                                    padding: 10px 20px;
+                                    border-radius: 8px;
+                                    display: grid;
+                                    grid-template-columns: 2fr 2fr 1fr 2fr 2fr 1.5fr;
+                                    gap: 10px;
+
+                                    @include mobile {
+                                        grid-template-columns: 1fr;
+                                    }
+
+                                    & > div {
+                                        font-size: 1.2rem;
+                                        line-height: 1.6rem;
+                                        @include flex(center, flex-start);
+                                    }
+                                }
+
+                                &__mobile {
+                                    display: none;
+
+                                    @include mobile {
+                                        display: grid;
+                                    }
+                                }
+                            }
+
+                            &__mobile-hidden {
+                                @include mobile {
+                                    display: none !important;
+                                }
+                            }
+
+                            &__mobile-show {
+                                display: none;
+                                @include mobile {
+                                    margin: 6px;
+                                    display: block;
+                                    text-align: center;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &__review {
+                    list-style-type: none;
+                    & > * ~ * {
+                        margin-top: 10px;
+                    }
+
+                    &__item {
+                        position: relative;
+                        padding: 20px;
+                        border: 1px solid #ccc;
+
+                        &__info {
+                            @include flex(center, flex-start);
+                            font-size: 1.4rem;
+
+                            &__avatar {
+                                margin-right: 10px;
+
+                                & > img {
+                                    width: 80px;
+                                    height: 80px;
+                                    object-fit: cover;
+                                    border-radius: 50%;
+                                }
+                            }
+
+                            &__body {
+                                @include flex(flex-start, flex-start);
+                                flex-direction: column;
+
+                                & > * ~ * {
+                                    margin-top: 6px;
+                                }
+                            }
+                        }
+
+                        &__star {
+                            font-size: 1.6rem;
+                            color: $star-color;
+                            margin: 10px 0;
+                        }
+
+                        &__comment {
+                            font-size: 1.4rem;
+                            line-height: 2rem;
+                        }
+
+                        &__feedback-action {
+                            position: absolute;
+                            top: 20px;
+                            right: 20px;
+                            @include flex(center, flex-start);
+                            & > * ~ * {
+                                margin-left: 10px;
+                            }
+
+                            &__btn {
+                                width: 40px;
+                                height: 40px;
+                                border: 1px solid #333;
+                                border-radius: 50%;
+                                @include flex(center, center);
+                                font-size: 1.6rem;
+
+                                &:hover {
+                                    background-color: var(--bg-second);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &__purchase-badge {
+            @include tablet {
+                display: none;
+            }
+
+            &__content {
+                position: sticky;
+                position: -webkit-sticky;
+                top: calc($top-header-size + $mid-header-size + $bottom-header-size + 30px);
+                @include flex(center, center);
+                flex-direction: column;
+                & > * ~ * {
+                    margin-top: 10px;
+                }
+
+                &__image {
+                    height: max-content;
+                    max-width: 36rem;
+
+                    & > img {
+                        border-radius: 20px;
+                    }
+                }
+
+                &__text {
+                    & > * ~ * {
+                        margin-top: 10px;
+                    }
+                    &__price {
+                        @include flex(center, center);
+                        font-size: 2.6rem;
+                        margin-top: 18px;
+
+                        & > * ~ * {
+                            margin-left: 20px;
+                        }
+
+                        &__current {
+                            font-weight: 700;
+                        }
+
+                        &__original {
+                            text-decoration: line-through;
+                            color: var(--txt-second);
+                        }
+                    }
+
+                    &__btn {
+                        @include flex(center, center);
+                        & > * ~ * {
+                            margin-left: 20px;
+                        }
+
+                        & i {
+                            font-size: 2rem;
+                        }
+                    }
+
+                    &__about {
+                        margin-top: 20px;
+                        width: max-content;
+                        & > h3 {
+                            font-size: 1.6rem;
+                            margin-bottom: 10px;
+                        }
+
+                        & > ul {
+                            & > li ~ li {
+                                margin-top: 10px;
+                            }
+                            & > li {
+                                font-size: 1.4rem;
+                                font-weight: 400;
+                                text-transform: capitalize;
+                                @include flex(center, flex-start);
+                                color: var(--txt-fourth);
+
+                                & > * ~ * {
+                                    margin-left: 10px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    &__taskbar {
+        display: none;
+        @include tablet {
+            display: block;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #1c1d1f;
+            box-shadow: 0 -2px 4px rgb(0 0 0 / 8%), 0 -4px 12px rgb(0 0 0 / 16%);
+            padding-top: 10px;
+            padding-bottom: 10px;
+            color: #fff;
+            z-index: 999;
+
+            & > .container {
+                @include flex(center, space-between);
+                @include mobile {
+                    justify-content: end;
+                }
+            }
+
+            &__info {
+                @include mobile {
+                    display: none;
+                }
+
+                &__header {
+                    font-size: 2rem;
+                    font-weight: 700;
+                    max-width: 100%;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 1;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                }
+
+                &__sub {
+                    padding: 10px 0;
+                    @include flex(center, flex-start);
+                    font-size: 1.6rem;
+
+                    & > * ~ * {
+                        margin-left: 10px;
+                    }
+
+                    &__star-total,
+                    &__star {
+                        color: $star-color;
+                    }
+
+                    &__count-courses {
+                        color: var(--main-color);
+                        text-decoration: underline;
+                    }
+                }
+            }
+
+            &__action {
+                @include flex(center, flex-start);
+                font-size: 2.4rem;
+
+                & > * ~ * {
+                    margin-left: 10px;
+                }
+            }
+        }
+    }
+}
