@@ -1,102 +1,76 @@
 import React from 'react';
-import { useRef } from 'react';
+import { useEffect } from 'react';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import images from '~/assets/images';
 import Button from '~/components/Button';
-import Tag from '~/components/Tag';
 import { handleScoll } from '~/utils/scrollBody';
+import CourseContent from './CourseContent';
+import CourseHeader from './CourseHeader';
+import CourseSection from './CourseSection';
+import CourseTaskbar from './CourseTaskbar';
+import PurchaseBadge from './PurchaseBadge';
+import * as httpRequest from '~/utils/httpRequest';
+import Skeleton from '~/components/Skeleton';
 
 const Course = () => {
+    const params = useParams();
+    const [courseData, setCourseData] = useState({});
+
     const handleScollEnroll = () => {
         const offsetTop = document.querySelector('.course__container__content__body__opening-schedule').offsetTop;
         handleScoll(offsetTop);
     };
+
+    useEffect(() => {
+        handleScoll(0, false);
+
+        const fetchCourse = async () => {
+            try {
+                const res = await httpRequest.get('/course/' + params.slug);
+                if (res.success === 'success') setCourseData(res.course);
+            } catch (error) {}
+        };
+
+        fetchCourse();
+    }, [params.slug]);
     return (
         <div className="course">
             <div className="course__container">
                 <div className="container">
-                    <div className="course__container__content">
-                        <CourseHeader />
-                        <CourseBody />
-                    </div>
-                    <PurchaseBadge onScrollEnroll={handleScollEnroll} />
-                </div>
-            </div>
-            <div className="course__taskbar">
-                <div className="container">
-                    <div className="course__taskbar__info">
-                        <div className="course__taskbar__info__header">
-                            React - The Complete Guide (incl Hooks, React Router, Redux)
-                        </div>
-                        <div className="course__taskbar__info__sub">
-                            <Tag />
-                            <div className="course__taskbar__info__sub__star-total">4.5</div>
-                            <div className="course__taskbar__info__sub__star">
-                                <i className="bx bxs-star "></i>
+                    {Object.keys(courseData).length === 0 && (
+                        <>
+                            <Skeleton width={'100%'} height={560}>
+                                <rect x="0" y="0" rx="8" ry="8" width="45%" height="20" />
+                                <rect x="0" y="40" rx="8" ry="8" width="50%" height="36" />
+                                <rect x="0" y="90" rx="8" ry="8" width="95%" height="40" />
+                                <rect x="0" y="150" rx="8" ry="8" width="45%" height="60" />
+                                <rect x="0" y="250" rx="8" ry="8" width="100%" height="190" />
+                            </Skeleton>
+                            <Skeleton width={'100%'} height={560}>
+                                <rect x="0" y="0" rx="8" ry="8" width="100%" height="200" />
+                                <rect x="107" y="216" rx="8" ry="8" width="50%" height="50" />
+                                <rect x="107" y="280" rx="8" ry="8" width="50%" height="50" />
+                            </Skeleton>
+                        </>
+                    )}
+                    {Object.keys(courseData).length > 0 && (
+                        <>
+                            <div className="course__container__content">
+                                <CourseHeader data={courseData} />
+                                <CourseBody data={courseData} />
                             </div>
-                            <a href="/" className="course__taskbar__info__sub__count-courses">
-                                (2022 ratings)
-                            </a>
-                        </div>
-                    </div>
-                    <div className="course__taskbar__action">
-                        <span>$84.99</span>
-                        <Button primary onClick={handleScollEnroll}>
-                            Enroll now
-                        </Button>
-                    </div>
+                            <PurchaseBadge data={courseData} onScrollEnroll={handleScollEnroll} />
+                        </>
+                    )}
                 </div>
             </div>
+            {Object.keys(courseData).length > 0 && <CourseTaskbar onScollEnroll={handleScollEnroll} />}
         </div>
     );
 };
 
-const CourseHeader = () => {
-    return (
-        <div className="course__container__content__header">
-            <div className="course__container__content__header__breadcumb">
-                <a href="/" className="course__container__content__header__breadcumb__link">
-                    development
-                </a>
-                <i className="bx bx-chevron-right"></i>
-                <a href="/" className="course__container__content__header__breadcumb__link">
-                    programming languages
-                </a>
-                <i className="bx bx-chevron-right"></i>
-                <a href="/" className="course__container__content__header__breadcumb__link">
-                    react JS
-                </a>
-                <i className="bx bx-chevron-right"></i>
-            </div>
-            <div className="course__container__content__header__name-course">
-                React - The Complete Guide (incl Hooks, React Router, Redux)
-            </div>
-            <div className="course__container__content__header__sub-name-course">
-                Dive in and learn React.js from scratch! Learn Reactjs, Hooks, Redux, React Routing, Animations, Next.js
-                and way more!
-            </div>
-            <div className="course__container__content__header__preview">
-                <Tag />
-                <div className="course__container__content__header__preview__star-total">4.5</div>
-                <div className="course__container__content__header__preview__star">
-                    <i className="bx bxs-star "></i>
-                    <i className="bx bxs-star "></i>
-                    <i className="bx bxs-star "></i>
-                    <i className="bx bxs-star "></i>
-                    <i className="bx bxs-star "></i>
-                </div>
-                <a href="/" className="course__container__content__header__preview__count-courses">
-                    (2022 ratings)
-                </a>
-            </div>
-            <div className="course__container__content__header__teacher">
-                By <a href="/">Michael Jackson</a>
-            </div>
-        </div>
-    );
-};
-
-const CourseBody = () => {
+const CourseBody = ({ data }) => {
     const [desc, setDesc] = useState(false);
     const handleShowDesc = () => setDesc(!desc);
 
@@ -125,9 +99,11 @@ const CourseBody = () => {
                     </li>
                 </ul>
             </CourseSection>
+
             <CourseSection title={`Course content`}>
                 <CourseContent />
             </CourseSection>
+
             <CourseSection title={`Description`}>
                 <div
                     className={`course__container__content__body__description ${
@@ -324,20 +300,22 @@ const CourseBody = () => {
                     </div>
                 </div>
             </CourseSection>
+
             <CourseSection title={`Certificate Of Completion`}>
                 <ul className="course__container__content__body__ul">
                     <li>
-                        Certificate Of Completion <b>React - The Complete Guide (incl Hooks, React Router, Redux)</b>
+                        Certificate Of Completion <b>{data.name}</b>
                     </li>
                 </ul>
             </CourseSection>
+
             <CourseSection title={`Opening Schedule`}>
                 <div className="course__container__content__body__opening-schedule">
                     <ul className="course__container__content__body__ul">
                         <li>
                             <span>Tuition</span>{' '}
                             <span>
-                                : <b>$84.9</b>
+                                : <b>${data.price}</b>
                             </span>
                         </li>
                         <li>
@@ -442,6 +420,7 @@ const CourseBody = () => {
                     </div>
                 </div>
             </CourseSection>
+
             <CourseSection title={`Featured review`}>
                 <ul className="course__container__content__body__review">
                     <li className="course__container__content__body__review__item">
@@ -546,192 +525,4 @@ const CourseBody = () => {
     );
 };
 
-const PurchaseBadge = ({ onScrollEnroll }) => {
-    return (
-        <div className="course__container__purchase-badge">
-            <div className="course__container__purchase-badge__content">
-                <div className="course__container__purchase-badge__content__image">
-                    <img src="https://files.fullstack.edu.vn/f8-prod/courses/3.png" alt="" />
-                </div>
-                <div className="course__container__purchase-badge__content__text">
-                    <div className="course__container__purchase-badge__content__text__price">
-                        <div className="course__container__purchase-badge__content__text__price__current">$84.99</div>
-                        <div className="course__container__purchase-badge__content__text__price__original">$84.99</div>
-                    </div>
-                    <div className="course__container__purchase-badge__content__text__btn">
-                        <Button primary onClick={() => onScrollEnroll()}>
-                            Enroll Now
-                        </Button>
-                        <Button primaryOutline hover={false}>
-                            <i className="bx bx-heart"></i>
-                        </Button>
-                    </div>
-                    <div className="course__container__purchase-badge__content__text__about">
-                        <h3>This course includes:</h3>
-                        <ul>
-                            <li>
-                                <i className="bx bx-slideshow"></i>
-                                <span>beginner level</span>
-                            </li>
-                            <li>
-                                <i className="bx bx-file-blank"></i>
-                                <span>50 articles</span>
-                            </li>
-                            <li>
-                                <i className="bx bx-download"></i>
-                                <span>92 downloadable resources</span>
-                            </li>
-                            <li>
-                                <i className="bx bx-mobile-alt"></i>
-                                <span>Access on mobile and TV</span>
-                            </li>
-                            <li>
-                                <i className="bx bx-notepad"></i>
-                                <span>Assignments</span>
-                            </li>
-                            <li>
-                                <i className="bx bx-shield"></i>
-                                <span>Certificate of completion</span>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
-};
-
-const CourseSection = ({ children, title, more = '' }) => {
-    return (
-        <div className="course__container__content__body__section">
-            <h1 className="course__container__content__body__section__title">
-                {title} <span className="course__container__content__body__section__title__more">{more}</span>
-            </h1>
-            {children}
-        </div>
-    );
-};
-
-const CourseContent = () => {
-    const [collapse, setCollapse] = useState({ 0: true });
-    const [collapseAll, setCollapseAll] = useState(false);
-    const collapseRef = useRef(null);
-
-    const handleCollapse = (event) => setCollapse({ ...collapse, [event.target.id]: !collapse[event.target.id] });
-
-    const handleCollapseAll = () => {
-        if (collapseAll === true) {
-            setCollapseAll(false);
-            setCollapse({});
-        } else {
-            const liEl = collapseRef.current.querySelectorAll(
-                'li > .course__container__content__body__course-list__item__header',
-            );
-
-            const listItem = {};
-
-            liEl.forEach((item) => {
-                listItem[item.id] = true;
-            });
-
-            setCollapse({ ...listItem });
-            setCollapseAll(true);
-        }
-    };
-    return (
-        <>
-            <div className="course__container__content__body__course-header">
-                <div className="course__container__content__body__course-header__info">31 sections • 495 lectures</div>
-                <div
-                    className="course__container__content__body__course-header__open-toggle"
-                    onClick={handleCollapseAll}
-                >
-                    {collapseAll ? 'Collapse all sections' : 'Expand all sections'}
-                </div>
-            </div>
-            <ul ref={collapseRef} className="course__container__content__body__course-list">
-                <li
-                    className={`course__container__content__body__course-list__item ${
-                        !collapse['0'] && 'course__container__content__body__course-list__item--active'
-                    }`}
-                >
-                    <div
-                        id="0"
-                        className="course__container__content__body__course-list__item__header"
-                        onClick={handleCollapse}
-                    >
-                        <div>
-                            {!collapse['0'] ? <i className="bx bx-minus"></i> : <i className="bx bx-plus"></i>}
-                            <span>Getting Started</span>
-                        </div>
-                        <span>3 lessons</span>
-                    </div>
-                    <div className="course__container__content__body__course-list__item__collapse">
-                        <div className="course__container__content__body__course-list__item__collapse__item">
-                            <div>
-                                <i className="bx bx-right-arrow-alt"></i>
-                                <span>Welcome To The Course!</span>
-                            </div>
-                            <span></span>
-                        </div>
-                        <div className="course__container__content__body__course-list__item__collapse__item">
-                            <div>
-                                <i className="bx bx-right-arrow-alt"></i>
-                                <span>What is React.js?</span>
-                            </div>
-                            <span></span>
-                        </div>
-                        <div className="course__container__content__body__course-list__item__collapse__item">
-                            <div>
-                                <i className="bx bx-right-arrow-alt"></i>
-                                <span>Why React Instead Of "Just JavaScript"?</span>
-                            </div>
-                            <span></span>
-                        </div>
-                    </div>
-                </li>
-                <li
-                    className={`course__container__content__body__course-list__item ${
-                        !collapse['1'] && 'course__container__content__body__course-list__item--active'
-                    }`}
-                >
-                    <div
-                        id="1"
-                        className="course__container__content__body__course-list__item__header"
-                        onClick={handleCollapse}
-                    >
-                        <div>
-                            {!collapse['1'] ? <i className="bx bx-minus"></i> : <i className="bx bx-plus"></i>}
-                            <span>JavaScript Refresher</span>
-                        </div>
-                        <span>3 lessons</span>
-                    </div>
-                    <div className="course__container__content__body__course-list__item__collapse">
-                        <div className="course__container__content__body__course-list__item__collapse__item">
-                            <div>
-                                <i className="bx bx-right-arrow-alt"></i>
-                                <span>Module Introduction</span>
-                            </div>
-                            <span></span>
-                        </div>
-                        <div className="course__container__content__body__course-list__item__collapse__item">
-                            <div>
-                                <i className="bx bx-right-arrow-alt"></i>
-                                <span>Understanding "let" and "const"</span>
-                            </div>
-                            <span></span>
-                        </div>
-                        <div className="course__container__content__body__course-list__item__collapse__item">
-                            <div>
-                                <i className="bx bx-right-arrow-alt"></i>
-                                <span>Arrow Functions</span>
-                            </div>
-                            <span></span>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </>
-    );
-};
 export default Course;

@@ -34,6 +34,21 @@ const Filter = ({ toggleFilter, onToggleFilter, on, result }) => {
                         </div>
                         <ul className="filter__list">
                             <FilterItem
+                                title="Price"
+                                id="price"
+                                typeField={filterField.price}
+                                handleToggleField={handleToggleField}
+                            >
+                                <li className="filter__list__item__body__item">
+                                    <input type="checkbox" name="price" id="price1" />
+                                    <label htmlFor="price1">Paid (5,233)</label>
+                                </li>
+                                <li className="filter__list__item__body__item">
+                                    <input type="checkbox" name="price" id="price2" />
+                                    <label htmlFor="price2">Free (0)</label>
+                                </li>
+                            </FilterItem>
+                            <FilterItem
                                 title="Level"
                                 id="level"
                                 typeField={filterField.level}

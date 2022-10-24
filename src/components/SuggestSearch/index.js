@@ -18,7 +18,7 @@ const SuggestSearch = ({ data, onSuggest, onChangeValue }) => {
                     data.map((item, index) => {
                         let url = item.keyword
                             ? `${config.routes.coursesSearch}?query=${item.keyword}`
-                            : '/courses/' + item.slug;
+                            : '/course/' + item.slug;
                         return (
                             <li className="search__dropdown__content__wrapp__body__item" key={index}>
                                 <Button

@@ -10,11 +10,11 @@ function enableScroll() {
     body.style.overflowY = 'overlay';
 }
 
-const handleScoll = (top) => {
+const handleScoll = (top, behavior = true) => {
     var rootElement = document.documentElement;
     rootElement.scrollTo({
         top,
-        behavior: 'smooth',
+        behavior: behavior ? 'smooth' : 'auto',
     });
 };
 

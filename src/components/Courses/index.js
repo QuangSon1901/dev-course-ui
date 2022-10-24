@@ -1,10 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Paginate from '../Paginate';
 import Skeleton from '../Skeleton';
 import Tag from '../Tag';
 
 const Courses = ({ dataSearch = {}, result }) => {
-    console.log(dataSearch);
     return (
         <div className="courses">
             <ul className="courses__list">
@@ -39,7 +39,7 @@ const Courses = ({ dataSearch = {}, result }) => {
 
 const CourseItem = ({ data }) => {
     return (
-        <a href="/" className="courses__list__item">
+        <Link to={'/course/' + data.slug} className="courses__list__item">
             <div className="courses__list__item__content">
                 <div className="courses__list__item__content__image">
                     <img src={process.env.REACT_APP_BASE_URL_FILE_UPLOAD + data.image} alt="" />
@@ -67,7 +67,7 @@ const CourseItem = ({ data }) => {
                 <h3 className="courses__list__item__price__current">{data.price}đ</h3>
                 <h3 className="courses__list__item__price__original">{data.price}đ</h3>
             </div>
-        </a>
+        </Link>
     );
 };
 
