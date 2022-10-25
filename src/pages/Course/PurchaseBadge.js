@@ -35,16 +35,20 @@ const PurchaseBadge = ({ data, onScrollEnroll }) => {
                         <h3>This course includes:</h3>
                         <ul>
                             <li>
+                                <i className="bx bxl-meta"></i>
+                                <span>Form of learning: {data.form_of_learning}</span>
+                            </li>
+                            <li>
+                                <i className="bx bx-traffic-cone"></i>
+                                <span>{data.level}</span>
+                            </li>
+                            <li>
                                 <i className="bx bx-slideshow"></i>
-                                <span>beginner level</span>
+                                <span>{data.total_sections} sections</span>
                             </li>
                             <li>
                                 <i className="bx bx-file-blank"></i>
-                                <span>50 articles</span>
-                            </li>
-                            <li>
-                                <i className="bx bx-download"></i>
-                                <span>92 downloadable resources</span>
+                                <span>{data.total_lectures} lectures</span>
                             </li>
                             <li>
                                 <i className="bx bx-mobile-alt"></i>
