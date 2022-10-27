@@ -11,6 +11,7 @@ import { privateRouters, publicRoutes } from './routes';
 
 import './sass/index.scss';
 import 'react-datepicker/dist/react-datepicker.css';
+import 'react-toastify/dist/ReactToastify.css';
 import notiflixInit from './utils/notiflixInit';
 
 function App() {

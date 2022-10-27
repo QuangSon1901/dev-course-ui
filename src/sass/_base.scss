@@ -84,21 +84,25 @@ input:focus-visible {
     width: 100%;
 }
 
-.sc-dkrFOg.jfcQkO {
+.sc-dkrFOg {
     z-index: 9999;
 
-    .hMhenJ {
+    & > section {
         -webkit-align-self: center;
         align-self: center;
         border-radius: 8px !important;
         width: unset !important;
-    }
 
-    .sc-jrcTuL.kctTUp * {
-        font-size: 1.6rem !important;
-        box-shadow: none !important;
-        outline: none;
+        & * {
+            font-size: 1.6rem !important;
+            box-shadow: none !important;
+            outline: none;
+        }
     }
+}
+
+.Toastify__toast * {
+    font-size: 1.6rem;
 }
 
 @each $color, $val in $colors {

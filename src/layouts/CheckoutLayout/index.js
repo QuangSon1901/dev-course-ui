@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 import HeaderCheckout from '~/components/HeaderCheckout';
 import { themeSelector } from '~/redux/selector';
 

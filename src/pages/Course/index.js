@@ -24,7 +24,10 @@ const Course = () => {
             return handleScoll(offsetTop);
         }
 
-        navigate('/checkout/course/' + courseData.slug);
+        navigate({
+            pathname: '/checkout/course/' + courseData.slug,
+            search: `?class=${courseData.class_room[0].id}`,
+        });
     };
 
     useEffect(() => {

@@ -1,18 +1,27 @@
+import { loadScript } from '@paypal/paypal-js';
 import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useRef, useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import images from '~/assets/images';
-import Button from '~/components/Button';
 import Grid from '~/components/Grid';
 import Image from '~/components/Image';
 import InputCustom from '~/components/InputCustom';
+import { authSelector } from '~/redux/selector';
 import * as httpRequest from '~/utils/httpRequest';
+import { storage } from '~/utils/storage';
 
 const Checkout = () => {
-    const params = useParams();
+    const navigate = useNavigate();
 
-    const [paymentMethod, setPaymentMethod] = useState('');
+    const params = useParams();
+    const [paramsSearch, setParamsSearch] = useSearchParams();
+    const checkoutRef = useRef(null);
+
+    const { user } = useSelector(authSelector);
+
+    const [paymentMethod, setPaymentMethod] = useState('paypal');
     const [courseData, setCourseData] = useState({});
     const [startDate, setStartDate] = useState(new Date());
 
@@ -28,6 +37,97 @@ const Checkout = () => {
 
         fetchCourse();
     }, [params.slug]);
+
+    useEffect(() => {
+        if (checkoutRef.current.children[0]) {
+            checkoutRef.current.removeChild(checkoutRef.current.children[0]);
+        }
+
+        if (paymentMethod !== 'paypal' || !courseData.price) return;
+
+        const loadPaypal = async () => {
+            try {
+                const paypal = await loadScript({ 'client-id': process.env.REACT_APP_CLIENT_ID_PAYPAL });
+                await paypal
+                    .Buttons({
+                        fundingSource: paypal.FUNDING.PAYPAL,
+                        createOrder: async (data, actions, err) => {
+                            const token = storage.get(process.env.REACT_APP_TOKEN);
+                            if (!token) return;
+
+                            try {
+                                const res = await httpRequest.post(
+                                    '/paypal/order/create',
+                                    {
+                                        user_id: user.id,
+                                        class_id: Number(paramsSearch.get('class')),
+                                        price: String(courseData.price),
+                                    },
+                                    {
+                                        headers: {
+                                            Authorization: `Bearer ${token}`,
+                                        },
+                                    },
+                                );
+                                return res.id;
+                            } catch (error) {
+                                if (error.response.data && typeof error.response.data.message === 'string') {
+                                    toast.error(error.response.data.message);
+                                    return;
+                                } else if (error.response.data && typeof error.response.data.message === 'object') {
+                                    toast.error(Object.values(error.response.data.message)[0][0]);
+                                    return;
+                                }
+                                toast.error(error.message);
+                                return;
+                            }
+                        },
+                        onApprove: async (data, actions) => {
+                            const token = storage.get(process.env.REACT_APP_TOKEN);
+                            if (!token) return;
+                            try {
+                                const res = await httpRequest.post(
+                                    '/paypal/order/capture',
+                                    {
+                                        vendor_order_id: data.orderID,
+                                        user_id: user.id,
+                                        class_id: Number(paramsSearch.get('class')),
+                                    },
+                                    {
+                                        headers: {
+                                            Authorization: `Bearer ${token}`,
+                                        },
+                                    },
+                                );
+
+                                if (res.success === 'success') {
+                                    toast.success('Payment success');
+                                    navigate(-1);
+                                }
+                            } catch (error) {
+                                if (error.response.data && typeof error.response.data.message === 'string') {
+                                    toast.error(error.response.data.message);
+                                    return;
+                                } else if (error.response.data && typeof error.response.data.message === 'object') {
+                                    toast.error(Object.values(error.response.data.message)[0][0]);
+                                    return;
+                                }
+                                toast.error(error.message);
+                                return;
+                            }
+                        },
+                        onError: (err) => {
+                            toast.error(err);
+                        },
+                        style: {
+                            color: 'black',
+                        },
+                    })
+                    .render(checkoutRef.current);
+            } catch (error) {}
+        };
+        loadPaypal();
+    }, [paymentMethod, courseData.price]);
 
     return (
         <div className="checkout">
@@ -164,9 +264,7 @@ const Checkout = () => {
                             <span className="checkout__body__bill__content__sub">
                                 By completing your purchase you agree to these <a href="/">Terms of Service</a>.
                             </span>
-                            <Button primary large>
-                                Complete Checkout
-                            </Button>
+                            <div ref={checkoutRef} className=""></div>
                         </div>
                     </div>
                 </div>
