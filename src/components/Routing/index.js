@@ -8,7 +8,6 @@ function ProtectedRoute({ element, ...rest }) {
     const { isAuthenticated, loading } = useSelector(authSelector);
 
     if (loading) return Loading.circle();
-
     Loading.remove(500);
     return isAuthenticated ? <Outlet /> : <Navigate to={config.routes.login} />;
 }

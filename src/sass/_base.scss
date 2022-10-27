@@ -64,6 +64,43 @@ input:focus-visible {
     outline: none;
 }
 
+.dnone {
+    display: none !important;
+}
+
+.hidden {
+    visibility: hidden !important;
+}
+
+.w-50 {
+    width: 50%;
+
+    @include mobile {
+        width: 100%;
+    }
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.sc-dkrFOg.jfcQkO {
+    z-index: 9999;
+
+    .hMhenJ {
+        -webkit-align-self: center;
+        align-self: center;
+        border-radius: 8px !important;
+        width: unset !important;
+    }
+
+    .sc-jrcTuL.kctTUp * {
+        font-size: 1.6rem !important;
+        box-shadow: none !important;
+        outline: none;
+    }
+}
+
 @each $color, $val in $colors {
     .color-#{$color} {
         color: $val;

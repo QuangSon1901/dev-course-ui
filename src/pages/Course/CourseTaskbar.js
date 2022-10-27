@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '~/components/Button';
 import Tag from '~/components/Tag';
 
-const CourseTaskbar = ({ onScollEnroll }) => {
+const CourseTaskbar = ({ onEnroll }) => {
     return (
         <div className="course__taskbar">
             <div className="container">
@@ -23,7 +23,7 @@ const CourseTaskbar = ({ onScollEnroll }) => {
                 </div>
                 <div className="course__taskbar__action">
                     <span>$84.99</span>
-                    <Button primary onClick={onScollEnroll}>
+                    <Button primary onClick={onEnroll}>
                         Enroll now
                     </Button>
                 </div>

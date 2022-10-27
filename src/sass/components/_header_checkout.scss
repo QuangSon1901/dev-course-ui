@@ -1,0 +1,33 @@
+.header-checkout {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    z-index: 9999;
+    height: max-content;
+    box-shadow: 0 2px 4px rgb(0 0 0 / 8%), 0 4px 12px rgb(0 0 0 / 8%);
+
+    & > .container {
+        height: $mid-header-size;
+        @include flex(center, space-between);
+
+        @include tablet {
+            height: $mid-header-size-tablet;
+        }
+    }
+
+    &__logo {
+        max-width: 200px;
+
+        @include tablet {
+            max-width: 150px;
+        }
+    }
+
+    &__cancel {
+        color: var(--main-color);
+        font-weight: 700;
+        min-width: 0;
+        padding: 0;
+    }
+}

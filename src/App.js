@@ -10,6 +10,7 @@ import { combineApi } from './redux/reducerCombine';
 import { privateRouters, publicRoutes } from './routes';
 
 import './sass/index.scss';
+import 'react-datepicker/dist/react-datepicker.css';
 import notiflixInit from './utils/notiflixInit';
 
 function App() {
@@ -38,9 +39,9 @@ function App() {
                             path={item.path}
                             element={
                                 <Layout>
-                                    <Suspense fallback={null}>
-                                        <Page />
-                                    </Suspense>
+                                    {/* <Suspense fallback={null}> */}
+                                    <Page />
+                                    {/* </Suspense> */}
                                 </Layout>
                             }
                         />
@@ -59,9 +60,9 @@ function App() {
                                 path={item.path}
                                 element={
                                     <Layout>
-                                        <Suspense fallback={null}>
-                                            <Page />
-                                        </Suspense>
+                                        {/* <Suspense fallback={null}> */}
+                                        <Page />
+                                        {/* </Suspense> */}
                                     </Layout>
                                 }
                             />

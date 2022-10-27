@@ -1,6 +1,6 @@
 import { Loading } from 'notiflix';
 import { useSelector } from 'react-redux';
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import images from '~/assets/images';
 import config from '~/config';
 import { authSelector, themeSelector } from '~/redux/selector';
@@ -8,10 +8,11 @@ import { authSelector, themeSelector } from '~/redux/selector';
 const AuthLayout = ({ children }) => {
     const theme = useSelector(themeSelector);
     const { isAuthenticated } = useSelector(authSelector);
+    const navigate = useNavigate();
 
     if (isAuthenticated) {
         Loading.remove(500);
-        return <Navigate to={config.routes.home} />;
+        return navigate(-1);
     }
 
     return (

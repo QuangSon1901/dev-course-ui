@@ -1,7 +1,7 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import images from '~/assets/images';
 import Button from '~/components/Button';
 import { handleScoll } from '~/utils/scrollBody';
@@ -14,12 +14,17 @@ import * as httpRequest from '~/utils/httpRequest';
 import Skeleton from '~/components/Skeleton';
 
 const Course = () => {
+    const navigate = useNavigate();
     const params = useParams();
     const [courseData, setCourseData] = useState({});
 
-    const handleScollEnroll = () => {
-        const offsetTop = document.querySelector('.course__container__content__body__opening-schedule').offsetTop;
-        handleScoll(offsetTop);
+    const onEnroll = () => {
+        if (courseData.form_of_learning !== 'Online') {
+            const offsetTop = document.querySelector('.course__container__content__body__opening-schedule').offsetTop;
+            return handleScoll(offsetTop);
+        }
+
+        navigate('/checkout/course/' + courseData.slug);
     };
 
     useEffect(() => {
@@ -60,12 +65,12 @@ const Course = () => {
                                 <CourseHeader data={courseData} />
                                 <CourseBody data={courseData} />
                             </div>
-                            <PurchaseBadge data={courseData} onScrollEnroll={handleScollEnroll} />
+                            <PurchaseBadge data={courseData} onEnroll={onEnroll} />
                         </>
                     )}
                 </div>
             </div>
-            {Object.keys(courseData).length > 0 && <CourseTaskbar onScollEnroll={handleScollEnroll} />}
+            {Object.keys(courseData).length > 0 && <CourseTaskbar onEnroll={onEnroll} />}
         </div>
     );
 };

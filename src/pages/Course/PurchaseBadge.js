@@ -3,7 +3,7 @@ import images from '~/assets/images';
 import Button from '~/components/Button';
 import Image from '~/components/Image';
 
-const PurchaseBadge = ({ data, onScrollEnroll }) => {
+const PurchaseBadge = ({ data, onEnroll }) => {
     return (
         <div className="course__container__purchase-badge">
             <div className="course__container__purchase-badge__content">
@@ -24,7 +24,7 @@ const PurchaseBadge = ({ data, onScrollEnroll }) => {
                         </div>
                     </div>
                     <div className="course__container__purchase-badge__content__text__btn">
-                        <Button primary onClick={() => onScrollEnroll()}>
+                        <Button primary onClick={onEnroll}>
                             Enroll Now
                         </Button>
                         <Button primaryOutline hover={false}>

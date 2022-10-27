@@ -10,6 +10,7 @@ const routes = {
     profile: '/me/profile',
     coursesSearch: '/courses/search',
     course: '/course/:slug',
+    checkout: '/checkout/course/:slug',
 };
 
 export default routes;
