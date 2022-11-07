@@ -61,9 +61,7 @@ function App() {
                                 path={item.path}
                                 element={
                                     <Layout>
-                                        {/* <Suspense fallback={null}> */}
                                         <Page />
-                                        {/* </Suspense> */}
                                     </Layout>
                                 }
                             />

@@ -1,4 +1,5 @@
 import { Loading } from 'notiflix';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import images from '~/assets/images';
@@ -12,7 +13,7 @@ const AuthLayout = ({ children }) => {
 
     if (isAuthenticated) {
         Loading.remove(500);
-        return navigate(-1);
+        return navigate(-1, { replace: true });
     }
 
     return (

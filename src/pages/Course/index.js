@@ -12,22 +12,32 @@ import CourseTaskbar from './CourseTaskbar';
 import PurchaseBadge from './PurchaseBadge';
 import * as httpRequest from '~/utils/httpRequest';
 import Skeleton from '~/components/Skeleton';
+import CourseClass from './CourseClass';
+import { useSelector } from 'react-redux';
+import { authSelector } from '~/redux/selector';
 
 const Course = () => {
+    const { user } = useSelector(authSelector);
     const navigate = useNavigate();
     const params = useParams();
     const [courseData, setCourseData] = useState({});
 
     const onEnroll = () => {
-        if (courseData.form_of_learning !== 'Online') {
+        if (courseData.form_of_learning === 'Offline') {
             const offsetTop = document.querySelector('.course__container__content__body__opening-schedule').offsetTop;
             return handleScoll(offsetTop);
         }
 
-        navigate({
-            pathname: '/checkout/course/' + courseData.slug,
-            search: `?class=${courseData.class_room[0].id}`,
-        });
+        if (courseData.active) {
+            navigate({
+                pathname: '/view/course/' + courseData.slug,
+            });
+        } else {
+            navigate({
+                pathname: '/checkout/course/' + courseData.slug,
+                search: `?class=${courseData.class_room[0].id}`,
+            });
+        }
     };
 
     useEffect(() => {
@@ -35,13 +45,18 @@ const Course = () => {
 
         const fetchCourse = async () => {
             try {
-                const res = await httpRequest.get('/course/' + params.slug);
+                const userID = user ? user.id : -1;
+                const res = await httpRequest.get('/course/' + params.slug, {
+                    params: {
+                        user: userID,
+                    },
+                });
                 if (res.success === 'success') setCourseData(res.course);
             } catch (error) {}
         };
 
         fetchCourse();
-    }, [params.slug]);
+    }, [params.slug, user]);
     return (
         <div className="course">
             <div className="course__container">
@@ -124,120 +139,9 @@ const CourseBody = ({ data }) => {
                 </ul>
             </CourseSection>
 
-            {data.form_of_learning !== 'Online' && (
+            {data.active && (
                 <CourseSection title={`Opening Schedule`}>
-                    <div className="course__container__content__body__opening-schedule">
-                        <ul className="course__container__content__body__ul">
-                            <li>
-                                <span>Tuition</span>{' '}
-                                <span>
-                                    : <b>${data.price}</b>
-                                </span>
-                            </li>
-                            <li>
-                                <span>Note</span>{' '}
-                                <span>
-                                    : <b>Students will take the test directly in the practical machine room</b>
-                                </span>
-                            </li>
-                        </ul>
-                        <div
-                            id="opening-schedule"
-                            className="course__container__content__body__opening-schedule__table"
-                        >
-                            <div className="course__container__content__body__opening-schedule__table__header">
-                                <div className="course__container__content__body__opening-schedule__table__row">
-                                    <div className="course__container__content__body__opening-schedule__table__row__content">
-                                        <div className="course__container__content__body__opening-schedule__table__row__content__row">
-                                            <div>Class ID</div>
-                                            <div>Time</div>
-                                            <div>Opening</div>
-                                            <div>Estimated end time</div>
-                                            <div>Address</div>
-                                            <div></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="course__container__content__body__opening-schedule__table__body">
-                                <div className="course__container__content__body__opening-schedule__table__row">
-                                    <div className="course__container__content__body__opening-schedule__table__row__content">
-                                        <div className="course__container__content__body__opening-schedule__table__row__content__row course__container__content__body__opening-schedule__table__row__content__mobile">
-                                            <div>Class ID</div>
-                                            <div>Time</div>
-                                            <div>Opening</div>
-                                            <div>Estimated end time</div>
-                                            <div>Address</div>
-                                            <div className="course__container__content__body__opening-schedule__table__row__mobile-hidden"></div>
-                                        </div>
-                                        <div className="course__container__content__body__opening-schedule__table__row__content__row">
-                                            <div>UDCB_280C246</div>
-                                            <div>2nd, 3rd, 4th (13:30 - 16:45)</div>
-                                            <div>07-11-2022</div>
-                                            <div>07-02-2023</div>
-                                            <div>21-23 Jennie, 5 Dist</div>
-                                            <div className="course__container__content__body__opening-schedule__table__row__mobile-hidden">
-                                                <Button primary>Enroll Now</Button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="course__container__content__body__opening-schedule__table__row__mobile-show">
-                                        <Button primary>Enroll Now</Button>
-                                    </div>
-                                </div>
-                                <div className="course__container__content__body__opening-schedule__table__row">
-                                    <div className="course__container__content__body__opening-schedule__table__row__content">
-                                        <div className="course__container__content__body__opening-schedule__table__row__content__row course__container__content__body__opening-schedule__table__row__content__mobile">
-                                            <div>Class ID</div>
-                                            <div>Time</div>
-                                            <div>Opening</div>
-                                            <div>Estimated end time</div>
-                                            <div>Address</div>
-                                            <div className="course__container__content__body__opening-schedule__table__row__mobile-hidden"></div>
-                                        </div>
-                                        <div className="course__container__content__body__opening-schedule__table__row__content__row">
-                                            <div>UDCB_280C246</div>
-                                            <div>2nd, 3rd, 4th (13:30 - 16:45)</div>
-                                            <div>07-11-2022</div>
-                                            <div>07-02-2023</div>
-                                            <div>21-23 Jennie, 5 Dist</div>
-                                            <div className="course__container__content__body__opening-schedule__table__row__mobile-hidden">
-                                                <Button primary>Enroll Now</Button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="course__container__content__body__opening-schedule__table__row__mobile-show">
-                                        <Button primary>Enroll Now</Button>
-                                    </div>
-                                </div>
-                                <div className="course__container__content__body__opening-schedule__table__row">
-                                    <div className="course__container__content__body__opening-schedule__table__row__content">
-                                        <div className="course__container__content__body__opening-schedule__table__row__content__row course__container__content__body__opening-schedule__table__row__content__mobile">
-                                            <div>Class ID</div>
-                                            <div>Time</div>
-                                            <div>Opening</div>
-                                            <div>Estimated end time</div>
-                                            <div>Address</div>
-                                            <div className="course__container__content__body__opening-schedule__table__row__mobile-hidden"></div>
-                                        </div>
-                                        <div className="course__container__content__body__opening-schedule__table__row__content__row">
-                                            <div>UDCB_280C246</div>
-                                            <div>2nd, 3rd, 4th (13:30 - 16:45)</div>
-                                            <div>07-11-2022</div>
-                                            <div>07-02-2023</div>
-                                            <div>21-23 Jennie, 5 Dist</div>
-                                            <div className="course__container__content__body__opening-schedule__table__row__mobile-hidden">
-                                                <Button primary>Enroll Now</Button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="course__container__content__body__opening-schedule__table__row__mobile-show">
-                                        <Button primary>Enroll Now</Button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <CourseClass data={data} />
                 </CourseSection>
             )}
 

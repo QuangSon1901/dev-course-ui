@@ -1,7 +1,7 @@
 import React from 'react';
 import images from '~/assets/images';
-import Button from '~/components/Button';
 import Image from '~/components/Image';
+import InputCustom from '~/components/InputCustom';
 
 const PurchaseBadge = ({ data, onEnroll }) => {
     return (
@@ -24,12 +24,15 @@ const PurchaseBadge = ({ data, onEnroll }) => {
                         </div>
                     </div>
                     <div className="course__container__purchase-badge__content__text__btn">
-                        <Button primary onClick={onEnroll}>
-                            Enroll Now
-                        </Button>
-                        <Button primaryOutline hover={false}>
-                            <i className="bx bx-heart"></i>
-                        </Button>
+                        <InputCustom
+                            onClick={onEnroll}
+                            typeComp="button"
+                            width="w-100 "
+                            classComp={data.active ? 'primary' : 'disable'}
+                            className="fl-1"
+                            value={data.active ? 'Enroll Now' : 'Coming Soon'}
+                        />
+                        <InputCustom leftIcon="bx bx-heart" typeComp="button" width="w-auto" />
                     </div>
                     <div className="course__container__purchase-badge__content__text__about">
                         <h3>This course includes:</h3>

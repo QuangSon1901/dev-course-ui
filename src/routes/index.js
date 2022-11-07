@@ -3,6 +3,7 @@ import { lazy } from 'react';
 import config from '~/config';
 import AuthLayout from '~/layouts/AuthLayout';
 import CheckoutLayout from '~/layouts/CheckoutLayout';
+import MeLayout from '~/layouts/MeLayout';
 
 import Checkout from '~/pages/Checkout';
 import Contact from '~/pages/Contact';
@@ -11,6 +12,7 @@ import CoursesSearch from '~/pages/CoursesSearch';
 import Home from '~/pages/Home';
 import LoginForm from '~/pages/LoginForm';
 import Logout from '~/pages/Logout';
+import MyLearning from '~/pages/MyLearning';
 import News from '~/pages/News';
 import PaymentGuide from '~/pages/PaymentGuide';
 import Profile from '~/pages/Profile';
@@ -94,12 +96,18 @@ export const publicRoutes = [
 
 export const privateRouters = [
     {
-        path: config.routes.profile,
-        component: Profile,
-    },
-    {
         path: config.routes.logout,
         component: Logout,
+    },
+    {
+        path: config.routes.profile,
+        component: Profile,
+        layout: MeLayout,
+    },
+    {
+        path: config.routes.myLearning,
+        component: MyLearning,
+        layout: MeLayout,
     },
     {
         path: config.routes.checkout,

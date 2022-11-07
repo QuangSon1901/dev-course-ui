@@ -15,6 +15,9 @@ const InputCustom = forwardRef(({ typeComp = 'text', className, children, width,
         case 'date-picker':
             Comp = DatePickerInput;
             break;
+        case 'button':
+            Comp = Button;
+            break;
         default:
             break;
     }
@@ -29,11 +32,12 @@ const InputCustom = forwardRef(({ typeComp = 'text', className, children, width,
 const Input = ({
     label,
     tag = 'Required',
+    validate = false,
     type,
     width = { label: '', input: '' },
     value,
     name,
-    error,
+    error = '',
     placeholder = '',
     onChange,
     onBlur,
@@ -42,7 +46,9 @@ const Input = ({
     return (
         <>
             <label className={`input-custom__label-input ${width.label}`}>
-                <span className="input-custom__label-input__span">{label}</span>
+                <span className="input-custom__label-input__span">
+                    {label} {validate && <span className="input-custom__label-input__span__validate">*</span>}
+                </span>
                 <span className="input-custom__label-input__tag">{tag}</span>
             </label>
             <div className={`input-custom__text-input ${width.input}`}>
@@ -53,6 +59,8 @@ const Input = ({
                     value={value}
                     onChange={onChange}
                     onBlur={onBlur}
+                    className={error && 'error'}
+                    autoComplete="on"
                     {...props}
                 />
             </div>
@@ -64,19 +72,23 @@ const Input = ({
 const Select = ({
     label,
     tag = 'Required',
+    validate = false,
     width = { label: '', input: '' },
     defaulOption = 'Please select...',
     sub,
+    error = '',
     children,
 }) => {
     return (
         <>
             <label className={`input-custom__label-input ${width.label}`}>
-                <span className="input-custom__label-input__span">{label}</span>
+                <span className="input-custom__label-input__span">
+                    {label} {validate && <span className="input-custom__label-input__span__validate">*</span>}
+                </span>
                 <span className="input-custom__label-input__tag">{tag}</span>
             </label>
             <div className={`input-custom__select-input ${width.input}`}>
-                <select>
+                <select className={error && 'error'}>
                     <option value="default">{defaulOption}</option>
                     {children}
                 </select>
@@ -94,6 +106,7 @@ const RadioCollapse = ({
     right = [],
     children,
     checked,
+    classComp,
     onClick,
     ...props
 }) => {
@@ -104,7 +117,7 @@ const RadioCollapse = ({
                     checked && 'input-custom__radio-collapse-input--active'
                 }`}
             >
-                <div className="input-custom__radio-collapse-input__header" onClick={onClick} {...props}>
+                <div className={`input-custom__radio-collapse-input__header ${classComp}`} onClick={onClick} {...props}>
                     <div className="input-custom__radio-collapse-input__header__left">
                         <span className="input-custom__radio-collapse-input__header__check"></span>
                         <span className="input-custom__radio-collapse-input__header__img">
@@ -130,6 +143,7 @@ const RadioCollapse = ({
 const DatePickerInput = ({
     label,
     tag = 'Required',
+    validate = false,
     type,
     width = { label: '', button: '' },
     value,
@@ -141,7 +155,9 @@ const DatePickerInput = ({
     return (
         <>
             <label className={`input-custom__label-input ${width.label}`}>
-                <span className="input-custom__label-input__span">{label}</span>
+                <span className="input-custom__label-input__span">
+                    {label} {validate && <span className="input-custom__label-input__span__validate">*</span>}
+                </span>
                 <span className="input-custom__label-input__tag">{tag}</span>
             </label>
             <div className={`input-custom__date-input ${width.input}`}>
@@ -151,13 +167,25 @@ const DatePickerInput = ({
                     label="DatePicker Label"
                     onChange={(value) => onChange(value)}
                     icon={<i className="bx bx-calendar"></i>}
-                    className="input-custom__date-input__container"
+                    className={`input-custom__date-input__container ${error && 'error'}`}
                     hideLabel
                     locale="en"
                 />
             </div>
             <span className="input-custom__error-input">{error && error}</span>
         </>
+    );
+};
+
+const Button = ({ onClick, type = 'button', classComp, value = '', leftIcon, rightIcon, ...props }) => {
+    return (
+        <div className={`input-custom__button-input ${classComp}`}>
+            <button type={type} onClick={onClick} {...props}>
+                {leftIcon && <i className={leftIcon}></i>}
+                {value && value}
+                {rightIcon && <i className={rightIcon}></i>}
+            </button>
+        </div>
     );
 };
 

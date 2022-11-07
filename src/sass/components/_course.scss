@@ -22,7 +22,7 @@
         & > .container {
             display: grid;
             grid-template-columns: 2fr 1fr;
-            gap: 20px;
+            gap: 40px;
 
             @include tablet {
                 grid-template-columns: 1fr;
@@ -469,13 +469,13 @@
             @include tablet {
                 display: none;
             }
-
+            width: max-content;
             &__content {
                 position: sticky;
                 position: -webkit-sticky;
                 top: calc($top-header-size + $mid-header-size + $bottom-header-size + 30px);
-                @include flex(center, center);
                 flex-direction: column;
+                text-align: center;
                 & > * ~ * {
                     margin-top: 10px;
                 }
@@ -485,7 +485,7 @@
                     max-width: 36rem;
 
                     & > img {
-                        border-radius: 20px;
+                        border-radius: 10px;
                     }
                 }
 
@@ -514,8 +514,10 @@
 
                     &__btn {
                         @include flex(center, center);
+                        padding: 0 30px;
+
                         & > * ~ * {
-                            margin-left: 20px;
+                            margin-left: 10px;
                         }
 
                         & i {
@@ -525,17 +527,19 @@
 
                     &__about {
                         margin-top: 20px;
-                        width: max-content;
                         & > h3 {
                             font-size: 1.6rem;
                             margin-bottom: 10px;
                         }
 
                         & > ul {
+                            width: max-content;
+                            margin: 0 auto;
                             & > li ~ li {
                                 margin-top: 10px;
                             }
                             & > li {
+                                width: max-content;
                                 font-size: 1.4rem;
                                 font-weight: 400;
                                 text-transform: capitalize;

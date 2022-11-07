@@ -57,7 +57,7 @@ const MidHeader = () => {
             id: uuidv4(),
             icon: 'bx bx-bulb',
             title: translationSelected.messages.myCourses,
-            to: '/me/courses',
+            to: config.routes.myLearning,
         },
         {
             id: uuidv4(),

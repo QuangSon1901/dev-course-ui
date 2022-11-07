@@ -79,23 +79,23 @@ const CourseContent = ({ id }) => {
                                 >
                                     <div>
                                         {!collapse[index] ? (
-                                            <i className="bx bx-minus"></i>
-                                        ) : (
                                             <i className="bx bx-plus"></i>
+                                        ) : (
+                                            <i className="bx bx-minus"></i>
                                         )}
                                         <span>{unit.name}</span>
                                     </div>
-                                    <span>{unit.lessons_count} lectures</span>
+                                    <span>{unit.lectures_count} lectures</span>
                                 </div>
                                 <div className="course__container__content__body__course-list__item__collapse">
-                                    {unit.lessons.map((lesson, index) => (
+                                    {unit.lectures.map((lecture, index) => (
                                         <div
                                             key={index}
                                             className="course__container__content__body__course-list__item__collapse__item"
                                         >
                                             <div>
                                                 <i className="bx bx-right-arrow-alt"></i>
-                                                <span>{lesson.name}</span>
+                                                <span>{lecture.name}</span>
                                             </div>
                                             <span></span>
                                         </div>
@@ -104,12 +104,14 @@ const CourseContent = ({ id }) => {
                             </li>
                         );
                     })}
-                    <li
-                        className={`course__container__content__body__course-list__item--more`}
-                        onClick={() => setUnitShowAll(!unitShowAll)}
-                    >
-                        {unitShowAll ? 'Show less sections' : `${unitsData.units.length - 10} more sections`}
-                    </li>
+                    {unitsData.units.length > 10 && (
+                        <li
+                            className={`course__container__content__body__course-list__item--more`}
+                            onClick={() => setUnitShowAll(!unitShowAll)}
+                        >
+                            {unitShowAll ? 'Show less sections' : `${unitsData.units.length - 10} more sections`}
+                        </li>
+                    )}
                 </ul>
             </>
         )
