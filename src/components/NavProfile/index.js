@@ -17,7 +17,7 @@ const NavProfile = () => {
                     </div>
                     <div className="profile__nav__body__text__links">
                         <NavLink to={config.routes.profile}>Profile</NavLink>
-                        <NavLink to={config.routes.myLearning}>My learning</NavLink>
+                        <NavLink to={config.routes.learning}>My learning</NavLink>
                         <NavLink to="/">Account</NavLink>
                         <NavLink to="/">Payment</NavLink>
                     </div>

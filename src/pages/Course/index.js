@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import images from '~/assets/images';
-import Button from '~/components/Button';
 import { handleScoll } from '~/utils/scrollBody';
 import CourseContent from './CourseContent';
 import CourseHeader from './CourseHeader';
@@ -12,15 +11,19 @@ import CourseTaskbar from './CourseTaskbar';
 import PurchaseBadge from './PurchaseBadge';
 import * as httpRequest from '~/utils/httpRequest';
 import Skeleton from '~/components/Skeleton';
-import CourseClass from './CourseClass';
 import { useSelector } from 'react-redux';
 import { authSelector } from '~/redux/selector';
+import CourseClass from './CourseClass';
+import ModalVideo, { ModalVideoContent } from '~/components/ModalVideo';
+import getSrcYoutube from '~/utils/youtubeUrl';
 
 const Course = () => {
     const { user } = useSelector(authSelector);
     const navigate = useNavigate();
     const params = useParams();
     const [courseData, setCourseData] = useState({});
+    const [modalVideo, setModalVideo] = useState(false);
+    const modalVideoRef = useRef();
 
     const onEnroll = () => {
         if (courseData.form_of_learning === 'Offline') {
@@ -38,6 +41,18 @@ const Course = () => {
                 search: `?class=${courseData.class_room[0].id}`,
             });
         }
+    };
+
+    const handleOnModalVideo = () => {
+        document
+            .getElementById('iframe_video')
+            .setAttribute('src', getSrcYoutube('https://www.youtube.com/watch?v=red9YvYlPWg'));
+        setModalVideo(true);
+    };
+
+    const handleCloseModalVideo = () => {
+        document.getElementById('iframe_video').setAttribute('src', '');
+        setModalVideo(false);
     };
 
     useEffect(() => {
@@ -81,9 +96,13 @@ const Course = () => {
                         <>
                             <div className="course__container__content">
                                 <CourseHeader data={courseData} />
-                                <CourseBody data={courseData} />
+                                <CourseBody
+                                    data={courseData}
+                                    modalVideo={modalVideo}
+                                    onCloseModalVideo={handleCloseModalVideo}
+                                />
                             </div>
-                            <PurchaseBadge data={courseData} onEnroll={onEnroll} />
+                            <PurchaseBadge data={courseData} onModalVideo={handleOnModalVideo} onEnroll={onEnroll} />
                         </>
                     )}
                 </div>
@@ -93,7 +112,7 @@ const Course = () => {
     );
 };
 
-const CourseBody = ({ data }) => {
+const CourseBody = ({ data, modalVideo, onCloseModalVideo }) => {
     const [desc, setDesc] = useState(false);
     const handleShowDesc = () => setDesc(!desc);
 
@@ -245,6 +264,11 @@ const CourseBody = ({ data }) => {
                     </li>
                 </ul>
             </CourseSection>
+            <ModalVideo active={modalVideo} onClose={onCloseModalVideo}>
+                <ModalVideoContent onClose={onCloseModalVideo}>
+                    <iframe id="iframe_video" width="100%" height="500px" title="trailer"></iframe>
+                </ModalVideoContent>
+            </ModalVideo>
         </div>
     );
 };

@@ -16,7 +16,7 @@ const HeaderCheckout = () => {
                     <img src={theme.theme === 'theme-mode-light' ? images.lightLogo : images.darkLogo} alt="" />
                 </a>
                 <Button onClick={() => navigate(-1)} hover={false} className="header-checkout__cancel">
-                    Cancel
+                    Back
                 </Button>
             </div>
         </div>

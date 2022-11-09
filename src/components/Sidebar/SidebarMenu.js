@@ -187,13 +187,13 @@ const SidebarMenu = (props) => {
                     <span>{translationSelected.messages.personal}</span>
                     <ul className="sidebar__menu__select__list">
                         <li className="sidebar__menu__select__list__item">
-                            <NavLink className="sidebar__menu__select__list__item__link" to="/me/profile">
+                            <NavLink className="sidebar__menu__select__list__item__link" to={config.routes.profile}>
                                 <i className="bx bx-user"></i>
                                 <span>{translationSelected.messages.personalPage}</span>
                             </NavLink>
                         </li>
                         <li className="sidebar__menu__select__list__item">
-                            <NavLink className="sidebar__menu__select__list__item__link" to="/me/courses">
+                            <NavLink className="sidebar__menu__select__list__item__link" to={config.routes.learning}>
                                 <i className="bx bx-bulb"></i>
                                 <span>{translationSelected.messages.myCourses}</span>
                             </NavLink>

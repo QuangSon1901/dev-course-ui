@@ -12,12 +12,13 @@ import CoursesSearch from '~/pages/CoursesSearch';
 import Home from '~/pages/Home';
 import LoginForm from '~/pages/LoginForm';
 import Logout from '~/pages/Logout';
-import MyLearning from '~/pages/MyLearning';
+import LearningProfile from '~/pages/LearningProfile';
 import News from '~/pages/News';
 import PaymentGuide from '~/pages/PaymentGuide';
 import Profile from '~/pages/Profile';
 import RegisterForm from '~/pages/RegisterForm';
 import ResetPassForm from '~/pages/ResetPassForm';
+import MyCourse from '~/pages/LearningProfile/MyCourse';
 
 // const homePromise = import('~/pages/Home');
 // const loginFormPromise = import('~/pages/LoginForm');
@@ -105,8 +106,13 @@ export const privateRouters = [
         layout: MeLayout,
     },
     {
-        path: config.routes.myLearning,
-        component: MyLearning,
+        path: config.routes.learning,
+        component: LearningProfile,
+        layout: MeLayout,
+    },
+    {
+        path: config.routes.learningMyCourse,
+        component: MyCourse,
         layout: MeLayout,
     },
     {

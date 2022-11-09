@@ -19,6 +19,10 @@ const images = {
     vnFlag: require('~/assets/images/vietnam.png'),
     englishFlag: require('~/assets/images/united-kingdom.png'),
     messi: require('~/assets/images/13183418150-16260118104581506368878.jpg'),
+    iconTeacher1: require('~/assets/images/teacher-icon-01.svg').default,
+    iconTeacher2: require('~/assets/images/teacher-icon-02.svg').default,
+    iconStudent1: require('~/assets/images/student-icon-01.svg').default,
+    iconStudent2: require('~/assets/images/student-icon-02.svg').default,
 };
 
 export default images;

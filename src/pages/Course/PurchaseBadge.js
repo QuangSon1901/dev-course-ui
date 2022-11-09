@@ -1,18 +1,26 @@
 import React from 'react';
 import images from '~/assets/images';
-import Image from '~/components/Image';
 import InputCustom from '~/components/InputCustom';
 
-const PurchaseBadge = ({ data, onEnroll }) => {
+const PurchaseBadge = ({ data, onEnroll, onModalVideo }) => {
     return (
         <div className="course__container__purchase-badge">
             <div className="course__container__purchase-badge__content">
-                <div className="course__container__purchase-badge__content__image">
-                    <Image
-                        src={(data.image && process.env.REACT_APP_BASE_URL_FILE_UPLOAD + data.image) || ''}
-                        fallback={images.noImg}
-                        alt=""
-                    />
+                <div
+                    className="course__container__purchase-badge__content__image"
+                    style={{
+                        backgroundImage: `url('${
+                            (data.image && process.env.REACT_APP_BASE_URL_FILE_UPLOAD + data.image) || images.noImg
+                        }')`,
+                    }}
+                >
+                    <div className="course__container__purchase-badge__content__image__toggle-video"></div>
+                    <div
+                        className="course__container__purchase-badge__content__image__toggle-video__button"
+                        onClick={onModalVideo}
+                    >
+                        <i className="bx bx-play"></i>
+                    </div>
                 </div>
                 <div className="course__container__purchase-badge__content__text">
                     <div className="course__container__purchase-badge__content__text__price">
