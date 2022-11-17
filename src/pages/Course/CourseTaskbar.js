@@ -1,8 +1,9 @@
 import React from 'react';
 import Button from '~/components/Button';
+import InputCustom from '~/components/InputCustom';
 import Tag from '~/components/Tag';
 
-const CourseTaskbar = ({ onEnroll }) => {
+const CourseTaskbar = ({ onEnroll, data }) => {
     return (
         <div className="course__taskbar">
             <div className="container">
@@ -23,9 +24,14 @@ const CourseTaskbar = ({ onEnroll }) => {
                 </div>
                 <div className="course__taskbar__action">
                     <span>$84.99</span>
-                    <Button primary onClick={onEnroll}>
-                        Enroll now
-                    </Button>
+                    <InputCustom
+                        onClick={onEnroll}
+                        typeComp="button"
+                        width="w-100 "
+                        classComp={data.active ? 'primary' : 'disable'}
+                        className="fl-1"
+                        value={data.active ? 'Enroll Now' : 'Coming Soon'}
+                    />
                 </div>
             </div>
         </div>

@@ -382,6 +382,11 @@
                             &__mobile-show {
                                 display: none;
                                 @include mobile {
+                                    & > div {
+                                        width: 100px;
+                                        margin: auto;
+                                    }
+
                                     margin: 6px;
                                     display: block;
                                     text-align: center;

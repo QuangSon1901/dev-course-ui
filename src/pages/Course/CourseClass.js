@@ -16,7 +16,7 @@ const CourseClass = ({ data }) => {
     const onEnroll = (active, classID) => {
         if (active) {
             navigate({
-                pathname: '/view/course/' + data.slug,
+                pathname: '/me/learning/my-course/' + classID,
             });
         } else {
             navigate({
@@ -98,7 +98,7 @@ const CourseClass = ({ data }) => {
                                         <div>{classItem.address}</div>
                                         <div className="course__container__content__body__opening-schedule__table__row__mobile-hidden">
                                             <InputCustom
-                                                onClick={() => onEnroll(classItem.active, classItem.id)}
+                                                onClick={() => onEnroll(classItem.active, classItem.class_id)}
                                                 typeComp="button"
                                                 width="w-100 "
                                                 classComp={`${classItem.active ? '' : 'primary'} sm`}
@@ -109,7 +109,16 @@ const CourseClass = ({ data }) => {
                                     </div>
                                 </div>
                                 <div className="course__container__content__body__opening-schedule__table__row__mobile-show">
-                                    <Button primary>Enroll Now</Button>
+                                    <div>
+                                        <InputCustom
+                                            onClick={() => onEnroll(classItem.active, classItem.class_id)}
+                                            typeComp="button"
+                                            width="w-50"
+                                            classComp={`${classItem.active ? '' : 'primary'} sm`}
+                                            className="fl-1"
+                                            value={classItem.active ? 'View Class' : 'Enroll Now'}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         ))}

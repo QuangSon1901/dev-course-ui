@@ -107,7 +107,7 @@ const Course = () => {
                     )}
                 </div>
             </div>
-            {Object.keys(courseData).length > 0 && <CourseTaskbar onEnroll={onEnroll} />}
+            {Object.keys(courseData).length > 0 && <CourseTaskbar onEnroll={onEnroll} data={courseData} />}
         </div>
     );
 };
