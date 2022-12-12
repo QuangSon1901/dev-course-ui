@@ -37,7 +37,7 @@ const CheckoutBill = ({ courseData, step, setStep, onSubmitInfo, paymentMethod, 
                                     '/paypal/order/create',
                                     {
                                         user_id: user.id,
-                                        class_id: Number(paramsSearch.get('class')),
+                                        class_id: paramsSearch.get('class'),
                                         price: String(courseData.price),
                                         name: info.name,
                                         phone: info.phone,
@@ -72,7 +72,7 @@ const CheckoutBill = ({ courseData, step, setStep, onSubmitInfo, paymentMethod, 
                                     {
                                         vendor_order_id: data.orderID,
                                         user_id: user.id,
-                                        class_id: Number(paramsSearch.get('class')),
+                                        class_id: paramsSearch.get('class'),
                                     },
                                     {
                                         headers: {

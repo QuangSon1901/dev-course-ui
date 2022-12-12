@@ -1,6 +1,6 @@
 import { Loading } from 'notiflix';
 import React, { useEffect, useState } from 'react';
-import { useParams, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import Courses from '~/components/Courses';
 import Filter from '~/components/Filter';
 import Skeleton from '~/components/Skeleton';
@@ -12,6 +12,12 @@ const CoursesSearch = () => {
 
     const page = searchParams.get('page');
     const query = searchParams.get('query');
+    const sortPr = searchParams.get('sort');
+    const levelPr = searchParams.get('level');
+    const [sort, setSort] = useState(sortPr || 'suggested');
+    const [filterLevel, setFilterSet] = useState(
+        levelPr && levelPr.split(',').reduce((acc, curr) => (acc = { ...acc, [curr]: true }), {}),
+    );
 
     const [toggleFilter, setToggleFilter] = useState(true);
     const [dataSearch, setDataSearch] = useState({});
@@ -21,10 +27,18 @@ const CoursesSearch = () => {
         const fecthDataSeach = async () => {
             setResult(true);
             try {
+                let arr = [];
+                const objectArray = Object.entries(filterLevel);
+                objectArray.forEach(([key, value]) => {
+                    if (value) arr.push(key);
+                });
+
                 const res = await httpRequest.get('/search-keyword', {
                     params: {
                         q: query,
                         page,
+                        sort,
+                        level: arr,
                     },
                 });
 
@@ -38,7 +52,27 @@ const CoursesSearch = () => {
         };
 
         fecthDataSeach();
-    }, [query, page]);
+    }, [query, page, sort, filterLevel]);
+
+    const handleSort = (event) => {
+        let obj = {};
+        searchParams.forEach((e, key) => (obj[key] = e));
+        setSearchParams({ ...obj, sort: event.target.value });
+        setSort(event.target.value);
+    };
+
+    const handleFilterLevel = (value) => {
+        let level = { ...filterLevel, [value]: !filterLevel[value] };
+        let arr = [];
+        const objectArray = Object.entries(level);
+        objectArray.forEach(([key, value]) => {
+            if (value) arr.push(key);
+        });
+        let obj = {};
+        searchParams.forEach((e, key) => (obj[key] = e));
+        setSearchParams({ ...obj, level: arr.toString() });
+        setFilterSet(level);
+    };
 
     return (
         <div className="courses__search-page bg-main">
@@ -88,10 +122,15 @@ const CoursesSearch = () => {
                                 <h3>Filter</h3>
                             </div>
                             <div className="courses__search__filter-panel__btn__sort">
-                                <select className="courses__search__filter-panel__btn__sort__select">
-                                    <option value="most-reviewed">Most Reviewed</option>
-                                    <option value="most-reviewed">Most Reviewed</option>
-                                    <option value="most-reviewed">Most Reviewed</option>
+                                <select
+                                    className="courses__search__filter-panel__btn__sort__select"
+                                    defaultValue={sort}
+                                    onChange={(event) => handleSort(event)}
+                                >
+                                    <option value="suggested">Suggested</option>
+                                    <option value="lowest-price">Lowest Price</option>
+                                    <option value="highest-price">Highest Price</option>
+                                    <option value="lastest">Latest</option>
                                 </select>
                                 <i className="bx bx-chevron-down courses__search__filter-panel__btn__sort__arrow"></i>
                                 <h3 className="courses__search__filter-panel__btn__sort__span">Sort by</h3>
@@ -108,6 +147,8 @@ const CoursesSearch = () => {
                         on={!!dataSearch.data}
                         onToggleFilter={setToggleFilter}
                         result={result}
+                        filterLevel={filterLevel}
+                        onFilterLevel={handleFilterLevel}
                     />
                     <Courses dataSearch={dataSearch} result={result} />
                 </div>

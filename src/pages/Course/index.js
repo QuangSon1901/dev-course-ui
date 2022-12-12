@@ -23,7 +23,6 @@ const Course = () => {
     const params = useParams();
     const [courseData, setCourseData] = useState({});
     const [modalVideo, setModalVideo] = useState(false);
-    const modalVideoRef = useRef();
 
     const onEnroll = () => {
         if (courseData.form_of_learning === 'Offline') {

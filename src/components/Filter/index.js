@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Skeleton from '../Skeleton';
 
-const Filter = ({ toggleFilter, onToggleFilter, on, result }) => {
+const Filter = ({ toggleFilter, onToggleFilter, on, result, onFilterLevel, filterLevel }) => {
     const [filterField, setFilterField] = useState({
         level: true,
         price: true,
@@ -34,40 +34,49 @@ const Filter = ({ toggleFilter, onToggleFilter, on, result }) => {
                         </div>
                         <ul className="filter__list">
                             <FilterItem
-                                title="Price"
-                                id="price"
-                                typeField={filterField.price}
-                                handleToggleField={handleToggleField}
-                            >
-                                <li className="filter__list__item__body__item">
-                                    <input type="checkbox" name="price" id="price1" />
-                                    <label htmlFor="price1">Paid (5,233)</label>
-                                </li>
-                                <li className="filter__list__item__body__item">
-                                    <input type="checkbox" name="price" id="price2" />
-                                    <label htmlFor="price2">Free (0)</label>
-                                </li>
-                            </FilterItem>
-                            <FilterItem
                                 title="Level"
                                 id="level"
                                 typeField={filterField.level}
                                 handleToggleField={handleToggleField}
                             >
                                 <li className="filter__list__item__body__item">
-                                    <input type="checkbox" name="level" id="level1" />
-                                    <label htmlFor="level1">All level (2,233)</label>
+                                    <input
+                                        type="checkbox"
+                                        name="level"
+                                        id="level1"
+                                        checked={filterLevel['all']}
+                                        onChange={() => onFilterLevel('all')}
+                                    />
+                                    <label htmlFor="level1">All levels (2,233)</label>
                                 </li>
                                 <li className="filter__list__item__body__item">
-                                    <input type="checkbox" name="level" id="level2" />
+                                    <input
+                                        type="checkbox"
+                                        name="level"
+                                        id="level2"
+                                        checked={filterLevel['beginner']}
+                                        onChange={() => onFilterLevel('beginner')}
+                                    />
                                     <label htmlFor="level2">Beginner (2,233)</label>
                                 </li>
                                 <li className="filter__list__item__body__item">
-                                    <input type="checkbox" name="level" id="level3" />
+                                    <input
+                                        type="checkbox"
+                                        name="level"
+                                        id="level3"
+                                        checked={filterLevel['intermediate']}
+                                        onChange={() => onFilterLevel('intermediate')}
+                                    />
                                     <label htmlFor="level3">Intermediate (2,233)</label>
                                 </li>
                                 <li className="filter__list__item__body__item">
-                                    <input type="checkbox" name="level" id="level4" />
+                                    <input
+                                        type="checkbox"
+                                        name="level"
+                                        id="level4"
+                                        checked={filterLevel['expert']}
+                                        onChange={() => onFilterLevel('expert')}
+                                    />
                                     <label htmlFor="level4">Expert (2,233)</label>
                                 </li>
                             </FilterItem>
