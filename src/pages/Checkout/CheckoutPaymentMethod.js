@@ -6,21 +6,23 @@ const CheckoutPaymentMethod = ({ courseData, paymentMethod, setPaymentMethod }) 
     return (
         <>
             <div className="checkout__body__overview__content__section">
-                <div className="checkout__body__overview__content__section__title">Billing Address</div>
+                <div className="checkout__body__overview__content__section__title">Địa chỉ vùng</div>
                 <div className="checkout__body__overview__content__section__body">
                     <InputCustom
                         label="Country"
                         typeComp="select"
                         tag=""
-                        sub="Udemy is required by law to collect applicable transaction taxes for purchases made in certain tax jurisdictions."
+                        sub="Luật pháp yêu cầu chúng tôi thu thuế giao dịch hiện hành đối với các giao dịch mua được thực hiện tại một số khu vực pháp lý thuế nhất định."
                         width={{ label: 'w-50', input: 'w-50' }}
                     >
-                        <option value="VN">Vietnam</option>
+                        <option value="VN" selected>
+                            Vietnam
+                        </option>
                     </InputCustom>
                 </div>
             </div>
             <div className="checkout__body__overview__content__section">
-                <div className="checkout__body__overview__content__section__title">Payment Method</div>
+                <div className="checkout__body__overview__content__section__title">Phương thức thanh toán</div>
                 <div className="checkout__body__overview__content__section__body">
                     <InputCustom
                         typeComp="radio-collapse"
@@ -59,8 +61,25 @@ const CheckoutPaymentMethod = ({ courseData, paymentMethod, setPaymentMethod }) 
                     >
                         <div className="checkout__body__overview__content__section__body__collapse">
                             <span>
-                                In order to complete your transaction, we will transfer you over to PayPal's secure
-                                servers.
+                                Để hoàn tất giao dịch của bạn, chúng tôi sẽ chuyển bạn đến các máy chủ an toàn của
+                                PayPal.
+                            </span>
+                        </div>
+                    </InputCustom>
+                    <InputCustom
+                        typeComp="radio-collapse"
+                        left={{
+                            img: 'https://inkythuatso.com/uploads/images/2021/12/vnpay-logo-inkythuatso-01-13-16-26-42.jpg',
+                            title: 'VNPay',
+                        }}
+                        checked={paymentMethod === 'vnpay'}
+                        data-method="vnpay"
+                        onClick={(event) => setPaymentMethod(event.target.dataset.method)}
+                    >
+                        <div className="checkout__body__overview__content__section__body__collapse">
+                            <span>
+                                Để hoàn tất giao dịch của bạn, chúng tôi sẽ chuyển bạn đến các máy chủ an toàn của
+                                VNPay.
                             </span>
                         </div>
                     </InputCustom>

@@ -16,7 +16,7 @@ const Checkout = () => {
     const [step, setStep] = useState(1);
     const [info, setInfo] = useState(null);
 
-    const [paymentMethod, setPaymentMethod] = useState('paypal');
+    const [paymentMethod, setPaymentMethod] = useState('');
     const [courseData, setCourseData] = useState({});
 
     const formik = useFormik({
@@ -58,7 +58,7 @@ const Checkout = () => {
             <div className="checkout__body">
                 <div className="checkout__body__overview">
                     <div>
-                        <div className="checkout__body__overview__header">Checkout</div>
+                        <div className="checkout__body__overview__header">Thanh toán</div>
                         <div className="checkout__body__overview__content">
                             {step === 1 && <CheckoutInfo formik={formik} setInfo={setInfo} />}
                             {step === 2 && (
@@ -68,7 +68,7 @@ const Checkout = () => {
                                 />
                             )}
                             <div className="checkout__body__overview__content__section">
-                                <div className="checkout__body__overview__content__section__title">Order</div>
+                                <div className="checkout__body__overview__content__section__title">Khoá học</div>
                                 <div className="checkout__body__overview__content__section__body">
                                     {(Object.keys(courseData).length > 0 && (
                                         <ul className="checkout__body__overview__content__section__body__list-course">

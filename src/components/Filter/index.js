@@ -47,7 +47,7 @@ const Filter = ({ toggleFilter, onToggleFilter, on, result, onFilterLevel, filte
                                         checked={filterLevel['all']}
                                         onChange={() => onFilterLevel('all')}
                                     />
-                                    <label htmlFor="level1">All levels (2,233)</label>
+                                    <label htmlFor="level1">Tất cả level (2,233)</label>
                                 </li>
                                 <li className="filter__list__item__body__item">
                                     <input
@@ -57,7 +57,7 @@ const Filter = ({ toggleFilter, onToggleFilter, on, result, onFilterLevel, filte
                                         checked={filterLevel['beginner']}
                                         onChange={() => onFilterLevel('beginner')}
                                     />
-                                    <label htmlFor="level2">Beginner (2,233)</label>
+                                    <label htmlFor="level2">Người mới (2,233)</label>
                                 </li>
                                 <li className="filter__list__item__body__item">
                                     <input
@@ -67,7 +67,7 @@ const Filter = ({ toggleFilter, onToggleFilter, on, result, onFilterLevel, filte
                                         checked={filterLevel['intermediate']}
                                         onChange={() => onFilterLevel('intermediate')}
                                     />
-                                    <label htmlFor="level3">Intermediate (2,233)</label>
+                                    <label htmlFor="level3">Trung cấp (2,233)</label>
                                 </li>
                                 <li className="filter__list__item__body__item">
                                     <input
@@ -77,7 +77,7 @@ const Filter = ({ toggleFilter, onToggleFilter, on, result, onFilterLevel, filte
                                         checked={filterLevel['expert']}
                                         onChange={() => onFilterLevel('expert')}
                                     />
-                                    <label htmlFor="level4">Expert (2,233)</label>
+                                    <label htmlFor="level4">Thành thạo (2,233)</label>
                                 </li>
                             </FilterItem>
                             <FilterItem
@@ -88,11 +88,11 @@ const Filter = ({ toggleFilter, onToggleFilter, on, result, onFilterLevel, filte
                             >
                                 <li className="filter__list__item__body__item">
                                     <input type="checkbox" name="price" id="price1" />
-                                    <label htmlFor="price1">Paid (5,233)</label>
+                                    <label htmlFor="price1">Có phí (5,233)</label>
                                 </li>
                                 <li className="filter__list__item__body__item">
                                     <input type="checkbox" name="price" id="price2" />
-                                    <label htmlFor="price2">Free (0)</label>
+                                    <label htmlFor="price2">Miễn phí (0)</label>
                                 </li>
                             </FilterItem>
                             <FilterItem

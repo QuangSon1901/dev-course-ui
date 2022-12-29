@@ -48,15 +48,15 @@ const CourseClass = ({ data }) => {
         <div className="course__container__content__body__opening-schedule">
             <ul className="course__container__content__body__ul">
                 <li>
-                    <span>Tuition</span>{' '}
+                    <span>Học phí</span>{' '}
                     <span>
                         : <b>${data.price}</b>
                     </span>
                 </li>
                 <li>
-                    <span>Note</span>{' '}
+                    <span>Ghi chú</span>{' '}
                     <span>
-                        : <b>Students will take the test directly in the practical machine room</b>
+                        : <b>Học viên sẽ làm bài kiểm tra trực tiếp tại phòng máy thực hành</b>
                     </span>
                 </li>
             </ul>
@@ -65,11 +65,11 @@ const CourseClass = ({ data }) => {
                     <div className="course__container__content__body__opening-schedule__table__row">
                         <div className="course__container__content__body__opening-schedule__table__row__content">
                             <div className="course__container__content__body__opening-schedule__table__row__content__row">
-                                <div>Class ID</div>
-                                <div>Time</div>
-                                <div>Opening</div>
-                                <div>Estimated end time</div>
-                                <div>Address</div>
+                                <div>Mã lớp</div>
+                                <div>Tiết học</div>
+                                <div>Ngày khai giảng</div>
+                                <div>Ngày kết thúc</div>
+                                <div>Địa chỉ</div>
                                 <div></div>
                             </div>
                         </div>
@@ -81,11 +81,11 @@ const CourseClass = ({ data }) => {
                             <div key={index} className="course__container__content__body__opening-schedule__table__row">
                                 <div className="course__container__content__body__opening-schedule__table__row__content">
                                     <div className="course__container__content__body__opening-schedule__table__row__content__row course__container__content__body__opening-schedule__table__row__content__mobile">
-                                        <div>Class ID</div>
-                                        <div>Time</div>
-                                        <div>Opening</div>
-                                        <div>Estimated end time</div>
-                                        <div>Address</div>
+                                        <div>Mã lớp</div>
+                                        <div>Tiết học</div>
+                                        <div>Ngày khai giảng</div>
+                                        <div>Ngày kết thúc</div>
+                                        <div>Địa chỉ</div>
                                         <div className="course__container__content__body__opening-schedule__table__row__mobile-hidden"></div>
                                     </div>
                                     <div className="course__container__content__body__opening-schedule__table__row__content__row">

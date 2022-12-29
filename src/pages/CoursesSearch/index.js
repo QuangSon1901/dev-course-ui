@@ -16,7 +16,7 @@ const CoursesSearch = () => {
     const levelPr = searchParams.get('level');
     const [sort, setSort] = useState(sortPr || 'suggested');
     const [filterLevel, setFilterSet] = useState(
-        levelPr && levelPr.split(',').reduce((acc, curr) => (acc = { ...acc, [curr]: true }), {}),
+        (levelPr && levelPr.split(',').reduce((acc, curr) => (acc = { ...acc, [curr]: true }), {})) || {},
     );
 
     const [toggleFilter, setToggleFilter] = useState(true);
@@ -26,13 +26,13 @@ const CoursesSearch = () => {
     useEffect(() => {
         const fecthDataSeach = async () => {
             setResult(true);
-            try {
-                let arr = [];
-                const objectArray = Object.entries(filterLevel);
-                objectArray.forEach(([key, value]) => {
-                    if (value) arr.push(key);
-                });
+            let arr = [];
+            const objectArray = Object.entries(filterLevel);
+            objectArray.forEach(([key, value]) => {
+                if (value) arr.push(key);
+            });
 
+            try {
                 const res = await httpRequest.get('/search-keyword', {
                     params: {
                         q: query,
@@ -45,6 +45,7 @@ const CoursesSearch = () => {
                 res.success === 'success' ? setDataSearch(res.result) : setDataSearch({});
                 Loading.remove(500);
             } catch (error) {
+                console.log(error);
                 setDataSearch({});
                 setResult(false);
                 Loading.remove(500);
@@ -86,12 +87,16 @@ const CoursesSearch = () => {
 
                 {!result && (
                     <>
-                        <h1 className="courses__search__header">Sorry, we couldn't find any results for “{query}”</h1>
-                        <p className="courses__search__header-sub">Try adjusting your search. Here are some ideas:</p>
+                        <h1 className="courses__search__header">
+                            Xin lỗi, chúng tôi không thể tìm thấy bất kỳ kết quả nào cho “{query}”
+                        </h1>
+                        <p className="courses__search__header-sub">
+                            Hãy thử điều chỉnh tìm kiếm của bạn. Đây là một số ý tưởng:
+                        </p>
                         <ul className="courses__search__header-error">
-                            <li>Make sure all words are spelled correctly</li>
-                            <li>Try different search terms</li>
-                            <li>Try more general search terms</li>
+                            <li>Hãy chắc chắn rằng tất cả các từ đều đúng chính tả</li>
+                            <li>Thử các cụm từ tìm kiếm khác nhau</li>
+                            <li>Thử các cụm từ tìm kiếm chung</li>
                         </ul>
                     </>
                 )}
@@ -99,13 +104,13 @@ const CoursesSearch = () => {
                 {result && dataSearch.data && (
                     <>
                         <h1 className="courses__search__header">
-                            {dataSearch.total && dataSearch.total} results for “{query}”
+                            {dataSearch.total && dataSearch.total} kết quả cho “{query}”
                         </h1>
                         <p className="courses__search__header-sub">
-                            Explore <span>HTML5 courses</span>
+                            Khám phá <span>khoá học HTML5</span>
                         </p>
                         <p className="courses__search__header-sub">
-                            Students also learn{' '}
+                            Học viên khác cũng học{' '}
                             <span>CSS, Responsive, Design, Web, Design, HTML, JavaScript, Bootstrap</span>
                         </p>
                     </>
@@ -119,7 +124,7 @@ const CoursesSearch = () => {
                                 onClick={() => setToggleFilter(!toggleFilter)}
                             >
                                 <i className="bx bx-filter"></i>
-                                <h3>Filter</h3>
+                                <h3>Bộ lọc</h3>
                             </div>
                             <div className="courses__search__filter-panel__btn__sort">
                                 <select
@@ -127,17 +132,17 @@ const CoursesSearch = () => {
                                     defaultValue={sort}
                                     onChange={(event) => handleSort(event)}
                                 >
-                                    <option value="suggested">Suggested</option>
-                                    <option value="lowest-price">Lowest Price</option>
-                                    <option value="highest-price">Highest Price</option>
-                                    <option value="lastest">Latest</option>
+                                    <option value="suggested">Đề nghị</option>
+                                    <option value="lowest-price">Giá thấp nhất</option>
+                                    <option value="highest-price">Giá cao nhất</option>
+                                    <option value="lastest">Mới nhấT</option>
                                 </select>
                                 <i className="bx bx-chevron-down courses__search__filter-panel__btn__sort__arrow"></i>
-                                <h3 className="courses__search__filter-panel__btn__sort__span">Sort by</h3>
+                                <h3 className="courses__search__filter-panel__btn__sort__span">Sắp xếp theo</h3>
                             </div>
                         </div>
                         <div className="courses__search__filter-panel__btn__count">
-                            {dataSearch.total && dataSearch.total} results
+                            {dataSearch.total && dataSearch.total} kết quả
                         </div>
                     </div>
                 )}

@@ -6,10 +6,10 @@ import * as Yup from 'yup';
 const CheckoutInfo = ({ formik }) => {
     return (
         <div className="checkout__body__overview__content__section">
-            <div className="checkout__body__overview__content__section__title">Student Information</div>
+            <div className="checkout__body__overview__content__section__title">Thông tin học viên</div>
             <div className="checkout__body__overview__content__section__body">
                 <InputCustom
-                    label="Fullname"
+                    label="Họ tên"
                     validate={true}
                     name="name"
                     value={formik.values.name}
@@ -19,7 +19,7 @@ const CheckoutInfo = ({ formik }) => {
                     error={formik.errors.name && formik.touched.name ? formik.errors.name : ''}
                 />
                 <InputCustom
-                    label="Birth"
+                    label="Ngày sinh"
                     name="birth"
                     value={formik.values.birth}
                     validate={true}
@@ -41,7 +41,7 @@ const CheckoutInfo = ({ formik }) => {
                     error={formik.errors.email && formik.touched.email ? formik.errors.email : ''}
                 />
                 <InputCustom
-                    label="Phone"
+                    label="Số điện thoại"
                     validate={true}
                     name="phone"
                     value={formik.values.phone}

@@ -38,16 +38,16 @@ const PurchaseBadge = ({ data, onEnroll, onModalVideo }) => {
                             width="w-100 "
                             classComp={data.active ? 'primary' : 'disable'}
                             className="fl-1"
-                            value={data.active ? 'Enroll Now' : 'Coming Soon'}
+                            value={data.active ? 'Đăng ký ngay' : 'Chưa mở'}
                         />
                         <InputCustom leftIcon="bx bx-heart" typeComp="button" width="w-auto" />
                     </div>
                     <div className="course__container__purchase-badge__content__text__about">
-                        <h3>This course includes:</h3>
+                        <h3>Khóa học này bao gồm:</h3>
                         <ul>
                             <li>
                                 <i className="bx bxl-meta"></i>
-                                <span>Form of learning: {data.form_of_learning}</span>
+                                <span>Hình thức học tập: {data.form_of_learning}</span>
                             </li>
                             <li>
                                 <i className="bx bx-traffic-cone"></i>
@@ -55,23 +55,23 @@ const PurchaseBadge = ({ data, onEnroll, onModalVideo }) => {
                             </li>
                             <li>
                                 <i className="bx bx-slideshow"></i>
-                                <span>{data.total_sections} sections</span>
+                                <span>{data.total_sections} chương</span>
                             </li>
                             <li>
                                 <i className="bx bx-file-blank"></i>
-                                <span>{data.total_lectures} lectures</span>
+                                <span>{data.total_lectures} bài giảng</span>
                             </li>
                             <li>
                                 <i className="bx bx-mobile-alt"></i>
-                                <span>Access on mobile and TV</span>
+                                <span>Truy cập trên điện thoại di động và TV</span>
                             </li>
                             <li>
                                 <i className="bx bx-notepad"></i>
-                                <span>Assignments</span>
+                                <span>Bài tập</span>
                             </li>
                             <li>
                                 <i className="bx bx-shield"></i>
-                                <span>Certificate of completion</span>
+                                <span>Chứng chỉ hoàn thành</span>
                             </li>
                         </ul>
                     </div>

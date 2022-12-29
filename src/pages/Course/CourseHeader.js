@@ -31,11 +31,11 @@ const CourseHeader = ({ data }) => {
                     <i className="bx bxs-star "></i>
                 </div>
                 <a href="/" className="course__container__content__header__preview__count-courses">
-                    (2022 ratings)
+                    (2022 xếp hạng)
                 </a>
             </div>
             <div className="course__container__content__header__teacher">
-                By <a href="/">Michael Jackson</a>
+                Bởi <a href="/">Michael Jackson</a>
             </div>
         </div>
     );

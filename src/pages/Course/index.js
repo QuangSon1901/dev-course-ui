@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import images from '~/assets/images';
 import { handleScoll } from '~/utils/scrollBody';
 import CourseContent from './CourseContent';
@@ -16,11 +16,15 @@ import { authSelector } from '~/redux/selector';
 import CourseClass from './CourseClass';
 import ModalVideo, { ModalVideoContent } from '~/components/ModalVideo';
 import getSrcYoutube from '~/utils/youtubeUrl';
+import { storage } from '~/utils/storage';
+import { Loading } from 'notiflix';
+import { toast } from 'react-toastify';
 
 const Course = () => {
     const { user } = useSelector(authSelector);
     const navigate = useNavigate();
     const params = useParams();
+    const [paramsSearch] = useSearchParams();
     const [courseData, setCourseData] = useState({});
     const [modalVideo, setModalVideo] = useState(false);
 
@@ -71,6 +75,7 @@ const Course = () => {
 
         fetchCourse();
     }, [params.slug, user]);
+
     return (
         <div className="course">
             <div className="course__container">
@@ -117,7 +122,7 @@ const CourseBody = ({ data, modalVideo, onCloseModalVideo }) => {
 
     return (
         <div className="course__container__content__body">
-            <CourseSection title={`What you'll learn`}>
+            <CourseSection title={`Bạn sẽ học được gì`}>
                 <ul className="course__container__content__body__learn-list">
                     {data.objectives &&
                         data.objectives.map((objective, index) => (
@@ -129,11 +134,11 @@ const CourseBody = ({ data, modalVideo, onCloseModalVideo }) => {
                 </ul>
             </CourseSection>
 
-            <CourseSection title={`Course content`}>
+            <CourseSection title={`Nội dung khóa học`}>
                 <CourseContent id={data.id} />
             </CourseSection>
 
-            <CourseSection title={`Description`}>
+            <CourseSection title={`Mô tả`}>
                 <div
                     className={`course__container__content__body__description ${
                         desc && 'course__container__content__body__description--active'
@@ -149,21 +154,21 @@ const CourseBody = ({ data, modalVideo, onCloseModalVideo }) => {
                 </div>
             </CourseSection>
 
-            <CourseSection title={`Certificate Of Completion`}>
+            <CourseSection title={`Chứng chỉ hoàn thành`}>
                 <ul className="course__container__content__body__ul">
                     <li>
-                        Certificate Of Completion <b>{data.name}</b>
+                        Chứng chỉ hoàn tất <b>{data.name}</b>
                     </li>
                 </ul>
             </CourseSection>
 
             {data.active && (
-                <CourseSection title={`Opening Schedule`}>
+                <CourseSection title={`Lịch khai giảng`}>
                     <CourseClass data={data} />
                 </CourseSection>
             )}
 
-            <CourseSection title={`Featured review`}>
+            <CourseSection title={`Đánh giá nổi bật`}>
                 <ul className="course__container__content__body__review">
                     <li className="course__container__content__body__review__item">
                         <div className="course__container__content__body__review__item__info">
@@ -172,8 +177,8 @@ const CourseBody = ({ data, modalVideo, onCloseModalVideo }) => {
                             </div>
                             <div className="course__container__content__body__review__item__info__body">
                                 <h3>Lione Messi</h3>
-                                <span>24 courses</span>
-                                <span>6 reviews</span>
+                                <span>24 khoá học</span>
+                                <span>6 đánh giá</span>
                             </div>
                         </div>
                         <div className="course__container__content__body__review__item__star">
@@ -184,9 +189,9 @@ const CourseBody = ({ data, modalVideo, onCloseModalVideo }) => {
                             <i className="bx bxs-star "></i>
                         </div>
                         <div className="course__container__content__body__review__item__comment">
-                            Robert is a really good instructor. He has an ability to take complicated concepts and
-                            simplify them for both understanding and retention. I highly recommend this course for
-                            anyone interested in working with socket.io.
+                            Robert là một người hướng dẫn thực sự tốt. Anh ấy có khả năng nắm bắt những khái niệm phức
+                            tạp và đơn giản hóa chúng cho cả sự hiểu biết và lưu giữ. Tôi đánh giá cao khóa học này cho
+                            bất kỳ ai quan tâm đến việc làm việc với socket.io.
                         </div>
                         <div className="course__container__content__body__review__item__feedback-action">
                             <button className="course__container__content__body__review__item__feedback-action__btn">
@@ -204,8 +209,8 @@ const CourseBody = ({ data, modalVideo, onCloseModalVideo }) => {
                             </div>
                             <div className="course__container__content__body__review__item__info__body">
                                 <h3>Lione Messi</h3>
-                                <span>24 courses</span>
-                                <span>6 reviews</span>
+                                <span>24 khoá học</span>
+                                <span>6 đánh giá</span>
                             </div>
                         </div>
                         <div className="course__container__content__body__review__item__star">
@@ -216,9 +221,9 @@ const CourseBody = ({ data, modalVideo, onCloseModalVideo }) => {
                             <i className="bx bxs-star "></i>
                         </div>
                         <div className="course__container__content__body__review__item__comment">
-                            Robert is a really good instructor. He has an ability to take complicated concepts and
-                            simplify them for both understanding and retention. I highly recommend this course for
-                            anyone interested in working with socket.io.
+                            Robert là một người hướng dẫn thực sự tốt. Anh ấy có khả năng nắm bắt những khái niệm phức
+                            tạp và đơn giản hóa chúng cho cả sự hiểu biết và lưu giữ. Tôi đánh giá cao khóa học này cho
+                            bất kỳ ai quan tâm đến việc làm việc với socket.io.
                         </div>
                         <div className="course__container__content__body__review__item__feedback-action">
                             <button className="course__container__content__body__review__item__feedback-action__btn">
@@ -236,8 +241,8 @@ const CourseBody = ({ data, modalVideo, onCloseModalVideo }) => {
                             </div>
                             <div className="course__container__content__body__review__item__info__body">
                                 <h3>Lione Messi</h3>
-                                <span>24 courses</span>
-                                <span>6 reviews</span>
+                                <span>24 khoá học</span>
+                                <span>6 đánh giá</span>
                             </div>
                         </div>
                         <div className="course__container__content__body__review__item__star">
@@ -248,9 +253,9 @@ const CourseBody = ({ data, modalVideo, onCloseModalVideo }) => {
                             <i className="bx bxs-star "></i>
                         </div>
                         <div className="course__container__content__body__review__item__comment">
-                            Robert is a really good instructor. He has an ability to take complicated concepts and
-                            simplify them for both understanding and retention. I highly recommend this course for
-                            anyone interested in working with socket.io.
+                            Robert là một người hướng dẫn thực sự tốt. Anh ấy có khả năng nắm bắt những khái niệm phức
+                            tạp và đơn giản hóa chúng cho cả sự hiểu biết và lưu giữ. Tôi đánh giá cao khóa học này cho
+                            bất kỳ ai quan tâm đến việc làm việc với socket.io.
                         </div>
                         <div className="course__container__content__body__review__item__feedback-action">
                             <button className="course__container__content__body__review__item__feedback-action__btn">
