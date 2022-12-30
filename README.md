@@ -13,4 +13,7 @@ An easy way to create beautiful and modern github profiles
 Hệ thống hỗ trợ việc đăng ký khoá học tin học ngay trên trang web giúp học viên tiết kiệm thời gian hơn, dễ dàng tìm kiếm khoá học phù hợp hơn, đáp ứng nhu cầu thời gian và không gian với nhiều sự lựa chọn khung giờ học.
 
 # Công nghệ sử dụng
-![React JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+![CSS](https://img.shields.io/badge/css-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![HTML](https://img.shields.io/badge/html-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
