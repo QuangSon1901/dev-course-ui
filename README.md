@@ -24,7 +24,7 @@ Hệ thống hỗ trợ việc đăng ký khoá học tin học ngay trên trang
   Cài đặt
 </summary>
 
-# Bắt đầu
+## Bắt đầu
 
 Đầu tiên, cài đặt node module:
 
