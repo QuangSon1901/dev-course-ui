@@ -34,7 +34,7 @@ npm install
 
 ## Chạy dự án
 
-In the project directory, you can run:
+Trong thư mục dự án, bạn có thể chạy:
 
 ```bash
 npm start
