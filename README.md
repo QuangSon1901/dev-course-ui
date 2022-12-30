@@ -6,8 +6,6 @@
 </div>
 <br/>
 
-An easy way to create beautiful and modern github profiles
-
 # Giới thiệu
 
 Hệ thống hỗ trợ việc đăng ký khoá học tin học ngay trên trang web giúp học viên tiết kiệm thời gian hơn, dễ dàng tìm kiếm khoá học phù hợp hơn, đáp ứng nhu cầu thời gian và không gian với nhiều sự lựa chọn khung giờ học.
